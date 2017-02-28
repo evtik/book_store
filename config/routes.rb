@@ -3,7 +3,25 @@ Rails.application.routes.draw do
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     passwords: 'users/passwords'
-  }
+  }#, path_names: { sign_in: 'login', sign_up: 'logout' }
+
+  devise_scope :user do
+    get 'login', to: 'devise/sessions#new'
+    get 'logout', to: 'devise/sessions#destroy'
+  end
+
+  # devise_scope :user do
+    # get 'login', to: 'devise/sessions#new'
+
+    # authenticated :user do
+      # root to: 'admin/dashboard#index', as: :authenticated_root
+    # end
+
+    # unauthenticated :user do
+      # root to: 'users/sessions#new', as: :unauthenticated_root
+    # end
+  # end
+
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
