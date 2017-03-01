@@ -5,4 +5,10 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')
+User.delete_all
+
+User.create! do |u|
+  u.email = 'admin@example.com'
+  u.password = '11111111'
+  u.admin = true
+end
