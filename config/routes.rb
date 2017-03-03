@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  root to: 'catalog#index'
+  get 'catalog/index'
+
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
