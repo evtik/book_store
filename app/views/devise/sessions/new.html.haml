@@ -1,0 +1,32 @@
+%main.container.general-main-wrap
+  .text-center
+    %h3.general-login-title Log In
+    -# %a.general-login-icon{href: "#"}
+    - if devise_mapping.omniauthable?
+      - resource_class.omniauth_providers.each do |provider|
+        = link_to omniauth_authorize_path(resource_name, provider), class: 'general-login-icon', title: "Sign in with #{OmniAuth::Utils.camelize(provider)}" do
+          %i{class: "fa fa-#{provider}-official"}
+    -# = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon', title: 'Sign in with Facebook' do
+      -# %i.fa.fa-facebook-official
+    %p.general-login-text or
+  = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "general-form"}) do |f|
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: "email"} Enter Email
+      = f.email_field :email, class: 'form-control', placeholder: 'Enter Email', autofocus: true
+    .form-group.mb-30
+      %label.control-label.font-weight-light{for: "password"} Password
+      = f.password_field :password, class: 'form-control', placeholder: "Password"
+      %a.help-block.in-gold-500{href: "#"} Forgot password?
+    .form-group.checkbox.text-center.mb-30
+      %label.font-weight-light.pl-0
+        = f.check_box :remember_me, class: 'checkbox-input', hidden: "true"
+        %span.checkbox-icon
+          %i.fa.fa-check
+        %span.checkbox-text Remember me
+    .text-center
+      -# %button.btn.btn-default.mb-20{type: 'submit'} Log in
+      -# = f.submit class: 'button.btn.btn-default.mb-20', 'Log in'
+      = f.submit 'Log in', class: 'button btn btn-default mb-20'
+  %p.general-sign-text.text-center
+    Don’t have an Account?
+    %a.in-gold-500{href: "/users/sign_up"} Sign Up
