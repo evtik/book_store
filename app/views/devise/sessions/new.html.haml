@@ -10,7 +10,7 @@
     .form-group.mb-30
       %label.control-label.font-weight-light{for: "password"} Password
       = f.password_field :password, class: 'form-control', placeholder: "Password"
-      %a.help-block.in-gold-500{href: "#"} Forgot password?
+      %a.help-block.in-gold-500{href: new_user_password_path} Forgot password?
     .form-group.checkbox.text-center.mb-30
       %label.font-weight-light.pl-0
         = f.check_box :remember_me, class: 'checkbox-input', hidden: "true"
