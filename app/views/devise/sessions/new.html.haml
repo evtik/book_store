@@ -1,13 +1,7 @@
 %main.container.general-main-wrap
   .text-center
     %h3.general-login-title Log In
-    -# %a.general-login-icon{href: "#"}
-    - if devise_mapping.omniauthable?
-      - resource_class.omniauth_providers.each do |provider|
-        = link_to omniauth_authorize_path(resource_name, provider), class: 'general-login-icon', title: "Sign in with #{OmniAuth::Utils.camelize(provider)}" do
-          %i{class: "fa fa-#{provider}-official"}
-    -# = link_to user_facebook_omniauth_authorize_path, class: 'general-login-icon', title: 'Sign in with Facebook' do
-      -# %i.fa.fa-facebook-official
+    = render 'devise/shared/omniauth_links'
     %p.general-login-text or
   = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "general-form"}) do |f|
     .form-group.mb-30
@@ -24,8 +18,6 @@
           %i.fa.fa-check
         %span.checkbox-text Remember me
     .text-center
-      -# %button.btn.btn-default.mb-20{type: 'submit'} Log in
-      -# = f.submit class: 'button.btn.btn-default.mb-20', 'Log in'
       = f.submit 'Log in', class: 'button btn btn-default mb-20'
   %p.general-sign-text.text-center
     Don’t have an Account?
