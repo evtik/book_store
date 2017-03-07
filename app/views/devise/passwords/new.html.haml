@@ -7,7 +7,6 @@
     = devise_error_messages!
     .form-group.mb-25
       = f.email_field :email, autofocus: true, class: 'form-control', placeholder: 'Enter your email'
-    = f.submit 'Email instructions', class: 'button btn btn-default center-block mb-20'
+    = f.submit 'Email instructions', class: 'btn btn-default center-block mb-20'
     .text-center
       = link_to 'Cancel', '/login', class: 'in-gold-500 mb-20'
-      -# %a.in-gold-500.mb-20{href: "#"} Cancel
