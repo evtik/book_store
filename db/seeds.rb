@@ -5,9 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-User.delete_all
+# User.delete_all
 
-User.create! do |u|
+User.find_or_create_by_id(1) do |u|
   u.email = 'admin@bookstore.com'
   u.password = '11111111'
   u.admin = true
@@ -54,6 +54,7 @@ authors = Author.all
     book.width = (4..7).to_a.sample
     book.thickness = (1..3).to_a.sample
     book.category = categories.sample
+    book.price = rand(4.99..999.99)
     book.materials.concat [materials[rand(0..4)], materials[rand(5..7)]]
     if (i % 3).zero?
       book.authors.concat authors.sample(rand(1..3))
