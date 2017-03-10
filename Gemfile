@@ -39,6 +39,7 @@ gem 'cancancan'
 gem 'devise'
 gem 'hamlit'
 gem 'hamlit-rails'
+gem 'kaminari'
 gem 'omniauth'
 gem 'omniauth-facebook'
 

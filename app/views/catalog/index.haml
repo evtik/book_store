@@ -1,0 +1,82 @@
+%main.container
+  %h1.general-title-margin Сatalog
+  .hidden-xs.clearfix
+    .pull-right
+      .dropdown.width-240
+        %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+          Newest first
+          %i.fa.fa-angle-down.dropdown-icon
+        %ul.dropdown-menu
+          %li
+            %a{href: "#"} Newest first
+          %li
+            %a{href: "#"} Popular first
+          %li
+            %a{href: "#"} Price: Low to high
+          %li
+            %a{href: "#"} Price: Low to high
+    %ul.list-inline.pt-10.mb-25.mr-240
+      %li.mr-35
+        %a.filter-link{href: "#"}
+          All
+          %span.badge.general-badge 135
+      %li.mr-35
+        %a.filter-link{href: "#"}
+          Mobile Development
+          %span.badge.general-badge 135
+      %li.mr-35
+        %a.filter-link{href: "#"}
+          Photo
+          %span.badge.general-badge 135
+      %li.mr-35
+        %a.filter-link{href: "#"}
+          Web Design
+          %span.badge.general-badge 135
+  .mb-40.visible-xs
+    %p.in-grey-600.small.mb-10 Filter by category
+    .dropdown.mb-20
+      %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+        Newest first
+        %i.fa.fa-angle-down.dropdown-icon
+      %ul.dropdown-menu
+        %li
+          %a{href: "#"} Newest first
+        %li
+          %a{href: "#"} Popular first
+        %li
+          %a{href: "#"} Price: Low to high
+        %li
+          %a{href: "#"} Price: Low to high
+    %p.in-grey-600.small.mb-10 Sort by
+    .dropdown
+      %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+        Newest first
+        %i.fa.fa-angle-down.dropdown-icon
+      %ul.dropdown-menu
+        %li
+          %a{href: "#"} Newest first
+        %li
+          %a{href: "#"} Popular first
+        %li
+          %a{href: "#"} Price: Low to hight
+        %li
+          %a{href: "#"} Price: Low to hight
+  .mb-120
+    .row
+      - @books.each do |book|
+        .col-xs-6.col-sm-3
+          .general-thumb-wrap
+            .thumbnail.general-thumbnail
+              %img.img-shadow.general-thumbnail-img{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
+              .thumb-hover
+                .general-thumb-link-wrap
+                  %a.thumb-hover-link{href: "#"}
+                    %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
+                  %a.thumb-hover-link{href: "#"}
+                    %i.fa.fa-shopping-cart.thumb-icon
+          .general-thumb-info
+            %p.general-title= book.title
+            %p.font-16.in-gold-500= book.price
+            %span.divider-sm
+            %p.in-grey-600.small= book.authors.map(&:full_name).join(', ')
+  =link_to_next_page @books, 'Next page'
