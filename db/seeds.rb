@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 # User.delete_all
 
-User.find_or_create_by_id(1) do |u|
+User.find_or_create_by(id: 1) do |u|
   u.email = 'admin@bookstore.com'
   u.password = '11111111'
   u.admin = true
