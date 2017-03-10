@@ -79,4 +79,7 @@
             %p.font-16.in-gold-500= book.price
             %span.divider-sm
             %p.in-grey-600.small= book.authors.map(&:full_name).join(', ')
-  =link_to_next_page @books, 'Next page'
+  .text-center
+    %span
+      =link_to_previous_page @books, 'Previous page', class: 'btn btn-default mb-20'
+      =link_to_next_page @books, 'Next page', class: 'btn btn-default mb-20'

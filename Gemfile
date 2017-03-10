@@ -35,10 +35,12 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
+# gem 'activeadmin', git: 'gregbell/active_admin'
 gem 'cancancan'
 gem 'devise'
 gem 'hamlit'
 gem 'hamlit-rails'
+# gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
 gem 'kaminari'
 gem 'omniauth'
 gem 'omniauth-facebook'
