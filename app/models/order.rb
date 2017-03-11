@@ -3,4 +3,5 @@ class Order < ApplicationRecord
   belongs_to :credit_card
   belongs_to :coupon
   belongs_to :shipment
+  has_many :order_items
 end
