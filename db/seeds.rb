@@ -80,9 +80,11 @@ num_books.times do |i|
   end
 end
 
-users = User.where(admin: false)
+users = User.where(admin: nil)
+# puts "users count is #{users.count}"
 review_states = %w(unprocessed approved rejected)
 books = Book.all
+# puts "books count is #{books.count}"
 books.each do |book|
   users.sample(rand(0..5)).each do |user|
     Review.create! do |review|
@@ -117,7 +119,8 @@ def create_address(type)
   address.zip = Faker::Address.zip
   address.country = Faker::Address.country
   address.phone = '+' << Faker::PhoneNumber.subscriber_number(rand(12..15))
-  address.type = type
+  address.address_type = type
+  address
 end
 
 booleans = [true, false]
@@ -144,13 +147,16 @@ num_orders.times do |order_index|
   order.shipment = shipments.sample
   order.state = order_states.sample
   order.user = users.sample
-  order.coupon = Coupon.where(order_id: nil).sample
+  # if (order_index % 20).zero?
+    # Coupon.where(order_id: nil).sample.order = order
+  # end
   card = CreditCard.new
   card.number = Faker::Business.credit_card_number
   card.month_year = "#{months.sample}/#{rand(18..20)}"
-  card.cardholder = order.user.full_name
+  card.cardholder = 'John Doe'
   card.cvv = Array.new(rand(3..4)) { rand(0..9) }.join
-  order.card = card
+  # breaks here ...
+  order.credit_card = card
 
   if (order_index % 7).zero?
     order_item = OrderItem.new
