@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  root to: 'catalog#index'
+  get 'home/index'
+
+  root to: 'home#index'
+  get 'home/index'
   get 'catalog/index'
 
   devise_for :users, controllers: {

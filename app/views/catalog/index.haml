@@ -75,8 +75,8 @@
                   %a.thumb-hover-link{href: "#"}
                     %i.fa.fa-shopping-cart.thumb-icon
           .general-thumb-info
+            %p.pull-right.font-16.in-gold-500= book.price
             %p.general-title= book.title
-            %p.font-16.in-gold-500= book.price
             %span.divider-sm
             %p.in-grey-600.small= book.authors.map(&:full_name).join(', ')
   .text-center
