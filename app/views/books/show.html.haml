@@ -1,0 +1,69 @@
+%main.container
+  %a.general-back-link{href: "#"}
+    %i.fa.fa-long-arrow-left.mr-15
+    Back to results
+  .row
+    .col-sm-6
+      .product-gallery
+        .mb-20
+          %img.img-responsive{src: "https://www.bramstein.com/static/smashing-book-5-photo-stack.9d5d114e3e.jpg"}
+        .images.clearfix
+          %a.img-link{href: "#"}
+            %img{src: "https://www.smashingmagazine.com/wp-content/uploads/2015/09/smashing-book-5-2-large.jpg"}
+          %a.img-link{href: "#"}
+            %img{src: "https://www.smashingmagazine.com/wp-content/uploads/2015/09/smashing-book-5-2-large.jpg"}
+          %a.img-link{href: "#"}
+            %img{src: "https://www.smashingmagazine.com/wp-content/uploads/2015/09/smashing-book-5-2-large.jpg"}
+    .col-sm-6
+      %h1.mt-res-0= @book.title
+      %p.in-grey-600.small= @book.authors.map(&:full_name).join(', ')
+      .row
+        .col-xs-12.col-md-4
+          %p.h1.in-gold-500.mt-10= @book.price
+        .col-xs-5.col-md-3
+          .input-group.general-position
+            %a.input-link{href: "#"}
+              %i.fa.fa-minus.line-height-40
+            %input.form-control.quantity-input{type: "text"}
+            %a.input-link{href: "#"}
+              %i.fa.fa-plus.line-height-40
+        .col-xs-7.col-md-5
+          %button.btn.btn-default.pull-right.general-position Add to Cart
+      .pt-20.divider-lg
+        %p Description
+        %p.in-grey-600.small.line-height-2
+          Smashing Book 5: Real-Life Responsive Web Design is our brand new, upcoming book with smart front-end techniques and design patterns derived from real-life responsive projects. With 13 chapters on responsive workflow, SVG, Flexbox, Web fonts, responsive images, responsive email, content strategy, debugging ...
+          %a.in-gold-500.ml-10{href: "#"} Read More
+      .pt-20.divider-lg
+        .clearfix
+          %p.general-item-info.pull-right= @book.year
+          %p.break-word Year of publication
+      .pt-20.divider-lg
+        .clearfix
+          -# %p.general-item-info.pull-right H:6.4\" x W: 0.9\" x D: 5.0
+          %p.general-item-info.pull-right= "H: #{@book.height}\" x W: #{@book.width}\" x D: #{@book.thickness}\""
+          %p.break-word Dimensions
+      .pt-20.divider-lg
+        .clearfix
+          %p.general-item-info.pull-right= @book.materials.map(&:name).join(', ').capitalize 
+          %p.break-word Materials
+  .mb-80
+    %h3.in-gold-500.mb-25= "Reviews (#{@book.reviews.length})"
+    %ul.media-list
+      - @book.reviews.each do |review|
+        %li.media.divider-lg
+          .media-left
+            %a{href: "#"}
+              %span.img-circle.logo-size.logo-empty.media-object= review.user.email.first.upcase
+          .media-body
+            %div
+              %p.general-message-date.hidden-xs= review.updated_at
+              %h4.media-heading.max-240.general-message-name
+                %span.general-message-verified Verified Reviewer
+                Rita J. Lewis
+            .mb-15
+              - review.score.times do
+                %i.fa.fa-star.rate-star
+              - (5 - review.score).times do
+                %i.fa.fa-star.rate-star.rate-empty
+            %p= review.body

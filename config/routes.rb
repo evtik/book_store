@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  get 'home/index'
 
   root to: 'home#index'
   get 'home/index'
   get 'catalog/index'
+
+  resources :books, only: :show
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
