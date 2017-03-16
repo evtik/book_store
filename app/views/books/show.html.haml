@@ -16,19 +16,33 @@
             %img{src: "https://www.smashingmagazine.com/wp-content/uploads/2015/09/smashing-book-5-2-large.jpg"}
     .col-sm-6
       %h1.mt-res-0= @book.title
+      -# .input-group
+        -# %span.input-group-btn
+          -# %button.btn.btn-default.btn-number{type: "button", "data-type" => "minus", "data-field" => "xxx"}
+            -# %span.glyphicon.glyphicon-minus
+        -# %input.form-control.input-number#xxx{type: "text", name: "xxx", value: "1"}
+        -# %span.input-group-btn
+          -# %button.btn.btn-default.btn-number{type: "button", "data-type" => "plus", "data-field" => "xxx"}
+            -# %span.glyphicon.glyphicon-plus
       %p.in-grey-600.small= @book.authors.map(&:full_name).join(', ')
       .row
         .col-xs-12.col-md-4
           %p.h1.in-gold-500.mt-10= @book.price
-        .col-xs-5.col-md-3
-          .input-group.general-position
-            %a.input-link{href: "#"}
-              %i.fa.fa-minus.line-height-40
-            %input.form-control.quantity-input{type: "text"}
-            %a.input-link{href: "#"}
-              %i.fa.fa-plus.line-height-40
-        .col-xs-7.col-md-5
-          %button.btn.btn-default.pull-right.general-position Add to Cart
+        = form_tag('/cart/add_item', method: 'post', class: 'form-inline') do
+          .col-xs-5.col-md-3
+            .input-group.general-position
+              %a.input-link{href: "#"}
+                %i.fa.fa-minus.line-height-40
+              = hidden_field_tag(:id, @book.id)
+              = text_field_tag(:quantity, 1, class: "form-control quantity-input")
+            .input-group.general-position
+              %a.input-link{href: "#"}
+                %i.fa.fa-plus.line-height-40
+          .col-xs-7.col-md-5
+            -# = submit_tag('Add to Cart', class: 'button btn btn-default pull-right general-position')
+            = submit_tag('Add to Cart', class: 'btn btn-default')
+
+          -# =link_to 'Add to Cart', add_item_path(id: @book.id), method: :post, class: 'button btn btn-default pull-right general-position' 
       .pt-20.divider-lg
         %p Description
         %p.in-grey-600.small.line-height-2

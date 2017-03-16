@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   root to: 'home#index'
   get 'home/index'
   get 'catalog/index'
@@ -32,4 +31,9 @@ Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '/cart', to: 'cart#index'
+  post '/cart/add_item', to: 'cart#add_item', as: :add_item
+  post '/cart/update_quantity', to: 'cart#update_quantity', as: :update_item_quantity
+  delete '/cart/remove_item/:id', to: 'cart#remove_item', as: :remove_item
 end
