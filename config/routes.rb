@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   get '/cart', to: 'cart#index'
-  post '/cart/add_item', to: 'cart#add_item', as: :add_item
-  post '/cart/update_quantity', to: 'cart#update_quantity', as: :update_item_quantity
-  delete '/cart/remove_item/:id', to: 'cart#remove_item', as: :remove_item
+  post '/cart/add', to: 'cart#add', as: :cart_add
+  post '/cart/update', to: 'cart#update', as: :cart_update
+  delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
 end
