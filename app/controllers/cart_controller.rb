@@ -13,7 +13,11 @@ class CartController < ApplicationController
   def add
     book_id = params[:id]
     quantity = params[:quantity].to_i || 1
+    # don't know why it is nil by default
+    # though session[:cart] is created like Hash.new(0)
+    session[:cart][book_id] ||= 0
     session[:cart][book_id] += quantity
+    Rails.cache.write('my_key', 'foo', expires_in: 1.hour)
     redirect_to :back
   end
 
@@ -21,6 +25,8 @@ class CartController < ApplicationController
     params[:quantities].each do |book_id, quantity|
       session[:cart][book_id] = quantity.to_i
     end
+    logger.info('bar')
+    logger.info(Rails.cache.read('my_key'))
     redirect_to :cart
   end
 
@@ -33,5 +39,6 @@ class CartController < ApplicationController
 
   def set_cart
     session[:cart] ||= Cart.new
+    # session[:cart] ||= Hash.new(0)
   end
 end
