@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
-  root to: 'catalog#index'
+  root to: 'home#index'
+  get 'home/index'
   get 'catalog/index'
+
+  resources :books, only: :show
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -28,4 +31,11 @@ Rails.application.routes.draw do
 
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get '/cart', to: 'cart#index'
+  post '/cart/add', to: 'cart#add', as: :cart_add
+  post '/cart/update', to: 'cart#update', as: :cart_update
+  delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
+
+  resources :checkout
 end
