@@ -3,65 +3,30 @@
   .hidden-xs.clearfix
     .pull-right
       .dropdown.width-240
-        %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-          Newest first
-          %i.fa.fa-angle-down.dropdown-icon
-        %ul.dropdown-menu
-          %li
-            %a{href: "#"} Newest first
-          %li
-            %a{href: "#"} Popular first
-          %li
-            %a{href: "#"} Price: Low to high
-          %li
-            %a{href: "#"} Price: Low to high
+        =render 'catalog_sorters'
     %ul.list-inline.pt-10.mb-25.mr-240
-      %li.mr-35
-        %a.filter-link{href: "#"}
-          All
-          %span.badge.general-badge 135
-      %li.mr-35
-        %a.filter-link{href: "#"}
-          Mobile Development
-          %span.badge.general-badge 135
-      %li.mr-35
-        %a.filter-link{href: "#"}
-          Photo
-          %span.badge.general-badge 135
-      %li.mr-35
-        %a.filter-link{href: "#"}
-          Web Design
-          %span.badge.general-badge 135
+      - @categories.each do |category|
+        %li.mr-35
+          = link_to permitted.merge('category' => category.first.second, 'limit' => 12, 'sort_by' => 'created_at', 'order' => 'desc'), class: "filter-link" do
+            -if current_category?(category.first.second)
+              %b= capitalize_category(category.first.first)
+            -else
+              = capitalize_category(category.first.first)
+            %span.badge.general-badge= category.second
   .mb-40.visible-xs
     %p.in-grey-600.small.mb-10 Filter by category
     .dropdown.mb-20
       %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        Newest first
+        =capitalize_category(find_category(params[:category].to_i).first.first)
         %i.fa.fa-angle-down.dropdown-icon
       %ul.dropdown-menu
-        %li
-          %a{href: "#"} Newest first
-        %li
-          %a{href: "#"} Popular first
-        %li
-          %a{href: "#"} Price: Low to high
-        %li
-          %a{href: "#"} Price: Low to high
+        -@categories.each do |category|
+          %li
+            =link_to capitalize_category(category.first.first), permitted.merge('category' => category.first.second)
     %p.in-grey-600.small.mb-10 Sort by
     .dropdown
-      %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        Newest first
-        %i.fa.fa-angle-down.dropdown-icon
-      %ul.dropdown-menu
-        %li
-          %a{href: "#"} Newest first
-        %li
-          %a{href: "#"} Popular first
-        %li
-          %a{href: "#"} Price: Low to hight
-        %li
-          %a{href: "#"} Price: Low to hight
-  .mb-120
+      =render 'catalog_sorters'
+  .mb-20
     .row
       - @books.each do |book|
         .col-xs-6.col-sm-3
@@ -70,17 +35,16 @@
               %img.img-shadow.general-thumbnail-img{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
               .thumb-hover
                 .general-thumb-link-wrap
-                  -# %a.thumb-hover-link{href: "#"}
                   =link_to book_path(book), class: 'thumb-hover-link' do
                     %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
-                  %a.thumb-hover-link{href: "#"}
+                  =link_to cart_add_path(id: book.id, quantity: 1), method: :post, class: 'thumb-hover-link' do
                     %i.fa.fa-shopping-cart.thumb-icon
           .general-thumb-info
             %p.pull-right.font-16.in-gold-500= book.price
-            %p.general-title= book.title
+            %p.general-title= truncate book.title, length: 27
             %span.divider-sm
-            %p.in-grey-600.small= book.authors.map(&:full_name).join(', ')
+            %p.in-grey-600.small= book.authors_short
   .text-center
     %span
-      =link_to_previous_page @books, 'Previous page', class: 'btn btn-default mb-20'
-      =link_to_next_page @books, 'Next page', class: 'btn btn-default mb-20'
+      -if more_books?
+        =link_to 'View more', permitted.merge('limit' => params['limit'].to_i + 12), class: 'btn btn-primary mb-60'

@@ -80,11 +80,13 @@
               %span.font-16.in-gold-500= order_item.book.price
             %td
               .input-group
-                %a.input-link{href: "#"}
+                -# %a.input-link.quantity-decrement{href: "#"}
+                %a.input-link.quantity-decrement{data: {target: "quantities-#{order_item.book_id}"}, href: "#"}
                   %i.fa.fa-minus.line-height-40
-                %input.form-control.quantity-input{type: "text", name: "quantities[#{order_item.book_id}]", value: order_item.quantity}
-                -# = text_field_tag("quantity[#{order_item.book.id}]", value: order_item.quantity)
-                %a.input-link{href: "#"}
+                %input.form-control.quantity-input{type: "number", min: "1", name: "quantities[#{order_item.book_id}]", id: "quantities-#{order_item.book_id}", value: order_item.quantity}
+                -# = text_field_tag("quantities[#{order_item.book.id}]", class: "form-control quantity-input", value: order_item.quantity)
+                -# %a.input-link.quantity-increment{href: "#"}
+                %a.input-link.quantity-increment{data: {target: "quantities-#{order_item.book_id}"}, href: "#"}
                   %i.fa.fa-plus.line-height-40
             %td
               %span.font-16.in-gold-500= order_item.book.price * order_item.quantity
@@ -123,5 +125,7 @@
                   %td
                     %strong.font-18 €117.69
           %button.btn.btn-default.mb-20.visible-xs-inline-block Checkout
-  %button.btn.btn-default.mb-20.hidden-xs.center-block Checkout
-  = link_to 'Checkout', checkout_index_path, class: 'btn btn-default mb-20 hidden-xs center-block'
+  .text-center
+    %span
+      -# = link_to 'Checkout', checkout_index_path, class: 'btn btn-default mb-20 hidden-xs'
+      = link_to 'Checkout', '/checkout/address', class: 'btn btn-default mb-20 hidden-xs'

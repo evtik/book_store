@@ -1,7 +1,12 @@
 class HomeController < ApplicationController
   def index
-    @latest_books = Book.order(created_at: :desc).limit(3)
-    @most_popular_books = Book.joins(:order_items).group('books.id')
-                              .order('count(books.id) DESC').limit(4)
+    @latest_books = BookDecorator.decorate_collection(BooksSorter.new(
+      'sort_by' => 'created_at',
+      'order' => 'desc',
+      'limit' => 3
+    ).to_a)
+    @most_popular_books = BookDecorator.decorate_collection(
+      BooksSorter.new('sort_by' => 'popular', 'limit' => 4)
+    )
   end
 end

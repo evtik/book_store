@@ -16,4 +16,7 @@
 //= require turbolinks
 //= require active_admin
 //= require books
+//= require cart
+//= require arrive.min
+//= require trunk8
 //= require_tree .

@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20170312083923) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "firstname"
-    t.string   "lastname"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "address"
     t.string   "city"
     t.string   "zip"
@@ -45,8 +45,8 @@ ActiveRecord::Schema.define(version: 20170312083923) do
   end
 
   create_table "authors", force: :cascade do |t|
-    t.string   "firstname"
-    t.string   "lastname"
+    t.string   "first_name"
+    t.string   "last_name"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false

@@ -48,9 +48,9 @@ end
 
 50.times do
   Author.create! do |author|
-    author.firstname = Faker::Name.first_name
-    author.lastname = Faker::Name.last_name
-    author.description = Faker::Hipster.paragraph(5, false, 2)
+    author.first_name = Faker::Name.first_name
+    author.last_name = Faker::Name.last_name
+    author.description = Faker::Hipster.paragraph(3, false, 5)
   end
 end
 
@@ -64,12 +64,12 @@ num_books.times do |i|
   Book.create! do |book|
     book.title = Faker::Book.title
     book.year = (1997..2016).to_a.sample
-    book.description = Faker::Hipster.paragraph(4, false, 2)
+    book.description = Faker::Hipster.paragraph(9, false, 17)
     book.height = rand(8..10)
     book.width = rand(4..7)
     book.thickness = rand(1..3)
     book.category = categories.sample
-    book.price = rand(4.99..119.99)
+    book.price = (rand(4.99..119.99) * 20).round / 20.0
     book.materials.concat [materials[rand(0..4)], materials[rand(5..7)]]
     if (i % 3).zero?
       book.authors.concat authors.sample(rand(1..3))
@@ -92,7 +92,7 @@ books.each do |book|
       review.user = user
       review.score = rand(1..5)
       review.title = Faker::Hipster.sentence
-      review.body = Faker::Hipster.paragraph(3, false, 1)
+      review.body = Faker::Hipster.paragraph(8, false, 10)
       review.state = review_states.sample
     end
   end
@@ -112,8 +112,8 @@ end
 
 def create_address(type)
   address = Address.new
-  address.firstname = Faker::Name.first_name
-  address.lastname = Faker::Name.last_name
+  address.first_name = Faker::Name.first_name
+  address.last_name = Faker::Name.last_name
   address.address = Faker::Address.street_address
   address.city = Faker::Address.city
   address.zip = Faker::Address.zip

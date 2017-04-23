@@ -8,7 +8,7 @@
         %span.icon-bar
       %a.navbar-brand Bookstore
       %a.shop-link.pull-right.visible-xs{href: "/"}
-        %span.shop-icon
+        %s.panshom-icon
           %span.shop-quantity 3
     %a.shop-link.pull-right.hidden-xs{href: "/cart"}
       %span.shop-icon
@@ -26,12 +26,9 @@
           %li
             %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"} Shop
             %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
-              %li
-                %a.collapse-link{href: "#"} Mobile development
-              %li
-                %a.collapse-link{href: "#"} Photo
-              %li
-                %a.collapse-link{href: "#"} Web design
+              -@categories.each do |category|
+                %li
+                  =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'), class: 'collapse-link'
           %li
             %a{href: "#"} My account
       .hidden-xs
@@ -41,14 +38,9 @@
           %li.dropdown
             %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} Shop
             %ul.dropdown-menu
-              %li
-                %a{href: "#"} Mobile development
-              %li
-                %a{href: "#"} Photo
-              %li
-                %a{href: "#"} Web design
-              %li
-                %a{href: "#"} Web development
+              -@categories.each do |category|
+                %li
+                  =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12')
           -if user_signed_in?
             %li.dropdown
               %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} My account

@@ -1,41 +1,91 @@
 class CheckoutController < ApplicationController
-  include Wicked::Wizard
   before_action :authenticate_user!
-  steps :address, :delivery, :payment, :confirm, :complete
 
-  def show
-    case step
-    when :address
-      @current_order = Order.new
-      if @current_order.addresses.length.zero?
-        current_user.addresses.each do |address|
-          @current_order.addresses << Address.new(address.attributes.except('id', 'user_id'))
-        end
-      end
-      Rails.cache.write("order_#{current_user.id}", @current_order,
-                        expires_in: 1.hour)
-    end
-    render_wizard
+  def address
+    # redirect to /cart if the cart is empty
+    order_from_session
+    initialize_order if @order.nil?
+    session[:order] = @order
   end
 
-  def update
-    @current_order = Rails.cache.read("order_#{current_user.id}")
-    case step
-    when :address
-      # @user = current_user
-      billing_address = Address.new(billing_address_params)
-      if billing_address.valid?
-        redirect_to next_wizard_path
-      else
-        @current_order.addresses.first.update_attributes(billing_address_params)
-        render_wizard
-      end
+  def submit_address
+    # byebug
+    # order_from_params
+    @order = OrderForm.from_params(session[:order]
+      .merge(params.require(:order).permit!.to_h))
+    session[:order] = @order
+    if @order.addresses_valid?
+      redirect_to action: 'delivery'
+    else
+      redirect_to action: 'address'
+    end
+  end
+
+  def delivery
+    order_from_session
+    redirect_to action: 'address' if @order.nil?
+    @shipments = Shipment.all
+    @order.shipment_id ||= 1
+    session[:order] = @order
+  end
+
+  def submit_delivery
+    # order_from_params
+    @order = OrderForm.from_params(session[:order])
+    @order.shipment_id = params[:shipment_id]
+    session[:order] = @order
+    if @order.shipment_id
+      redirect_to action: 'payment'
+    else
+      redirect_to action: 'delivery'
+    end
+  end
+
+  def payment
+    order_from_session
+    redirect_to action: 'delivery' if @order.shipment_id.nil?
+    @card = if session[:card]
+              CreditCardForm.from_params(session[:card])
+            else
+              CreditCardForm.new
+            end
+    @card.valid?
+  end
+
+  def submit_payment
+    @card = CreditCardForm.from_params(params)
+    session[:card] = @card
+    if @card.valid?
+      redirect_to action: 'confirm'
+    else
+      redirect_to action: 'payment'
     end
   end
 
   private
 
-  def billing_address_params
-    params.require(:billing).permit(:firstname, :zip)
+  def order_from_session
+    return unless session[:order]
+    @order = OrderForm.from_params(session[:order])
+    @order.valid?
+  end
+
+  def order_from_params
+    # @order = OrderForm.from_params(params)
+    # depends on the step, cannot use the same logic
+    @order = OrderForm.from_params(session[:order]
+      .merge!(params.permit!.to_h.slice(:order)[:order]))
+  end
+
+  def initialize_order
+    @order = OrderForm.new
+    @order.billing = fetch_or_create_address('billing')
+    @order.shipping = fetch_or_create_address('shipping')
+    # session[:order] = @order
+  end
+
+  def fetch_or_create_address(type)
+    address = UserAddress.new(current_user.id, type).to_a.first
+    address ? AddressForm.from_model(address) : AddressForm.new
   end
 end

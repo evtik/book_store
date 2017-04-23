@@ -1,0 +1,55 @@
+%main.container.mb-res-50
+  %h1.general-title-margin Checkout
+  = render 'progress'
+  %h3.general-subtitle Credit Card
+  -# %form.max-600.mb-80
+  =form_for @card, url: '/checkout/payment', method: :post, class: 'max-600 mb-80' do |f|
+    .form-group{ class: ('has-error' if @card.errors[:number].any?)}
+      %label.control-label.font-weight-light{for: "number"} Card Number
+      = f.text_field :number, class: 'form-control', placeholder: "Card Number"
+      - @card.errors[:number].each do |error|
+        %span.help-block= error
+    .row
+      .col-sm-6
+        .form-group{ class: ('has-error' if @card.errors[:cardholder].any?)}
+
+          %label.control-label.font-weight-light{for: "cardholder"} Name on Card
+          = f.text_field :cardholder, class: 'form-control', placeholder: "Name on Card"
+          - @card.errors[:cardholder].each do |error|
+            %span.help-block= error
+      .col-sm-3
+        .form-group{ class: ('has-error' if @card.errors[:month_year].any?)}
+
+          %label.control-label.font-weight-light{for: "month_year"} MM / YY
+          = f.text_field :month_year, class: 'form-control', placeholder: "MM / YY"
+          - @card.errors[:month_year].each do |error|
+            %span.help-block= error
+      .col-sm-3
+        .form-group.relative{ class: ('has-error' if @card.errors[:cvv].any?)}
+
+          %label.control-label.font-weight-light{for: "cvv"} CVV
+          = f.password_field :cvv, class: 'form-control', placeholder: "CVV"
+          %i.fa.fa-question-circle.general-form-help.font-18{title: 'smth'}
+          - @card.errors[:cvv].each do |error|
+            %span.help-block= error
+    .general-text-align
+      %p.in-gold-500.font-18 Order Summary
+      %table.general-summary-table
+        %tr
+          %td
+            %p.font-16 Subtotal:
+          %td
+            %p.font-16 €117.69
+        %tr
+          %td
+            %p.font-16 Coupon:
+          %td
+            %p.font-16 €0.00
+        %tr
+          %td
+            %strong.font-18 Order Total:
+          %td
+            %strong.font-18 €117.69
+    -# .text-center
+      -# %button.btn.btn-default.mb-80 Save and Continue
+    = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

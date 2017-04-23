@@ -1,0 +1,17 @@
+= f.fields_for type, address do |fields|
+  - %i(first_name last_name address city zip).each do |property|
+    .form-group{ class: ('has-error' if address.errors[property].any?)}
+      = fields.label property, property.to_s.humanize, class: "control-label font-weight-light"
+      = fields.text_field property, class: "form-control", placeholder: property.to_s.humanize
+      - address.errors[property].each do |error|
+        %span.help-block= error
+  .form-group{ class: ('has-error' if address.errors[:country].any?)}
+    = fields.label :country, 'Country', class: "control-label font-weight-light"
+    = fields.text_field :country, class: "form-control", placeholder: "Select a country"
+    - address.errors[:country].each do |error|
+      %span.help-block= error
+  .form-group{ class: ('has-error' if address.errors[:phone].any?)}
+    = fields.label :phone, 'Phone', class: "control-label font-weight-light"
+    = fields.text_field :phone, class: "form-control", placeholder: "Example +355 66 123 4567"
+    - address.errors[:phone].each do |error|
+      %span.help-block= error

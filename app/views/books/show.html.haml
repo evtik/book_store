@@ -16,38 +16,33 @@
             %img{src: "https://www.smashingmagazine.com/wp-content/uploads/2015/09/smashing-book-5-2-large.jpg"}
     .col-sm-6
       %h1.mt-res-0= @book.title
-      -# .input-group
-        -# %span.input-group-btn
-          -# %button.btn.btn-default.btn-number{type: "button", "data-type" => "minus", "data-field" => "xxx"}
-            -# %span.glyphicon.glyphicon-minus
-        -# %input.form-control.input-number#xxx{type: "text", name: "xxx", value: "1"}
-        -# %span.input-group-btn
-          -# %button.btn.btn-default.btn-number{type: "button", "data-type" => "plus", "data-field" => "xxx"}
-            -# %span.glyphicon.glyphicon-plus
-      %p.in-grey-600.small= @book.authors.map(&:full_name).join(', ')
+      %p.in-grey-600.small= @book.authors_full
       .row
         .col-xs-12.col-md-4
           %p.h1.in-gold-500.mt-10= @book.price
         = form_tag(cart_add_path, class: 'form-inline') do
           .col-xs-5.col-md-3
             .input-group.general-position
-              %a.input-link{href: "#"}
+              %a.input-link.quantity-decrement{data: {target: "quantities-#{@book.id}"}, href: "#"}
                 %i.fa.fa-minus.line-height-40
               = hidden_field_tag(:id, @book.id)
-              = text_field_tag(:quantity, 1, class: "form-control quantity-input")
+              -# = text_field_tag(:quantity, 1, class: "form-control quantity-input")
+              %input.form-control.quantity-input{type: "number", min: "1", value: "1", name: "quantity", id: "quantities-#{@book.id}"}
             .input-group.general-position
-              %a.input-link{href: "#"}
+              %a.input-link.quantity-increment{data: {target: "quantities-#{@book.id}"}, href: "#"}
                 %i.fa.fa-plus.line-height-40
           .col-xs-7.col-md-5
             -# = submit_tag('Add to Cart', class: 'button btn btn-default pull-right general-position')
-            = submit_tag('Add to Cart', class: 'btn btn-default')
+            = submit_tag('Add to Cart', class: 'btn btn-default pull-right general-position')
 
           -# =link_to 'Add to Cart', add_item_path(id: @book.id), method: :post, class: 'button btn btn-default pull-right general-position' 
       .pt-20.divider-lg
         %p Description
-        %p.in-grey-600.small.line-height-2
-          Smashing Book 5: Real-Life Responsive Web Design is our brand new, upcoming book with smart front-end techniques and design patterns derived from real-life responsive projects. With 13 chapters on responsive workflow, SVG, Flexbox, Web fonts, responsive images, responsive email, content strategy, debugging ...
-          %a.in-gold-500.ml-10{href: "#"} Read More
+        %p#book-description.in-grey-600.small.line-height-2.text-justify
+          = @book.description
+          -# %a#book-desc-toggler.in-gold-500.ml-10
+            -# Read More
+          -# %a#book-desc-toggler.in-gold-500.ml-10{style: { display: 'inline-block' }, href: "#"} Read More
       .pt-20.divider-lg
         .clearfix
           %p.general-item-info.pull-right= @book.year
@@ -55,11 +50,12 @@
       .pt-20.divider-lg
         .clearfix
           -# %p.general-item-info.pull-right H:6.4\" x W: 0.9\" x D: 5.0
-          %p.general-item-info.pull-right= "H: #{@book.height}\" x W: #{@book.width}\" x D: #{@book.thickness}\""
+          -# %p.general-item-info.pull-right= "H: #{@book.height}\" x W: #{@book.width}\" x D: #{@book.thickness}\""
+          %p.general-item-info.pull-right= @book.dimensions
           %p.break-word Dimensions
       .pt-20.divider-lg
         .clearfix
-          %p.general-item-info.pull-right= @book.materials.map(&:name).join(', ').capitalize 
+          %p.general-item-info.pull-right= @book.materials_string
           %p.break-word Materials
   .mb-80
     %h3.in-gold-500.mb-25= "Reviews (#{@book.reviews.length})"
@@ -80,4 +76,4 @@
                 %i.fa.fa-star.rate-star
               - (5 - review.score).times do
                 %i.fa.fa-star.rate-star.rate-empty
-            %p= review.body
+            %p.text-justify= review.body

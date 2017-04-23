@@ -5,5 +5,5 @@ class Address < ApplicationRecord
   scope :billing, -> { where(address_type: 'billing').first }
   scope :shipping, -> { where(address_type: 'shipping').first }
 
-  validates :zip, presence: true
+  # validates :zip, presence: true
 end

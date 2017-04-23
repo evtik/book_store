@@ -37,5 +37,11 @@ Rails.application.routes.draw do
   post '/cart/update', to: 'cart#update', as: :cart_update
   delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
 
-  resources :checkout
+  # resources :checkout
+  get '/checkout/address', to: 'checkout#address'
+  post '/checkout/address', to: 'checkout#submit_address'
+  get '/checkout/delivery', to: 'checkout#delivery'
+  post '/checkout/delivery', to: 'checkout#submit_delivery'
+  get '/checkout/payment', to: 'checkout#payment'
+  post '/checkout/payment', to: 'checkout#submit_payment'
 end

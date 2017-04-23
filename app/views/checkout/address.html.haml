@@ -1,102 +1,34 @@
 %main.container
   %h1.general-title-margin Checkout
-  %ul.steps.list-inline
-    %li.step.active
-      %span.step-number 1
-      %span.step-text.hidden-xs Address
-    %li.step-divider
-    %li.step
-      %span.step-number 2
-      %span.step-text.hidden-xs Delivery
-    %li.step-divider
-    %li.step
-      %span.step-number 3
-      %span.step-text.hidden-xs Payment
-    %li.step-divider
-    %li.step
-      %span.step-number 4
-      %span.step-text.hidden-xs Confirm
-    %li.step-divider
-    %li.step
-      %span.step-number 5
-      %span.step-text.hidden-xs Complete
-  -# %form.res-mb-100
-  = form_for @current_order, url: wizard_path, method: :put, class: "res-mb-100" do |f|
+  =render 'progress'
+  -# = form_for @order, url: wizard_path, method: :put, class: "res-mb-100" do |f|
+  = form_for @order, url: '/checkout/address', method: :post, class: "res-mb-100" do |f|
     .hidden-xs.hidden-sm
       .row
         .col-md-5
           %h3.general-subtitle Billing Address
           %p.general-info-text all fields are required
-        .col-md-5.col-md-offset-1
+        -# .col-md-5.col-md-offset-1.shipping-hideable
+        .col-md-5.col-md-offset-1.shipping-hideable{class: ('hidden' if @order.use_billing_address == 1)}
           %h3.general-subtitle Shipping Address
     .row
       .col-md-5.mb-40
         .visible-xs.visible-sm
           %h3.general-subtitle Billing Address
           %p.general-info-text all fields are required
-        = fields_for :billing, @current_order.addresses.first do |billing|
-          .form-group
-            = billing.label :firstname, 'First Name', class: "control-label font-weight-light"
-            = billing.text_field :firstname, class: "form-control"
-          .form-group.has-error
-            %label.control-label.font-weight-light{for: "firstName"} First Name
-            %input#firstName.form-control{name:"fname", type: "text", placeholder: "First Name"}
-            %span.help-block Please enter your first name
-          .form-group
-            %label.control-label.font-weight-light{for: "lastName"} Last Name
-            %input#lastName.form-control{name:"lname", type: "text", placeholder: "Last Name"}
-          .form-group
-            %label.control-label.font-weight-light{for: "address"} Address
-            %input#address.form-control{name: "address", type: "text", placeholder: "Address"}
-          .form-group
-            %label.control-label.font-weight-light{for: "city"} City
-            %input#city.form-control{name: "city", type: "text", placeholder: "City"}
-          .form-group
-            = billing.label :firstname, 'Zip', class: "control-label font-weight-light"
-            = billing.text_field :zip, class: "form-control"
-          .form-group
-            %label.control-label.font-weight-light{for: "zip"} Zip
-            %input#zip.form-control{name: "zip", type: "text", placeholder: "Zip"}
-          .form-group
-            %label.control-label.font-weight-light{for: "сountry"} Country
-            %input#country.form-control{name: "country", type: "text", placeholder: "Select a country"}
-          .form-group
-            %label.control-label.font-weight-light{for: "phone"} Phone
-            %input#phone.form-control{name: "phone", type: "tel", placeholder: "Example +355 66 123 4567"}
+        = render 'address_fields', f: f, type: :billing, address: @order.billing
       .col-md-5.col-md-offset-1.mb-60
-        .visible-xs.visible-sm
-          %h3.general-subtitle Shipping Address
-        .form-group.has-error
-          %label.control-label.font-weight-light{for: "firstName"} First Name
-          %input#firstName.form-control{name:"fname", type: "text", placeholder: "First Name"}
-          %span.help-block Please enter your first name
-        .form-group
-          %label.control-label.font-weight-light{for: "lastName"} Last Name
-          %input#lastName.form-control{name:"lname", type: "text", placeholder: "Last Name"}
-        .form-group
-          %label.control-label.font-weight-light{for: "address"} Address
-          %input#address.form-control{name: "address", type: "text", placeholder: "Address"}
-        .form-group
-          %label.control-label.font-weight-light{for: "city"} City
-          %input#city.form-control{name: "city", type: "text", placeholder: "City"}
-        .form-group
-          %label.control-label.font-weight-light{for: "zip"} Zip
-          %input#zip.form-control{name: "zip", type: "text", placeholder: "Zip"}
-        .form-group
-          %label.control-label.font-weight-light{for: "сountry"} Country
-          %select#country.form-control{name: "country", placeholder: "Select a country"}
-            %option London
-            %option London
-            %option London
-        .form-group
-          %label.control-label.font-weight-light{for: "phone"} Phone
-          %input#phone.form-control{name: "phone", type: "tel", placeholder: "Example +355 66 123 4567"}
+        -# .shipping-hideable
+        .shipping-hideable{class: ('hidden' if @order.use_billing_address == 1)}
+          .visible-xs.visible-sm
+            %h3.general-subtitle Shipping Address
+          = render 'address_fields', f: f, type: :shipping, address: @order.shipping
         .form-group.checkbox
           %label.font-weight-light.pl-0
-            %input.checkbox-input{type: "checkbox", hidden: "true"}
+            = f.check_box :use_billing_address, class: "input checkbox-input", hidden: "true"
             %span.checkbox-icon
               %i.fa.fa-check
-            %span.checkbox-text Use Billing Adress
+            %span.checkbox-text Use Billing Address
     .general-text-align.mb-60
       %p.in-gold-500.font-18 Order Summary
       %table.general-summary-table
@@ -111,4 +43,4 @@
           %td
             %p.font-16 €117.69
       -# %button.btn.disabled.center-block.mb-20 Save and Continue
-      = f.submit 'Save and continue', class: "button btn center-block mb-20"
+      = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"
