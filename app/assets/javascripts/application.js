@@ -19,4 +19,5 @@
 //= require cart
 //= require arrive.min
 //= require trunk8
+//= require jasny-bootstrap.min
 //= require_tree .

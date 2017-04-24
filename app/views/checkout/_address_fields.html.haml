@@ -12,6 +12,6 @@
       %span.help-block= error
   .form-group{ class: ('has-error' if address.errors[:phone].any?)}
     = fields.label :phone, 'Phone', class: "control-label font-weight-light"
-    = fields.text_field :phone, class: "form-control", placeholder: "Example +355 66 123 4567"
+    = fields.phone_field :phone, class: "form-control", placeholder: "Example +355 66 123 4567"
     - address.errors[:phone].each do |error|
       %span.help-block= error

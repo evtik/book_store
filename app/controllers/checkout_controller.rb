@@ -44,16 +44,17 @@ class CheckoutController < ApplicationController
   def payment
     order_from_session
     redirect_to action: 'delivery' if @order.shipment_id.nil?
-    @card = if session[:card]
-              CreditCardForm.from_params(session[:card])
-            else
-              CreditCardForm.new
-            end
-    @card.valid?
+    if session[:card]
+      @card = CreditCardForm.from_params(session[:card])
+      @card.valid?
+    else
+      @card = CreditCardForm.new
+    end
   end
 
   def submit_payment
     @card = CreditCardForm.from_params(params)
+    @card.number.delete!('-')
     session[:card] = @card
     if @card.valid?
       redirect_to action: 'confirm'

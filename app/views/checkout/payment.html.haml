@@ -6,32 +6,26 @@
   =form_for @card, url: '/checkout/payment', method: :post, class: 'max-600 mb-80' do |f|
     .form-group{ class: ('has-error' if @card.errors[:number].any?)}
       %label.control-label.font-weight-light{for: "number"} Card Number
-      = f.text_field :number, class: 'form-control', placeholder: "Card Number"
-      - @card.errors[:number].each do |error|
-        %span.help-block= error
+      = f.text_field :number, class: 'form-control',
+        data: {mask: "9999-9999-9999-9999", placeholder: "X"}, placeholder: "Card Number"
+      %span.help-block= @card.errors[:number].first
     .row
       .col-sm-6
         .form-group{ class: ('has-error' if @card.errors[:cardholder].any?)}
-
           %label.control-label.font-weight-light{for: "cardholder"} Name on Card
           = f.text_field :cardholder, class: 'form-control', placeholder: "Name on Card"
-          - @card.errors[:cardholder].each do |error|
-            %span.help-block= error
+          %span.help-block= @card.errors[:cardholder].first
       .col-sm-3
         .form-group{ class: ('has-error' if @card.errors[:month_year].any?)}
-
           %label.control-label.font-weight-light{for: "month_year"} MM / YY
           = f.text_field :month_year, class: 'form-control', placeholder: "MM / YY"
-          - @card.errors[:month_year].each do |error|
-            %span.help-block= error
+          %span.help-block= @card.errors[:month_year].first
       .col-sm-3
         .form-group.relative{ class: ('has-error' if @card.errors[:cvv].any?)}
-
           %label.control-label.font-weight-light{for: "cvv"} CVV
           = f.password_field :cvv, class: 'form-control', placeholder: "CVV"
-          %i.fa.fa-question-circle.general-form-help.font-18{title: 'smth'}
-          - @card.errors[:cvv].each do |error|
-            %span.help-block= error
+          %i.fa.fa-question-circle.general-form-help.font-18{title: CheckoutHelper::CVV_HINT, data: {toggle: 'tooltip', placement: 'top'}}
+          %span.help-block= @card.errors[:cvv].first
     .general-text-align
       %p.in-gold-500.font-18 Order Summary
       %table.general-summary-table

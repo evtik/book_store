@@ -1,6 +1,6 @@
 class CardLuhnValidator < ActiveModel::Validator
   def validate(record)
-    return if luhn_valid?(record.number)
+    return if record.number.blank? || luhn_valid?(record.number)
     record.errors[:number] << 'Invalid card number'
   end
 

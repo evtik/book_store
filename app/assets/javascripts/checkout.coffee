@@ -7,3 +7,5 @@ $ ->
       $('.shipping-hideable').addClass('hidden')
     else
       $('.shipping-hideable').removeClass('hidden')
+
+  $('[data-toggle="tooltip"]').tooltip()
