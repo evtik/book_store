@@ -13,11 +13,5 @@
 //= require jquery
 //= require bootstrap
 //= require jquery_ujs
-//= require turbolinks
-//= require active_admin
-//= require books
-//= require cart
-//= require arrive.min
 //= require trunk8
 //= require jasny-bootstrap.min
-//= require_tree .
