@@ -1,0 +1,27 @@
+- @shipments.each do |shipment|
+  -# .general-cart-item.divider-lg-bottom
+  %table.table
+    %tr
+      %td.col-half
+        %span.in-grey-600 Method
+      %td.col-half
+        .form-group.radio.mt-0.mb-0
+          %label.font-16.font-weight-light.pl-0
+            = radio_button_tag :shipment_id, shipment.id,
+              false,
+              class: "radio-input", hidden: true,
+              id: "xs-shipment-#{shipment.id}"
+            %span.radio-icon
+            %span.radio-text= shipment.method
+    %tr
+      %td
+        %span.in-grey-600 Days
+      %td
+        %span.font-16.font-weight-light #{shipment.days_min} to #{shipment.days_max} days
+
+    %tr
+      %td
+        %span.in-grey-600 Price
+      %td
+        %span.font-16.in-gold-500= shipment.price 
+  .general-cart-item.divider-lg-bottom.mb-30

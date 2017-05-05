@@ -1,0 +1,25 @@
+%table.table.table-hover
+  %thead
+    %tr
+      %th.col-method
+        %span.in-grey-600.ml-40 Method
+      %th
+        %span.in-grey-600 Days
+      %th
+        %span.in-grey-600 Price
+  %tbody
+    - @shipments.each do |shipment|
+      %tr
+        %td
+          .form-group.radio.mt-0.mb-0
+            %label.font-16.font-weight-light.pl-0
+              = radio_button_tag :shipment_id, shipment.id,
+                @order.shipment_id == shipment.id,
+                class: "radio-input", hidden: "true",
+                id: "shipment-#{shipment.id}"
+              %span.radio-icon
+              %span.radio-text= shipment.method
+        %td
+          %span #{shipment.days_min} to #{shipment.days_max} days
+        %td
+          %span.font-16.in-gold-500= shipment.price
