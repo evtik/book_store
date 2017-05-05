@@ -14,8 +14,9 @@
               .form-group.radio.mt-0.mb-0
                 %label.font-16.font-weight-light.pl-0
                   = radio_button_tag :shipment_id, shipment.id,
-                    @order.shipment_id == shipment.id,
-                    class: "radio-input", hidden: true
+                    false,
+                    class: "radio-input", hidden: true,
+                    id: "xs-shipment-#{shipment.id}"
                   %span.radio-icon
                   %span.radio-text= shipment.method
           %tr
@@ -48,7 +49,8 @@
                   %label.font-16.font-weight-light.pl-0
                     = radio_button_tag :shipment_id, shipment.id,
                       @order.shipment_id == shipment.id,
-                      class: "radio-input", hidden: "true"
+                      class: "radio-input", hidden: "true",
+                      id: "shipment-#{shipment.id}"
                     %span.radio-icon
                     %span.radio-text= shipment.method
               %td
