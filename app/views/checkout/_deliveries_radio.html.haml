@@ -16,7 +16,7 @@
               = radio_button_tag :shipment_id, shipment.id,
                 @order.shipment_id == shipment.id,
                 class: "radio-input", hidden: "true",
-                id: "shipment-#{shipment.id}"
+                id: "shipment-#{shipment.id}", data: {price: shipment.price}
               %span.radio-icon
               %span.radio-text= shipment.method
         %td

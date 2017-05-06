@@ -8,23 +8,5 @@
     .hidden-xs.mb-res-50
       = render 'deliveries_radio'
     .general-text-align
-      %p.in-gold-500.font-18 Order Summary
-      %table.general-summary-table
-        %tr
-          %td
-            %p.font-16 Subtotal:
-          %td
-            %p.font-16 €117.69
-        %tr
-          %td
-            %p.font-16 Coupon:
-          %td
-            %p.font-16 €0.00
-        %tr
-          %td
-            %strong.font-18 Order Total:
-          %td
-            %strong.font-18 €117.69
-    -# .text-center
-      -# %button.btn.btn-default.mb-20 Save and Continue
+      = render 'delivery_totals'
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

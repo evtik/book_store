@@ -25,3 +25,6 @@ $ ->
 
   setShipmentRadio()
 
+  $("input:radio").change ->
+    # don't forget i18n currency sign!
+    $('#shipment-label').text(I18n.l('currency', @getAttribute 'data-price'))
