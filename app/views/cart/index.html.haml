@@ -113,17 +113,17 @@
                   %td
                     %p.font-16 Subtotal:
                   %td
-                    %p.font-16 €117.69
+                    %p.font-16= number_to_currency @items_total
                 %tr
                   %td
                     %p.font-16 Coupon:
                   %td
-                    %p.font-16 €0.00
+                    %p.font-16= number_to_currency @coupon
                 %tr
                   %td
                     %strong.font-18 Order Total:
                   %td
-                    %strong.font-18 €117.69
+                    %strong.font-18= number_to_currency @order_subtotal
           %button.btn.btn-default.mb-20.visible-xs-inline-block Checkout
   .text-center
     %span

@@ -10,6 +10,12 @@
     = javascript_include_tag 'application', params[:controller]
   %body
     = render 'layouts/header'
+    -# .container{style: "visibility:#{flash[:error] ? 'visible' : 'hidden'}"}
+    .container{style: "visibility:#{flash[:error] ? 'hidden' : 'visible'}"}
+      .alert.alert-danger.alert-dismissable{role: 'alert'}
+        %button{type: 'button', class: 'close', data: {dismiss: 'alert'}, aria: {label: 'Close'}}
+          %span{aria: {hidden: true}} &times;
+        A danger test!
     = yield
     = render 'layouts/footer'
     %script{src: "https://use.fontawesome.com/67602d7308.js"}

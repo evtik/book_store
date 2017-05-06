@@ -26,6 +26,7 @@
               %a.input-link.quantity-decrement{data: {target: "quantities-#{@book.id}"}, href: "#"}
                 %i.fa.fa-minus.line-height-40
               = hidden_field_tag(:id, @book.id)
+              -# = hidden_field_tag(:price, @book.price)
               -# = text_field_tag(:quantity, 1, class: "form-control quantity-input")
               %input.form-control.quantity-input{type: "number", min: "1", value: "1", name: "quantity", id: "quantities-#{@book.id}"}
             .input-group.general-position

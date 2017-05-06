@@ -39,6 +39,13 @@
                     %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
                   =link_to cart_add_path(id: book.id, quantity: 1), method: :post, class: 'thumb-hover-link' do
                     %i.fa.fa-shopping-cart.thumb-icon
+                  -# = form_tag(cart_add_path, class: 'form-inline') do
+                    -# = hidden_field_tag(id: book.id)
+                    -# = hidden_field_tag(quantity: 1)
+                    -# = hidden_field_tag(price: book.price)
+                    -# %div.thumb-hover-link
+                      -# = submit_tag(nil) do
+                        -# %i.fa.fa-shopping-cart.thumb-icon
           .general-thumb-info
             %p.pull-right.font-16.in-gold-500= book.price
             %p.general-title= truncate book.title, length: 27

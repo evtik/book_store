@@ -8,6 +8,11 @@ class CartController < ApplicationController
         order_item.quantity = quantity.to_i
       end
     end
+    @items_total = items_total
+    @coupon = session[:coupon] ? session[:coupon] : 0
+    @order_subtotal = @items_total + @coupon
+    session[:items_total] = @items_total
+    session[:subtotal] = @order_subtotal
   end
 
   def add
@@ -40,5 +45,17 @@ class CartController < ApplicationController
   def set_cart
     session[:cart] ||= Cart.new
     # session[:cart] ||= Hash.new(0)
+  end
+
+  def items_total
+    books = Book.find session[:cart].keys
+    session[:cart].values.each_with_index.sum do |quantity, index|
+      quantity * books[index].price
+    end
+  end
+
+  def calculate_totals
+    session[:items_total] = items_total
+    
   end
 end
