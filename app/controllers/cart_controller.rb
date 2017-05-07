@@ -25,7 +25,7 @@ class CartController < ApplicationController
     params[:quantities].each do |book_id, quantity|
       session[:cart][book_id] = quantity.to_i
     end
-    session[:coupon] = params[:coupon]
+    coupon_message
     redirect_to :cart
   end
 
@@ -48,17 +48,26 @@ class CartController < ApplicationController
     end
   end
 
-  def calculate_discount
-    @coupon = Coupon.where(code: session[:coupon]).first if session[:coupon]
-    outcomes = {
-      [false, false, false] => [nil, @coupon&.discount],
-      [false, true, nil] => ['This coupon is already used!', 0.0],
-      [false, false, true] => ['This coupon has expired!', 0.0],
-      [true, nil, nil] => ['This coupon does not exist!', 0.0]
+  def coupon_message
+    unless params[:coupon].blank?
+      @coupon = Coupon.where(code: params[:coupon]).first
+      conditions = [@coupon.nil?, @coupon&.order_id?, coupon_expired?]
+      flash[:error] = coupon_messages[conditions]
+      flash.keep
+      if @coupon && !conditions[1] && !conditions[2]
+        session[:coupon_id] = @coupon.id
+        session[:discount] = @coupon.discount
+      end
+    end
+  end
+
+  def coupon_messages
+    {
+      [false, false, false] => nil,
+      [false, true, nil] => 'This coupon is already used!',
+      [false, false, true] => 'This coupon has expired!',
+      [true, nil, nil] => 'This coupon does not exist!'
     }
-    result = outcomes[[@coupon.nil?, @coupon&.order_id?, coupon_expired?]]
-    flash[:error] = result.first if result.first
-    result.last
   end
 
   def coupon_expired?
@@ -67,7 +76,8 @@ class CartController < ApplicationController
 
   def calculate_totals
     @items_total = items_total
-    @discount = @items_total * calculate_discount / 100
+    cut = session[:discount]
+    @discount = cut ? (@items_total * cut / 100) : 0.0
     @order_subtotal = @items_total - @discount
   end
 end
