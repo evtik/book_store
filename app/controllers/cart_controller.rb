@@ -8,11 +8,7 @@ class CartController < ApplicationController
         order_item.quantity = quantity.to_i
       end
     end
-    @items_total = items_total
-    @coupon = session[:coupon] ? session[:coupon] : 0
-    @order_subtotal = @items_total + @coupon
-    session[:items_total] = @items_total
-    session[:subtotal] = @order_subtotal
+    calculate_totals
   end
 
   def add
@@ -22,7 +18,6 @@ class CartController < ApplicationController
     # though session[:cart] is created like Hash.new(0)
     session[:cart][book_id] ||= 0
     session[:cart][book_id] += quantity
-    Rails.cache.write('my_key', 'foo', expires_in: 1.hour)
     redirect_to :back
   end
 
@@ -30,8 +25,7 @@ class CartController < ApplicationController
     params[:quantities].each do |book_id, quantity|
       session[:cart][book_id] = quantity.to_i
     end
-    logger.info('bar')
-    logger.info(Rails.cache.read('my_key'))
+    session[:coupon] = params[:coupon]
     redirect_to :cart
   end
 
@@ -54,8 +48,26 @@ class CartController < ApplicationController
     end
   end
 
+  def calculate_discount
+    @coupon = Coupon.where(code: session[:coupon]).first if session[:coupon]
+    outcomes = {
+      [false, false, false] => [nil, @coupon&.discount],
+      [false, true, nil] => ['This coupon is already used!', 0.0],
+      [false, false, true] => ['This coupon has expired!', 0.0],
+      [true, nil, nil] => ['This coupon does not exist!', 0.0]
+    }
+    result = outcomes[[@coupon.nil?, @coupon&.order_id?, coupon_expired?]]
+    flash[:error] = result.first if result.first
+    result.last
+  end
+
+  def coupon_expired?
+    (@coupon.nil? || @coupon.order_id?) ? nil : @coupon.expires < Date.today
+  end
+
   def calculate_totals
-    session[:items_total] = items_total
-    
+    @items_total = items_total
+    @discount = @items_total * calculate_discount / 100
+    @order_subtotal = @items_total - @discount
   end
 end

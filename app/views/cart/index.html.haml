@@ -99,7 +99,7 @@
           .col-sm-4
             .input-group.general-input-group
               %label.font-weight-light Enter Your Coupon Code
-              %input.form-control.mb-30{type: "text", placeholder: "Enter Your Coupon Code "}
+              %input.form-control.mb-30{type: "text", name: "coupon", placeholder: "Enter Your Coupon Code "}
               %div
                 %button.btn.btn-primary.mr-5.mb-15.visible-xs-inline-block Apply Coupon
                 -# %button.btn.btn-primary.mb-15.res-block Update cart
@@ -118,7 +118,7 @@
                   %td
                     %p.font-16 Coupon:
                   %td
-                    %p.font-16= number_to_currency @coupon
+                    %p.font-16= number_to_currency @discount
                 %tr
                   %td
                     %strong.font-18 Order Total:
