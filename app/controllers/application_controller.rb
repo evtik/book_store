@@ -12,4 +12,13 @@ class ApplicationController < ActionController::Base
   def fetch_categories
     @categories = CategoriesCounter.new.to_a
   end
+
+  def order_items_from_cart
+    session[:cart].map do |book_id, quantity|
+      OrderItem.new do |order_item|
+        order_item.book_id = book_id
+        order_item.quantity = quantity.to_i
+      end
+    end
+  end
 end

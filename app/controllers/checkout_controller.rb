@@ -14,11 +14,6 @@ class CheckoutController < ApplicationController
     @order = OrderForm.from_params(session[:order]
       .merge(params.require(:order).permit!.to_h))
     session[:order] = @order
-    # if @order.addresses_valid?
-      # redirect_to action: 'delivery'
-    # else
-      # redirect_to action: 'address'
-    # end
     redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end
 
@@ -38,11 +33,7 @@ class CheckoutController < ApplicationController
     session[:order_total] = session[:order_subtotal].to_f +
       session[:shipment].to_f
     session[:order] = @order
-    if @order.shipment_id
-      redirect_to action: 'payment'
-    else
-      redirect_to action: 'delivery'
-    end
+    redirect_to action: @order.shipment_id ? 'payment' : 'delivery'
   end
 
   def payment
@@ -60,11 +51,14 @@ class CheckoutController < ApplicationController
     @card = CreditCardForm.from_params(params)
     @card.number.delete!('-')
     session[:card] = @card
-    if @card.valid?
-      redirect_to action: 'confirm'
-    else
-      redirect_to action: 'payment'
-    end
+    redirect_to action: @card.valid? ? 'confirm' : 'payment'
+  end
+
+  def confirm
+    redirect_to action: 'payment' unless session[:card]
+    order_from_session
+    @order_items = order_items_from_cart
+    @card = CreditCardForm.from_params(session[:card])
   end
 
   private

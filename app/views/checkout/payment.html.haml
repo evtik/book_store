@@ -27,9 +27,9 @@
           %i.fa.fa-question-circle.general-form-help.font-18{title: CheckoutHelper::CVV_HINT, data: {toggle: 'tooltip', placement: 'top'}}
           %span.help-block= @card.errors[:cvv].first
     .general-text-align
-      = render 'delivery_totals'
-      -# %p.in-gold-500.font-18 Order Summary
-      -# %table.general-summary-table
+      %p.in-gold-500.font-18 Order Summary
+      %table.general-summary-table
+        = render 'delivery_totals'
         -# %tr
           -# %td
             -# %p.font-16 Subtotal:

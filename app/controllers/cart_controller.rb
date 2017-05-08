@@ -2,12 +2,13 @@ class CartController < ApplicationController
   before_action :set_cart
 
   def index
-    @order_items = session[:cart].map do |book_id, quantity|
-      OrderItem.new do |order_item|
-        order_item.book_id = book_id
-        order_item.quantity = quantity.to_i
-      end
-    end
+    # @order_items = session[:cart].map do |book_id, quantity|
+      # OrderItem.new do |order_item|
+        # order_item.book_id = book_id
+        # order_item.quantity = quantity.to_i
+      # end
+    # end
+    @order_items = order_items_from_cart
     calculate_totals
   end
 

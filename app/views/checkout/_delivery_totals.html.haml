@@ -1,17 +1,17 @@
-%p.in-gold-500.font-18 Order Summary
-%table.general-summary-table
-  %tr
-    %td
-      %p.font-16 Order subtotal:
-    %td
-      %p.font-16= number_to_currency session[:order_subtotal]
-  %tr
-    %td
-      %p.font-16 Shipping:
-    %td
-      %p#shipment-label.font-16= number_to_currency session[:shipment]
-  %tr
-    %td
-      %strong.font-18 Order Total:
-    %td
-      %strong#order-total-label.font-18{data: {subtotal: session[:order_subtotal]}}= number_to_currency session[:order_total]
+-# %p.in-gold-500.font-18 Order Summary
+-# %table.general-summary-table
+%tr
+  %td
+    %p.font-16 Order subtotal:
+  %td
+    %p.font-16= number_to_currency session[:order_subtotal]
+%tr
+  %td
+    %p.font-16 Shipping:
+  %td
+    %p#shipment-label.font-16= number_to_currency session[:shipment]
+%tr
+  %td
+    %strong.font-18 Order Total:
+  %td
+    %strong#order-total-label.font-18{data: {subtotal: session[:order_subtotal]}}= number_to_currency session[:order_total]

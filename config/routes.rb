@@ -44,4 +44,6 @@ Rails.application.routes.draw do
   post '/checkout/delivery', to: 'checkout#submit_delivery'
   get '/checkout/payment', to: 'checkout#payment'
   post '/checkout/payment', to: 'checkout#submit_payment'
+  get '/checkout/confirm', to: 'checkout#confirm'
+  post '/checkout/confirm', to: 'checkout#submit_confirm'
 end

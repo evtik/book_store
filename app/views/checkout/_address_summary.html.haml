@@ -1,0 +1,12 @@
+%p.general-address
+  = "#{address.first_name} #{address.last_name}"
+  %span.general-edit
+    = link_to 'edit', '/checkout/address'
+  %br
+  = address.address
+  %br
+  = "#{address.city} #{address.zip}"
+  %br
+  = address.country
+  %br
+  = "Phone #{address.phone}"
