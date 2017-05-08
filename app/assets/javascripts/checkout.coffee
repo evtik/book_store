@@ -1,6 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
   $('#order_use_billing_address').change ->
     if @checked
@@ -23,8 +20,13 @@ $ ->
   $(window).resize ->
     setShipmentRadio()
 
-  setShipmentRadio()
-
   $("input:radio").change ->
-    # don't forget i18n currency sign!
-    $('#shipment-label').text(I18n.l('currency', @getAttribute 'data-price'))
+    shipmentPrice = parseFloat @getAttribute 'data-price'
+    $('#shipment-label').text(I18n.l('currency', shipmentPrice))
+    totalEl = $('#order-total-label')[0]
+    subTotal = parseFloat totalEl.getAttribute 'data-subtotal'
+    $(totalEl).text(I18n.l('currency', subTotal + shipmentPrice))
+    $("input[name='shipment_price']").val(shipmentPrice)
+
+  # $('#shipment-1')[0].click()
+  setShipmentRadio()

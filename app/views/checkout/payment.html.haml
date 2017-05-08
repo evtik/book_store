@@ -27,23 +27,24 @@
           %i.fa.fa-question-circle.general-form-help.font-18{title: CheckoutHelper::CVV_HINT, data: {toggle: 'tooltip', placement: 'top'}}
           %span.help-block= @card.errors[:cvv].first
     .general-text-align
-      %p.in-gold-500.font-18 Order Summary
-      %table.general-summary-table
-        %tr
-          %td
-            %p.font-16 Subtotal:
-          %td
-            %p.font-16 €117.69
-        %tr
-          %td
-            %p.font-16 Coupon:
-          %td
-            %p.font-16 €0.00
-        %tr
-          %td
-            %strong.font-18 Order Total:
-          %td
-            %strong.font-18 €117.69
+      = render 'delivery_totals'
+      -# %p.in-gold-500.font-18 Order Summary
+      -# %table.general-summary-table
+        -# %tr
+          -# %td
+            -# %p.font-16 Subtotal:
+          -# %td
+            -# %p.font-16 €117.69
+        -# %tr
+          -# %td
+            -# %p.font-16 Coupon:
+          -# %td
+            -# %p.font-16 €0.00
+        -# %tr
+          -# %td
+            -# %strong.font-18 Order Total:
+          -# %td
+            -# %strong.font-18 €117.69
     -# .text-center
       -# %button.btn.btn-default.mb-80 Save and Continue
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

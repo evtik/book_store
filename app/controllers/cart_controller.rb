@@ -79,5 +79,7 @@ class CartController < ApplicationController
     cut = session[:discount]
     @discount = cut ? (@items_total * cut / 100) : 0.0
     @order_subtotal = @items_total - @discount
+    session[:items_total] = @items_total
+    session[:order_subtotal] = @order_subtotal
   end
 end

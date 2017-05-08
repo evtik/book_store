@@ -14,7 +14,7 @@
           .form-group.radio.mt-0.mb-0
             %label.font-16.font-weight-light.pl-0
               = radio_button_tag :shipment_id, shipment.id,
-                @order.shipment_id == shipment.id,
+                shipment.id == @order.shipment_id,
                 class: "radio-input", hidden: "true",
                 id: "shipment-#{shipment.id}", data: {price: shipment.price}
               %span.radio-icon
@@ -22,4 +22,4 @@
         %td
           %span #{shipment.days_min} to #{shipment.days_max} days
         %td
-          %span.font-16.in-gold-500= shipment.price
+          %span.font-16.in-gold-500= number_to_currency shipment.price

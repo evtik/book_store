@@ -9,4 +9,5 @@
       = render 'deliveries_radio'
     .general-text-align
       = render 'delivery_totals'
+    = hidden_field_tag(:shipment_price)
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

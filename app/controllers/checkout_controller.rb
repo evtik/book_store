@@ -14,11 +14,12 @@ class CheckoutController < ApplicationController
     @order = OrderForm.from_params(session[:order]
       .merge(params.require(:order).permit!.to_h))
     session[:order] = @order
-    if @order.addresses_valid?
-      redirect_to action: 'delivery'
-    else
-      redirect_to action: 'address'
-    end
+    # if @order.addresses_valid?
+      # redirect_to action: 'delivery'
+    # else
+      # redirect_to action: 'address'
+    # end
+    redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end
 
   def delivery
@@ -33,6 +34,9 @@ class CheckoutController < ApplicationController
     # order_from_params
     @order = OrderForm.from_params(session[:order])
     @order.shipment_id = params[:shipment_id]
+    session[:shipment] = params[:shipment_price]
+    session[:order_total] = session[:order_subtotal].to_f +
+      session[:shipment].to_f
     session[:order] = @order
     if @order.shipment_id
       redirect_to action: 'payment'

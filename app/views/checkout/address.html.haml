@@ -36,11 +36,11 @@
           %td
             %p.font-16 Item Total:
           %td
-            %p.font-16 €117.69
+            %p.font-16= number_to_currency session[:items_total]
         %tr
           %td
             %p.font-16 Order Total:
           %td
-            %p.font-16 €117.69
+            %p.font-16= number_to_currency session[:order_subtotal]
       -# %button.btn.disabled.center-block.mb-20 Save and Continue
       = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

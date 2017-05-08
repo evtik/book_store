@@ -2,16 +2,16 @@
 %table.general-summary-table
   %tr
     %td
-      %p.font-16 Item total:
+      %p.font-16 Order subtotal:
     %td
-      %p.font-16 €117.69
+      %p.font-16= number_to_currency session[:order_subtotal]
   %tr
     %td
       %p.font-16 Shipping:
     %td
-      %p#shipment-label.font-16 €0.00
+      %p#shipment-label.font-16= number_to_currency session[:shipment]
   %tr
     %td
       %strong.font-18 Order Total:
     %td
-      %strong.font-18 €117.69
+      %strong#order-total-label.font-18{data: {subtotal: session[:order_subtotal]}}= number_to_currency session[:order_total]
