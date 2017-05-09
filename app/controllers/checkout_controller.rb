@@ -59,6 +59,7 @@ class CheckoutController < ApplicationController
     order_from_session
     @order_items = order_items_from_cart
     @card = CreditCardForm.from_params(session[:card])
+    @shipment = Shipment.find(@order.shipment_id)
   end
 
   private

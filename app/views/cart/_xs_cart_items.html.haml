@@ -1,0 +1,34 @@
+- @order_items.each_with_index do |order_item|
+  - if render_inputs
+    = link_to(cart_remove_path(order_item.book.id), data: { confirm: 'Are you sure?' }, class: "close general-cart-close", method: :delete) do
+      %span{'aria-hidden': "true"} &times;
+  .general-img-wrap-table
+    %img.cart-img-shadow{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
+  %p.general-title= order_item.book.title
+  - unless render_inputs
+    %p.text-justify.in-grey-600.font-weight-light= truncate order_item.book.description, length: 150
+  %table.table
+    %tr
+      %td
+        %span.in-grey-600 Price
+      %td
+        %span.font-16.in-gold-500= number_to_currency order_item.book.price
+    %tr
+      %td.vertical-middle
+        %span.in-grey-600 Quantity
+      %td
+        - if render_inputs
+          .input-group
+            %a.input-link.quantity-decrement{'data-target': "xs-quantities-#{order_item.book_id}", href: "#"}
+              %i.fa.fa-minus.line-height-40
+            %input.form-control.quantity-input{type: "number", min: "1", name: "quantities[#{order_item.book_id}]", id: "xs-quantities-#{order_item.book_id}", value: order_item.quantity}
+            %a.input-link.quantity-increment{'data-target': "xs-quantities-#{order_item.book_id}", href: "#"}
+              %i.fa.fa-plus.line-height-40
+        - else
+          %span= order_item.quantity
+    %tr
+      %td
+        %span.in-grey-600 SubTotal
+      %td
+        %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
+  .general-cart-item.divider-lg-bottom.mb-30

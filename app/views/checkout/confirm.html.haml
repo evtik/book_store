@@ -12,66 +12,22 @@
     .col-sm-3
       %h3.general-subtitle Shipments
       %p.general-address
-        Delivery Next Day!
+        = @shipment.method
         %span.general-edit
           = link_to 'edit', '/checkout/delivery'
         %br
-        By train
+        from #{@shipment.days_min} to #{@shipment.days_max} days
     .col-sm-3
       %h3.general-subtitle Payment Information
       %p.general-address
-        ** ** ** 8756
+        = @card.starred_number
         %span.general-edit
           = link_to 'edit', '/checkout/payment'
         %br
-        12/2018
+        = @card.month_full_year
+  .general-cart-item.divider-lg.visible-xs
   .visible-xs
-    .general-cart-item.divider-lg
-      .general-img-wrap-table
-        %img.cart-img-shadow{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-      %p.general-title Android Programming for Beginners
-      %P.in-grey-600.font-weight-light A recipe-based book to help you efficiently create amazing PHP-based applications with Laravel 5.x
-      %table.table
-        %tr
-          %td
-            %span.in-grey-600 Price
-          %td
-            %span.font-16.in-gold-500 €28.50
-        %tr
-          %td.vertical-middle
-            %span.in-grey-600 Quantity
-          %td
-            %span 1
-        %tr
-          %td
-            %span.in-grey-600 SubTotal
-          %td
-            %span.font-16.in-gold-500 €32.90
-    .general-cart-item.divider-lg.mb-55
-      .general-img-wrap-table
-        %img.cart-img-shadow{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-      %p.general-title Android Programming for Beginners
-      %table.table
-        %tr
-          %td
-            %span.in-grey-600 Price
-          %td
-            %span.font-16.in-gold-500 €28.50
-        %tr
-          %td.vertical-middle
-            %span.in-grey-600 Quantity
-          %td
-            .input-group
-              %a.input-link{href: "#"}
-                %i.fa.fa-minus.line-height-40
-              %input.form-control.quantity-input{type: "text"}
-              %a.input-link{href: "#"}
-                %i.fa.fa-plus.line-height-40
-        %tr
-          %td
-            %span.in-grey-600 SubTotal
-          %td
-            %span.font-16.in-gold-500 €32.90
+    = render '/cart/xs_cart_items', render_inputs: false
   .hidden-xs.divider-lg.pt-20
     = render '/cart/cart_items', render_inputs: false
   .text-center.general-text-right
