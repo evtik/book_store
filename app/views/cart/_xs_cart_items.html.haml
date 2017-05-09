@@ -1,4 +1,4 @@
-- @order_items.each_with_index do |order_item|
+- @order_items.each do |order_item|
   - if render_inputs
     = link_to(cart_remove_path(order_item.book.id), data: { confirm: 'Are you sure?' }, class: "close general-cart-close", method: :delete) do
       %span{'aria-hidden': "true"} &times;
@@ -19,10 +19,17 @@
       %td
         - if render_inputs
           .input-group
-            %a.input-link.quantity-decrement{'data-target': "xs-quantities-#{order_item.book_id}", href: "#"}
+            %a.input-link.quantity-decrement{href: "#",
+              'data-target': "quantities-#{order_item.book_id}"}
               %i.fa.fa-minus.line-height-40
-            %input.form-control.quantity-input{type: "number", min: "1", name: "quantities[#{order_item.book_id}]", id: "xs-quantities-#{order_item.book_id}", value: order_item.quantity}
-            %a.input-link.quantity-increment{'data-target': "xs-quantities-#{order_item.book_id}", href: "#"}
+            %input.form-control.quantity-input{type: "number", min: "1",
+              name: "quantities[#{order_item.book_id}]",
+              class: "quantities-#{order_item.book_id}",
+              id: "xs-quantities-#{order_item.book_id}",
+              'data-bound-input': "quantities-#{order_item.book_id}",
+              value: order_item.quantity}
+            %a.input-link.quantity-increment{href: "#",
+              'data-target': "quantities-#{order_item.book_id}"}
               %i.fa.fa-plus.line-height-40
         - else
           %span= order_item.quantity
