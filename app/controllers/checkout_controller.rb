@@ -22,6 +22,10 @@ class CheckoutController < ApplicationController
     redirect_to action: 'address' if @order.nil?
     @shipments = Shipment.all
     @order.shipment_id ||= 1
+    shipment_price = @shipments.find(@order.shipment_id).price
+    # looks like there's no need in session variables
+    session[:shipment] = shipment_price
+    session[:order_total] = session[:order_subtotal].to_f + shipment_price
     session[:order] = @order
   end
 
