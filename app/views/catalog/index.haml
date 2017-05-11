@@ -4,31 +4,16 @@
     .pull-right
       .dropdown.width-240
         =render 'catalog_sorters'
-    %ul.list-inline.pt-10.mb-25.mr-240
-      - @categories.each do |category|
-        %li.mr-35
-          = link_to permitted.merge('category' => category.first.second, 'limit' => 12, 'sort_by' => 'created_at', 'order' => 'desc'), class: "filter-link" do
-            -if current_category?(category.first.second)
-              %b= capitalize_category(category.first.first)
-            -else
-              = capitalize_category(category.first.first)
-            %span.badge.general-badge= category.second
+    =render 'catalog_filters'
   .mb-40.visible-xs
-    %p.in-grey-600.small.mb-10 Filter by category
-    .dropdown.mb-20
-      %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-        =capitalize_category(find_category(params[:category].to_i).first.first)
-        %i.fa.fa-angle-down.dropdown-icon
-      %ul.dropdown-menu
-        -@categories.each do |category|
-          %li
-            =link_to capitalize_category(category.first.first), permitted.merge('category' => category.first.second)
+    =render 'xs_catalog_filters'
     %p.in-grey-600.small.mb-10 Sort by
     .dropdown
       =render 'catalog_sorters'
   .mb-20
-    = render 'books', books: @books
+    =render 'books', books: @books
   .text-center
     %span
       -if more_books?
-        =link_to 'View more', permitted.merge('limit' => params['limit'].to_i + 12), class: 'btn btn-primary mb-60'
+        =link_to 'View more', permitted.merge('limit' => params['limit'].to_i + 12),
+          class: 'btn btn-primary mb-60'
