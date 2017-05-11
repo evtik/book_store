@@ -27,30 +27,7 @@
     .dropdown
       =render 'catalog_sorters'
   .mb-20
-    .row
-      - @books.each do |book|
-        .col-xs-6.col-sm-3
-          .general-thumb-wrap
-            .thumbnail.general-thumbnail
-              %img.img-shadow.general-thumbnail-img{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-              .thumb-hover
-                .general-thumb-link-wrap
-                  =link_to book_path(book), class: 'thumb-hover-link' do
-                    %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
-                  =link_to cart_add_path(id: book.id, quantity: 1), method: :post, class: 'thumb-hover-link' do
-                    %i.fa.fa-shopping-cart.thumb-icon
-                  -# = form_tag(cart_add_path, class: 'form-inline') do
-                    -# = hidden_field_tag(id: book.id)
-                    -# = hidden_field_tag(quantity: 1)
-                    -# = hidden_field_tag(price: book.price)
-                    -# %div.thumb-hover-link
-                      -# = submit_tag(nil) do
-                        -# %i.fa.fa-shopping-cart.thumb-icon
-          .general-thumb-info
-            %p.pull-right.font-16.in-gold-500= number_to_currency book.price
-            %p.general-title= truncate book.title, length: 27
-            %span.divider-sm
-            %p.in-grey-600.small= book.authors_short
+    = render 'books', books: @books
   .text-center
     %span
       -if more_books?

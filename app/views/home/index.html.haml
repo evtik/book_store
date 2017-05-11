@@ -21,25 +21,9 @@
     %h2.h1 Welcome to our amazing Bookstore!
     .mb-res-50
       %p.in-grey-600 We pore through hundreds of new books each month and select the five best we can find to share with our members.
-    -# %button.btn.btn-default Get Started
-    = link_to 'Get started', catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}), class: 'button btn btn-default'
+    = link_to 'Get started',
+      catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
+      class: 'button btn btn-default'
   .mb-35
     %h3 Best Sellers
-    .row
-      - @most_popular_books.each do |book|
-        .col-sm-6.col-md-3
-          .general-thumb-wrap
-            .thumbnail.general-thumbnail
-              %img.img-shadow.general-thumbnail-img{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
-              .thumb-hover
-                .general-thumb-link-wrap
-                  =link_to book_path(book), class: 'thumb-hover-link' do
-                    %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
-                  =link_to cart_add_path(id: book.id, quantity: 1), method: :post, class: 'thumb-hover-link' do
-                    %i.fa.fa-shopping-cart.thumb-icon
-          .mb-35
-            .clearfix
-              %p.pull-right.font-16.in-gold-500= book.price
-              %p.general-title.mr-55= truncate book.title, length: 27
-            %span.divider-sm
-            %p.in-grey-600.small= book.authors_short
+    = render '/catalog/books', books: @most_popular_books
