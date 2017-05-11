@@ -23,5 +23,9 @@ module BookStore
     # -- all .rb files in that directory are automatically loaded.
     # config.i18n.default_locale = :'en'
     config.middleware.use I18n::JS::Middleware
+
+    ISO3166.configure do |config|
+      config.locales = [:en, :gb, :ua]
+    end
   end
 end

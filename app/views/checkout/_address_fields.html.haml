@@ -7,11 +7,23 @@
         %span.help-block= error
   .form-group{ class: ('has-error' if address.errors[:country].any?)}
     = fields.label :country, 'Country', class: "control-label font-weight-light"
-    = fields.text_field :country, class: "form-control", placeholder: "Select a country"
+    -# = fields.text_field :country, class: "form-control", placeholder: "Select a country"
+    -# = fields.select :country, options_for_select(@countries,
+      -# Country.find_country_by_name(address.country).country_code),
+      -# {}, {class: 'form-control country-select', 'data-target': "#{type}-phone"}
+    -# = fields.collection_select :country, @countries, :first, :first,
+      -# {}, {class: 'form-control country-select', 'data-country-code': :second}
+    %select{class: 'form-control country-select',
+      name: "order[#{type}][country]", 'data-target': "#{type}-phone"}
+      - @countries.each do |country|
+        %option{value: country.first, class: "#{type}",
+          selected: country.first == address.country,
+          'data-country-code': country.last}= country.first
     - address.errors[:country].each do |error|
       %span.help-block= error
   .form-group{ class: ('has-error' if address.errors[:phone].any?)}
     = fields.label :phone, 'Phone', class: "control-label font-weight-light"
-    = fields.phone_field :phone, class: "form-control", placeholder: "Example +355 66 123 4567"
+    = fields.phone_field :phone, class: "form-control",
+      id: "#{type}-phone", placeholder: "Example +355 66 123 4567"
     - address.errors[:phone].each do |error|
       %span.help-block= error

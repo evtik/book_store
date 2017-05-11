@@ -6,6 +6,7 @@ class CheckoutController < ApplicationController
     order_from_session
     initialize_order if @order.nil?
     session[:order] = @order
+    @countries = Country.all.map { |c| [c.name, c.country_code] }
   end
 
   def submit_address
@@ -13,6 +14,12 @@ class CheckoutController < ApplicationController
     # order_from_params
     @order = OrderForm.from_params(session[:order]
       .merge(params.require(:order).permit!.to_h))
+    # bl_country = Country.find_country_by_country_code(@order.billing.country)
+    # @order.billing.country = bl_country
+    # unless @order.use_billing_address
+      # sh_country = Country.find_country_by_country_code(@order.shipping.country)
+      # @order.shipping.country = sh_country 
+    # end
     session[:order] = @order
     redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end

@@ -5,11 +5,20 @@ $ ->
     else
       $('.shipping-hideable').removeClass 'hidden'
 
+  $('.country-select').change ->
+    target = @getAttribute 'data-target'
+    targetInput = $("##{target}")[0]
+    type = target.split('-')[0]
+    countryCode = $("option.#{type}")[@selectedIndex]
+                    .getAttribute 'data-country-code'
+    targetInput.value = '+' + countryCode
+
   $('[data-toggle="tooltip"]').tooltip()
 
   setShipmentRadio = ->
     $("input:radio").each ->
-      if $(@)[0].checked
+      # if $(@)[0].checked
+      if @checked
         isXSRadio = @id.includes 'xs-', 0
         if $(document).width() < 768
           $("#xs-shipment-#{@id.split('-')[1]}")[0].checked = true unless isXSRadio

@@ -110,6 +110,8 @@ codes.each do |code|
   end
 end
 
+@countries = Country.all.map { |country| [country.name, country.country_code] }
+
 def create_address(type)
   address = Address.new
   address.first_name = Faker::Name.first_name
@@ -117,8 +119,10 @@ def create_address(type)
   address.address = Faker::Address.street_address
   address.city = Faker::Address.city
   address.zip = Faker::Address.zip
-  address.country = Faker::Address.country
-  address.phone = '+' << Faker::PhoneNumber.subscriber_number(rand(12..15))
+  country = @countries.sample
+  address.country = country.first
+  address.phone = '+' << country.last <<
+    Faker::PhoneNumber.subscriber_number(rand(10..(15 - country.last.length)))
   address.address_type = type
   address
 end
