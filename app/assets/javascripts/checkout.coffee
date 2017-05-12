@@ -13,11 +13,8 @@ $ ->
                     .getAttribute 'data-country-code'
     targetInput.value = '+' + countryCode
 
-  $('[data-toggle="tooltip"]').tooltip()
-
   setShipmentRadio = ->
     $("input:radio").each ->
-      # if $(@)[0].checked
       if @checked
         isXSRadio = @id.includes 'xs-', 0
         if $(document).width() < 768
@@ -35,7 +32,9 @@ $ ->
     totalEl = $('#order-total-label')[0]
     subTotal = parseFloat totalEl.getAttribute 'data-subtotal'
     $(totalEl).text(I18n.l('currency', subTotal + shipmentPrice))
-    $("input[name='shipment_price']").val(shipmentPrice)
+    $("input[name='shipment_price']").val shipmentPrice
 
-  # $('#shipment-1')[0].click()
+  $('[data-toggle="tooltip"]').tooltip()
+
   setShipmentRadio()
+

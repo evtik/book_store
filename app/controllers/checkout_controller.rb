@@ -10,16 +10,8 @@ class CheckoutController < ApplicationController
   end
 
   def submit_address
-    # byebug
-    # order_from_params
     @order = OrderForm.from_params(session[:order]
       .merge(params.require(:order).permit!.to_h))
-    # bl_country = Country.find_country_by_country_code(@order.billing.country)
-    # @order.billing.country = bl_country
-    # unless @order.use_billing_address
-      # sh_country = Country.find_country_by_country_code(@order.shipping.country)
-      # @order.shipping.country = sh_country 
-    # end
     session[:order] = @order
     redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end
@@ -30,7 +22,6 @@ class CheckoutController < ApplicationController
     @shipments = Shipment.all
     @order.shipment_id ||= 1
     shipment_price = @shipments.find(@order.shipment_id).price
-    # looks like there's no need in session variables
     session[:shipment] = shipment_price
     session[:order_total] = session[:order_subtotal].to_f + shipment_price
     session[:order] = @order
