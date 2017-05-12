@@ -34,5 +34,7 @@
     %p.in-gold-500.font-18 Order Summary
     %table.general-summary-table.general-summary-table-right.general-text-right
       = render 'delivery_totals'
-  .text-center
-    %button.btn.btn-default.mb-20 Place Order
+  = form_tag('/checkout/confirm') do
+    .text-center
+      = submit_tag('Place order', class: 'btn btn-default')
+    -# %button.btn.btn-default.mb-20 Place Order

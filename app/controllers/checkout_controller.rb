@@ -64,6 +64,13 @@ class CheckoutController < ApplicationController
     @shipment = Shipment.find(@order.shipment_id)
   end
 
+  def submit_confirm
+    redirect_to action: 'complete'
+  end
+
+  def complete
+  end
+
   private
 
   def order_from_session
