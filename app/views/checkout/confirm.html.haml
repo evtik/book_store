@@ -33,8 +33,9 @@
   .text-center.general-text-right
     %p.in-gold-500.font-18 Order Summary
     %table.general-summary-table.general-summary-table-right.general-text-right
-      = render 'delivery_totals'
+      = render 'delivery_totals', subtotal: session[:order_subtotal],
+        shipment_price: session[:shipment], total: session[:order_total]
   = form_tag('/checkout/confirm') do
     .text-center
       = submit_tag('Place order', class: 'btn btn-default')
-    -# %button.btn.btn-default.mb-20 Place Order
+

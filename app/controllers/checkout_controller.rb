@@ -21,10 +21,8 @@ class CheckoutController < ApplicationController
     redirect_to action: 'address' if @order.nil?
     @shipments = Shipment.all
     @order.shipment_id ||= 1
-    shipment_price = @shipments.find(@order.shipment_id).price
-    session[:shipment] = shipment_price
-    session[:order_total] = session[:order_subtotal].to_f + shipment_price
-    session[:order] = @order
+    @shipment_price = @shipments.find(@order.shipment_id).price
+
   end
 
   def submit_delivery
@@ -34,7 +32,7 @@ class CheckoutController < ApplicationController
     session[:order_total] = session[:order_subtotal].to_f +
       session[:shipment].to_f
     session[:order] = @order
-    redirect_to action: @order.shipment_id ? 'payment' : 'delivery'
+    redirect_to action: 'payment'
   end
 
   def payment
@@ -89,5 +87,10 @@ class CheckoutController < ApplicationController
   def fetch_or_create_address(type)
     address = UserAddress.new(current_user.id, type).to_a.first
     address ? AddressForm.from_model(address) : AddressForm.new
+  end
+
+  def clear_session
+    session.except!(:cart, :order, :discount, :coupon_id, :items_total,
+                    :order_subtotal, :shipment, :order_total)
   end
 end
