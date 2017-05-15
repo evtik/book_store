@@ -20,7 +20,7 @@ class CartController < ApplicationController
     params[:quantities].each do |book_id, quantity|
       session[:cart][book_id] = quantity.to_i
     end
-    coupon_message
+    handle_coupon
     redirect_to :cart
   end
 
@@ -43,30 +43,33 @@ class CartController < ApplicationController
     end
   end
 
+  def handle_coupon
+    return if params[:coupon].blank?
+    @coupon = Coupon.where(code: params[:coupon]).first
+    @coupon_conditions = [@coupon.nil?, @coupon&.order_id?, coupon_expired?]
+    @coupon_conditions.any? ? coupon_message : coupon_discount
+  end
+
+  def coupon_expired?
+    @coupon.nil? || @coupon.order_id? ? nil : @coupon.expires < Date.today
+  end
+
   def coupon_message
-    unless params[:coupon].blank?
-      @coupon = Coupon.where(code: params[:coupon]).first
-      conditions = [@coupon.nil?, @coupon&.order_id?, coupon_expired?]
-      flash[:error] = coupon_messages[conditions]
-      flash.keep
-      if @coupon && !conditions[1] && !conditions[2]
-        session[:coupon_id] = @coupon.id
-        session[:discount] = @coupon.discount
-      end
-    end
+    flash[:error] = coupon_messages[@coupon_conditions]
+    flash.keep
+  end
+
+  def coupon_discount
+    session[:coupon_id] = @coupon.id
+    session[:discount] = @coupon.discount
   end
 
   def coupon_messages
     {
-      [false, false, false] => nil,
       [false, true, nil] => 'This coupon is already used!',
       [false, false, true] => 'This coupon has expired!',
       [true, nil, nil] => 'This coupon does not exist!'
     }
-  end
-
-  def coupon_expired?
-    (@coupon.nil? || @coupon.order_id?) ? nil : @coupon.expires < Date.today
   end
 
   def calculate_totals

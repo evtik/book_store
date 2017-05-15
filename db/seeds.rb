@@ -81,10 +81,8 @@ num_books.times do |i|
 end
 
 users = User.where(admin: nil)
-# puts "users count is #{users.count}"
 review_states = %w(unprocessed approved rejected)
 books = Book.all
-# puts "books count is #{books.count}"
 books.each do |book|
   users.sample(rand(0..5)).each do |user|
     Review.create! do |review|
@@ -151,15 +149,14 @@ num_orders.times do |order_index|
   order.shipment = shipments.sample
   order.state = order_states.sample
   order.user = users.sample
-  # if (order_index % 20).zero?
-    # Coupon.where(order_id: nil).sample.order = order
-  # end
+  if (order_index % 20).zero?
+    order.coupon = Coupon.where(order_id: nil).sample
+  end
   card = CreditCard.new
   card.number = Faker::Business.credit_card_number
   card.month_year = "#{months.sample}/#{rand(18..20)}"
   card.cardholder = 'John Doe'
   card.cvv = Array.new(rand(3..4)) { rand(0..9) }.join
-  # breaks here ...
   order.credit_card = card
 
   if (order_index % 7).zero?
