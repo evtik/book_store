@@ -8,7 +8,7 @@
             .general-thumb-link-wrap
               =link_to book_path(book), class: 'thumb-hover-link' do
                 %i.fa.fa-eye.thumb-icon{'aria-hidden': "true"}
-              =link_to cart_add_path(id: book.id, quantity: 1), method: :post,
+              =link_to cart_add_path(id: book.id), method: :post,
                 class: 'thumb-hover-link' do
                 %i.fa.fa-shopping-cart.thumb-icon
       .general-thumb-info

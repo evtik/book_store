@@ -8,17 +8,16 @@ class CartController < ApplicationController
 
   def add
     book_id = params[:id]
-    quantity = params[:quantity].to_i || 1
     # don't know why it is nil by default
     # though session[:cart] is created like Hash.new(0)
     session[:cart][book_id] ||= 0
-    session[:cart][book_id] += quantity
+    session[:cart][book_id] += 1
     redirect_to :back
   end
 
   def update
     params[:quantities].each do |book_id, quantity|
-      session[:cart][book_id] = quantity.to_i
+      session[:cart][book_id] = quantity.present? ? quantity.to_i : 1
     end
     handle_coupon
     redirect_to :cart
