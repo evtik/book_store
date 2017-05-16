@@ -1,42 +1,46 @@
 %main.container.general-main-wrap
   %h1.general-title-margin Cart
-  = form_tag(cart_update_path) do
-    .visible-xs
-      = render 'xs_cart_items', render_inputs: true
-    .hidden-xs
-      = render 'cart_items', render_inputs: true
-    .general-order-wrap
-      .row
-        .col-sm-4
-          .input-group.general-input-group
-            %label.font-weight-light Enter Your Coupon Code
-            %input.form-control.mb-30{type: "text", name: "coupon", placeholder: "Enter Your Coupon Code "}
-            %div
-              -# %button.btn.btn-primary.mr-5.mb-15.visible-xs-inline-block Apply Coupon
-              = submit_tag('Update cart', class: "btn btn-primary mb-15 res-block")
-        .col-sm-8
-          .res-mr-200.text-center.general-text-right
-            %p.in-gold-500.font-18 Order Summary
-            %table.general-summary-table.general-summary-table-right.general-text-right
-              %tr
-                %td
-                  %p.font-16 Subtotal:
-                %td
-                  %p.font-16= number_to_currency @items_total
-              %tr
-                %td
-                  %p.font-16 Coupon:
-                %td
-                  %p.font-16= number_to_currency @discount
-              %tr
-                %td
-                  %strong.font-18 Order Total:
-                %td
-                  %strong.font-18= number_to_currency @order_subtotal
-          .text-center
-            %span
-              = link_to 'Checkout', '/checkout/address', class: 'btn btn-default mb-20 visible-xs-inline-block'
-              -# %button.btn.btn-default.mb-20.visible-xs-inline-block Checkout
-  .text-center
-    %span
-      = link_to 'Checkout', '/checkout/address', class: 'btn btn-default mb-20 hidden-xs'
+  - if @order_items.empty?
+    %h2
+      Currently you do not have any books in your cart. You could visit the
+      = link_to 'Catalog', catalog_index_path
+      to add some.
+  - else
+    = form_tag(cart_update_path) do
+      .visible-xs
+        = render 'xs_cart_items', render_inputs: true
+      .hidden-xs
+        = render 'cart_items', render_inputs: true
+      .general-order-wrap
+        .row
+          .col-sm-4
+            .input-group.general-input-group
+              %label.font-weight-light Enter Your Coupon Code
+              %input.form-control.mb-30{type: "text", name: "coupon", placeholder: "Enter Your Coupon Code "}
+              %div
+                = submit_tag('Update cart', class: "btn btn-primary mb-15 res-block")
+          .col-sm-8
+            .res-mr-200.text-center.general-text-right
+              %p.in-gold-500.font-18 Order Summary
+              %table.general-summary-table.general-summary-table-right.general-text-right
+                %tr
+                  %td
+                    %p.font-16 Subtotal:
+                  %td
+                    %p.font-16= number_to_currency @items_total
+                %tr
+                  %td
+                    %p.font-16 Coupon:
+                  %td
+                    %p.font-16= number_to_currency @discount
+                %tr
+                  %td
+                    %strong.font-18 Order Total:
+                  %td
+                    %strong.font-18= number_to_currency @order_subtotal
+            .text-center
+              %span
+                = link_to 'Checkout', '/checkout/address', class: 'btn btn-default mb-20 visible-xs-inline-block'
+    .text-center
+      %span
+        = link_to 'Checkout', '/checkout/address', class: 'btn btn-default mb-20 hidden-xs'
