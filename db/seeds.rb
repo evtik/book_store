@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 OrderItem.delete_all
 Order.delete_all
 Shipment.delete_all
@@ -149,9 +141,7 @@ num_orders.times do |order_index|
   order.shipment = shipments.sample
   order.state = order_states.sample
   order.user = users.sample
-  if (order_index % 20).zero?
-    order.coupon = Coupon.where(order_id: nil).sample
-  end
+  order.coupon = Coupon.where(order_id: nil).sample if (order_index % 20).zero?
   card = CreditCard.new
   card.number = Faker::Business.credit_card_number
   card.month_year = "#{months.sample}/#{rand(18..20)}"
