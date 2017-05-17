@@ -1,5 +1,5 @@
 %main.container
-  %a.general-back-link{href: "#"}
+  = link_to flash[:referrer], class: 'general-back-link' do
     %i.fa.fa-long-arrow-left.mr-15
     Back to results
   .row

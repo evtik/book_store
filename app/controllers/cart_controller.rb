@@ -13,6 +13,7 @@ class CartController < ApplicationController
     # though session[:cart] is created like Hash.new(0)
     session[:cart][book_id] ||= 0
     session[:cart][book_id] += quantity
+    flash.keep
     redirect_to :back
   end
 
