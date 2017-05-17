@@ -38,13 +38,18 @@ Rails.application.routes.draw do
   delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
 
   # resources :checkout
-  get '/checkout/address', to: 'checkout#address'
-  post '/checkout/address', to: 'checkout#submit_address'
-  get '/checkout/delivery', to: 'checkout#delivery'
-  post '/checkout/delivery', to: 'checkout#submit_delivery'
-  get '/checkout/payment', to: 'checkout#payment'
-  post '/checkout/payment', to: 'checkout#submit_payment'
-  get '/checkout/confirm', to: 'checkout#confirm'
-  post '/checkout/confirm', to: 'checkout#submit_confirm'
+  # get '/checkout/address', to: 'checkout#address'
+  # post '/checkout/address', to: 'checkout#submit_address'
+  # get '/checkout/delivery', to: 'checkout#delivery'
+  # post '/checkout/delivery', to: 'checkout#submit_delivery'
+  # get '/checkout/payment', to: 'checkout#payment'
+  # post '/checkout/payment', to: 'checkout#submit_payment'
+  # get '/checkout/confirm', to: 'checkout#confirm'
+  # post '/checkout/confirm', to: 'checkout#submit_confirm'
+  %w(address delivery payment confirm).each do |action|
+    get "/checkout/#{action}", to: "checkout##{action}"
+    post "/checkout/#{action}", to: "checkout#submit_#{action}"
+  end
+
   get '/checkout/complete', to: 'checkout#complete'
 end
