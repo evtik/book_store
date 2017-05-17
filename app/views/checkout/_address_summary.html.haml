@@ -1,7 +1,8 @@
 %p.general-address
   = "#{address.first_name} #{address.last_name}"
-  %span.general-edit
-    = link_to 'edit', '/checkout/address'
+  - if render_edit_link
+    %span.general-edit
+      = link_to 'edit', '/checkout/address'
   %br
   = address.address
   %br

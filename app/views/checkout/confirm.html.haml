@@ -5,10 +5,11 @@
     .col-sm-3
       %h3.general-subtitle Shipping Address
       = render 'address_summary',
-        address: @order.use_billing_address == 1 ? @order.billing : @order.shipping
+        address: @order.use_billing_address == 1 ? @order.billing : @order.shipping,
+        render_edit_link: true
     .col-sm-3
       %h3.general-subtitle Billing Address
-      = render 'address_summary', address: @order.billing 
+      = render 'address_summary', address: @order.billing, render_edit_link: true
     .col-sm-3
       %h3.general-subtitle Shipments
       %p.general-address

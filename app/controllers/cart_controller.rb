@@ -45,16 +45,13 @@ class CartController < ApplicationController
   def handle_coupon
     return if params[:coupon].blank?
     @coupon = Coupon.where(code: params[:coupon]).first
-    @coupon_conditions = [@coupon.nil?, @coupon&.order_id?, coupon_expired?]
-    @coupon_conditions.any? ? coupon_message : coupon_discount
-  end
-
-  def coupon_expired?
-    @coupon.nil? || @coupon.order_id? ? nil : @coupon.expires < Date.today
+    @coupon_states = [@coupon.nil?, @coupon&.order.present?]
+    @coupon_states << (@coupon_states.any? ? nil : @coupon.expires < Date.today)
+    @coupon_states.any? ? coupon_message : coupon_discount
   end
 
   def coupon_message
-    flash[:error] = coupon_messages[@coupon_conditions]
+    flash[:error] = coupon_messages[@coupon_states]
     flash.keep
   end
 
@@ -67,7 +64,7 @@ class CartController < ApplicationController
     {
       [false, true, nil] => 'This coupon is already used!',
       [false, false, true] => 'This coupon has expired!',
-      [true, nil, nil] => 'This coupon does not exist!'
+      [true, false, nil] => 'This coupon does not exist!'
     }
   end
 

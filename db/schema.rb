@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170516062138) do
+ActiveRecord::Schema.define(version: 20170515192428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -96,8 +96,6 @@ ActiveRecord::Schema.define(version: 20170516062138) do
     t.integer  "discount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer  "order_id"
-    t.index ["order_id"], name: "index_coupons_on_order_id", using: :btree
   end
 
   create_table "credit_cards", force: :cascade do |t|
@@ -129,13 +127,12 @@ ActiveRecord::Schema.define(version: 20170516062138) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
+    t.integer  "coupon_id"
     t.integer  "shipment_id"
     t.string   "state"
-    t.decimal  "total",        precision: 6, scale: 2
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.string   "order_number"
-    t.integer  "coupon_id"
+    t.decimal  "total",       precision: 6, scale: 2
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.index ["coupon_id"], name: "index_orders_on_coupon_id", using: :btree
     t.index ["shipment_id"], name: "index_orders_on_shipment_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -184,9 +181,9 @@ ActiveRecord::Schema.define(version: 20170516062138) do
   add_foreign_key "books", "categories"
   add_foreign_key "books_materials", "books"
   add_foreign_key "books_materials", "materials"
-  add_foreign_key "coupons", "orders"
   add_foreign_key "order_items", "books"
   add_foreign_key "order_items", "orders"
+  add_foreign_key "orders", "coupons"
   add_foreign_key "orders", "shipments"
   add_foreign_key "orders", "users"
   add_foreign_key "reviews", "books"

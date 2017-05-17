@@ -69,14 +69,14 @@ class CheckoutController < ApplicationController
     @order.shipment_id = order['shipment_id']
     @order.credit_card = CreditCard.new(order['card'])
     @order.order_items << order_items_from_cart
-    # coupon!!!
+    @order.coupon_id = session[:coupon_id]
     submit_order
   end
 
   def complete
-    # show only after confirm
-    # gonna use smth alike flash[:order_confirmed] = true
-    # in submit_confirm
+    # return redirect_to '/cart' unless flash[:order_confirmed]
+    @order = UserLastOrder.new(current_user.id).to_a.first.decorate
+    @order_items = @order.order_items
   end
 
   private
@@ -108,6 +108,7 @@ class CheckoutController < ApplicationController
   def submit_order
     if @order.save
       clear_session
+      flash[:order_confirmed] = true
       redirect_to action: 'complete'
     else
       flash[:error] = 'Something went wrong...'

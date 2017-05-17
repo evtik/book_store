@@ -141,7 +141,11 @@ num_orders.times do |order_index|
   order.shipment = shipments.sample
   order.state = order_states.sample
   order.user = users.sample
-  order.coupon = Coupon.where(order_id: nil).sample if (order_index % 20).zero?
+  if (order_index % 20).zero?
+    order.coupon = Coupon.includes(:order)
+                         .where('orders.coupon_id' => nil)
+                         .sample
+  end
   card = CreditCard.new
   card.number = Faker::Business.credit_card_number
   card.month_year = "#{months.sample}/#{rand(18..20)}"
