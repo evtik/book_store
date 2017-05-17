@@ -8,10 +8,11 @@ class CartController < ApplicationController
 
   def add
     book_id = params[:id]
+    quantity = params[:quantity].present? ? params[:quantity].to_i : 1
     # don't know why it is nil by default
     # though session[:cart] is created like Hash.new(0)
     session[:cart][book_id] ||= 0
-    session[:cart][book_id] += 1
+    session[:cart][book_id] += quantity
     redirect_to :back
   end
 
