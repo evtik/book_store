@@ -22,20 +22,10 @@
   .text-center.general-text-right
     %p.in-gold-500.font-18 Order Summary
     %table.general-summary-table.general-summary-table-right.general-text-right
-      %tr
-        %td
-          %p.font-16 Subtotal:
-        %td
-          %p.font-16 €117.69
-      %tr
-        %td
-          %p.font-16 Coupon:
-        %td
-          %p.font-16 €0.00
-      %tr
-        %td
-          %strong.font-18 Order Total:
-        %td
-          %strong.font-18 €117.69
+      = render 'delivery_totals', subtotal: @order.subtotal,
+        shipment_price: @order.shipment.price, total: @order.total
   .text-center
-    %button.btn.btn-default.mb-20 Back to Store
+    = link_to 'Back to Store',
+      catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
+      class: 'btn btn-default mb-20'
+    -# %button.btn.btn-default.mb-20 Back to Store

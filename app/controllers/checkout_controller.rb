@@ -70,11 +70,14 @@ class CheckoutController < ApplicationController
     @order.credit_card = CreditCard.new(order['card'])
     @order.order_items << order_items_from_cart
     @order.coupon_id = session[:coupon_id]
+    @order.subtotal = session[:order_subtotal]
+    @order.total = session[:order_total]
     submit_order
   end
 
   def complete
-    # return redirect_to '/cart' unless flash[:order_confirmed]
+    flash.keep
+    return redirect_to '/cart' unless flash[:order_confirmed]
     @order = UserLastOrder.new(current_user.id).to_a.first.decorate
     @order_items = @order.order_items
   end

@@ -23,7 +23,7 @@
       %p.in-grey-600 We pore through hundreds of new books each month and select the five best we can find to share with our members.
     = link_to 'Get started',
       catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
-      class: 'button btn btn-default'
+      class: 'btn btn-default'
   .mb-35
     %h3 Best Sellers
     = render '/catalog/books', books: @most_popular_books
