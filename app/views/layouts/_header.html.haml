@@ -45,6 +45,9 @@
             %li.dropdown
               %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} My account
               %ul.dropdown-menu
+                - if current_user.admin?
+                  %li
+                    %a{href: '/admin'} Admin panel
                 %li
                   %a{href: "#"} Orders
                 %li
