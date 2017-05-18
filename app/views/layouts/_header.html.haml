@@ -51,7 +51,8 @@
                 %li
                   %a{href: "#"} Orders
                 %li
-                  %a{href: "#"} Settings
+                  -# %a{href: "#"} Settings
+                  = link_to 'Settings', user_settings_path(current_user)
                 %li.divider{role: "separator"}
                 %li
                   %a{href: '/logout'} Log Out
