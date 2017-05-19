@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::Base
+  COUNTRIES = Country.all.map { |c| [c.name, c.country_code] }
+
   protect_from_forgery with: :exception
   before_action :fetch_categories
 
@@ -20,5 +22,10 @@ class ApplicationController < ActionController::Base
         order_item.quantity = quantity.to_i
       end
     end
+  end
+
+  def fetch_or_create_address(type)
+    address = UserAddress.new(current_user.id, type).to_a.first
+    address ? AddressForm.from_model(address) : AddressForm.new
   end
 end

@@ -54,4 +54,5 @@ Rails.application.routes.draw do
   get '/checkout/complete', to: 'checkout#complete'
 
   get '/user/:id/settings', to: 'user_settings#show', as: :user_settings
+  patch '/user/:id/settings', to: 'user_settings#update', as: :update_settings
 end

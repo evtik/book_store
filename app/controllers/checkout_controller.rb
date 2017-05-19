@@ -6,7 +6,7 @@ class CheckoutController < ApplicationController
     order_from_session
     initialize_order if @order.nil?
     session[:order] = @order
-    @countries = Country.all.map { |c| [c.name, c.country_code] }
+    @countries = COUNTRIES
   end
 
   def submit_address
@@ -96,16 +96,10 @@ class CheckoutController < ApplicationController
     @order.shipping = fetch_or_create_address('shipping')
   end
 
-  def fetch_or_create_address(type)
-    address = UserAddress.new(current_user.id, type).to_a.first
-    address ? AddressForm.from_model(address) : AddressForm.new
-  end
-
   def populate_addresses(order)
-    @order.addresses << Address.new(order['billing']
-      .merge(address_type: 'billing'))
-    @order.addresses << Address.new(order['shipping']
-      .merge(address_type: 'shipping')) if order['use_billing_address'].zero?
+    @order.addresses << Address.new(order['billing'].except!('id'))
+    return unless order['use_billing_address'].zero?
+    @order.addresses << Address.new(order['shipping'].except!('id'))
   end
 
   def submit_order

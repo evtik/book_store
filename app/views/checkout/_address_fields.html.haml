@@ -1,4 +1,6 @@
 = f.fields_for type, address do |fields|
+  = fields.hidden_field :id
+  = fields.hidden_field :address_type
   - %i(first_name last_name address city zip).each do |property|
     .form-group{ class: ('has-error' if address.errors[property].any?)}
       = fields.label property, property.to_s.humanize, class: "control-label font-weight-light"
@@ -7,7 +9,7 @@
   .form-group{ class: ('has-error' if address.errors[:country].any?)}
     = fields.label :country, 'Country', class: "control-label font-weight-light"
     %select{class: 'form-control country-select',
-      name: "order[#{type}][country]", 'data-target': "#{type}-phone"}
+      name: "#{entity}[#{type}][country]", 'data-target': "#{type}-phone"}
       %option{value: "", hidden: true, selected: true} Select a country 
       - @countries.each do |country|
         %option{value: country.first, class: "#{type}",

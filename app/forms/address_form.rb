@@ -18,4 +18,6 @@ class AddressForm < Rectify::Form
 
   attribute :country, String
   validates :country, presence: { message: 'Please choose a country' }
+
+  attribute :address_type, String
 end
