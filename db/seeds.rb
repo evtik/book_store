@@ -106,7 +106,7 @@ def create_address(type)
   address = Address.new
   address.first_name = Faker::Name.first_name
   address.last_name = Faker::Name.last_name
-  address.address = Faker::Address.street_address
+  address.street_address = Faker::Address.street_address
   address.city = Faker::Address.city
   address.zip = Faker::Address.zip
   country = @countries.sample

@@ -1,7 +1,7 @@
 = f.fields_for type, address do |fields|
   = fields.hidden_field :id
   = fields.hidden_field :address_type
-  - %i(first_name last_name address city zip).each do |property|
+  - %i(first_name last_name street_address city zip).each do |property|
     .form-group{ class: ('has-error' if address.errors[property].any?)}
       = fields.label property, property.to_s.humanize, class: "control-label font-weight-light"
       = fields.text_field property, class: "form-control", placeholder: property.to_s.humanize
