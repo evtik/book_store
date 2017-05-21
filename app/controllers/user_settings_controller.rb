@@ -4,29 +4,41 @@ class UserSettingsController < ApplicationController
   def show
     @billing = fetch_or_create_address('billing')
     @shipping = fetch_or_create_address('shipping')
-    @countries = COUNTRIES
   end
 
   def update
-    # @billing = AddressForm.from_params(params.permit![:address][:billing].to_h)
-    # @shipping = AddressForm.from_params(params.permit![:address][:shipping].to_h)
-    b_params = params.permit![:address][:billing].to_h
-    p_params = params.permit![:address][:shipping].to_h
-    b_double = Address.new(b_params)
-    p_double = Address.new(p_params)
-    @billing = AddressForm.from_model(b_double)
-    @shipping = AddressForm.from_model(p_double)
-    byebug
-    if @shipping.valid?
-      Address.new(params.permit![:address][:shipping]).save
-    else
-      render :show
-    end
+    addresses_from_params
+    @current_type = params.permit(:billing, :shipping).to_h.key('Save')
+    @current_address = instance_variable_get("@#{@current_type}")
+    return render :show if @current_address.invalid?
+    address = find_or_initialize_address
+    flash[:error] = "Error saving #{@current_type} address" unless address.save
+    redirect_to action: :show
   end
 
   private
 
   def populate_countries
     @countries = COUNTRIES
+  end
+
+  def addresses_from_params
+    @billing = AddressForm.from_params(params[:address][:billing])
+    @shipping = AddressForm.from_params(params[:address][:shipping])
+  end
+
+  def find_or_initialize_address
+    address = Address.find_or_initialize_by(id: @current_address.id)
+    address.attributes = permitted(@current_type)
+    address.user_id ||= params.permit(:id)[:id]
+    address.address_type = @current_type if address.address_type.blank?
+    address
+  end
+
+  def permitted(type)
+    params.require(:address).require(type.to_sym).permit(
+      :user_id, :first_name, :last_name, :street_address,
+      :city, :zip, :country, :phone, :address_type
+    )
   end
 end

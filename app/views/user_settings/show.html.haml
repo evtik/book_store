@@ -7,7 +7,7 @@
       %a{href: "#privacy", 'aria-controls': "privacy", role: "tab", 'data-toggle': "tab"} Privacy
   .tab-content
     #address.tab-pane.fade.in.active.general-main-wrap{role: "tabpanel"}
-      = form_for @billing, url: update_settings_path do |f|
+      = form_for @billing, url: user_settings_update_path, method: :post do |f|
         .hidden-xs.hidden-sm
           .row
             .col-md-5
@@ -21,16 +21,15 @@
             = render '/checkout/address_fields', f: f, address: @billing,
               type: 'billing', entity: 'address'
             .text-center.general-text-align
-              = submit_tag 'Save', class: 'btn btn-default'
+              = submit_tag 'Save', name: 'billing', class: 'btn btn-default'
           .col-md-5.col-md-offset-1.mb-25
             .visible-xs.visible-sm
               %h3.general-subtitle.mt-0 Shipping Address
-            -# = form_for @shipping, url: '/posts' do |f|
-            = form_for @shipping, url: update_settings_path do |f|
+            = form_for @shipping, url: user_settings_update_path, method: :post do |f|
               = render '/checkout/address_fields', f: f, address: @shipping,
                 type: 'shipping', entity: 'address'
             .text-center.general-text-align
-              = submit_tag 'Save', class: 'btn btn-default'
+              = submit_tag 'Save', name: 'shipping', class: 'btn btn-default'
     #privacy.tab-pane.fade{role: "tabpanel"}
       .row.mb-60
         .col-sm-5
