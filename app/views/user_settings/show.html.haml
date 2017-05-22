@@ -1,13 +1,13 @@
 %main.container
   %h1.general-title-margin Settings
   %ul.nav.nav-tabs.mb-20{role: "tablist"}
-    %li.mb-10.active{role: "presentation"}
+    %li.mb-10{class: ('active' unless flash[:show_privacy]), role: "presentation"}
       %a{href: "#address", 'aria-controls': "address", role: "tab", 'data-toggle': "tab"} Address
-    %li.mb-10{role: "presentation"}
+    %li.mb-10{class: ('active' if flash[:show_privacy]), role: "presentation"}
       %a{href: "#privacy", 'aria-controls': "privacy", role: "tab", 'data-toggle': "tab"} Privacy
   .tab-content
-    #address.tab-pane.fade.in.active.general-main-wrap{role: "tabpanel"}
-      = form_for @billing, url: user_settings_update_path, method: :post do |f|
+    #address.tab-pane.general-main-wrap{class: ('active fade in' unless flash[:show_privacy]), role: "tabpanel"}
+      = form_for @billing, url: user_settings_update_address_path, method: :post do |f|
         .hidden-xs.hidden-sm
           .row
             .col-md-5
@@ -25,44 +25,16 @@
           .col-md-5.col-md-offset-1.mb-25
             .visible-xs.visible-sm
               %h3.general-subtitle.mt-0 Shipping Address
-            = form_for @shipping, url: user_settings_update_path, method: :post do |f|
+            = form_for @shipping, url: user_settings_update_address_path, method: :post do |f|
               = render '/checkout/address_fields', f: f, address: @shipping,
                 type: 'shipping', entity: 'address'
             .text-center.general-text-align
               = submit_tag 'Save', name: 'shipping', class: 'btn btn-default'
-    #privacy.tab-pane.fade{role: "tabpanel"}
+    #privacy.tab-pane{class: ('active fade in' if flash[:show_privacy]), role: "tabpanel"}
       .row.mb-60
         .col-sm-5
-          %p.in-gold-500.font-18.mb-25 Email
-          %form.general-form-md
-            .form-group.mb-35
-              %label.control-label.font-weight-light{for: "email"} Enter Email
-              %input#email.form-control{name:"email", type: "email", placeholder: "Enter your email"}
-            .general-text-align
-              %button.btn.btn-default.mb-35 Save
+          = render 'change_email'
         .col-sm-5.col-sm-offset-1
-          %p.in-gold-500.font-18.mb-25 Password
-          %form.general-form-md.pb-25
-            .form-group.mb-30
-              %label.control-label.font-weight-light{for: "oldPassword"} Old Password
-              %input#oldPassword.form-control{name:"password", type: "password", placeholder: "Old Password"}
-            .form-group.mb-30
-              %label.control-label.font-weight-light{for: "password"} New Password
-              %input#password.form-control{name:"password", type: "password", placeholder: "New Password"}
-            .form-group.mb-40
-              %label.control-label.font-weight-light{for: "confirmPassword"} Confirm Password
-              %input#confirmPassword.form-control{name:"password", type: "password", placeholder: "Confirm Password"}
-            .general-text-align
-              %button.btn.disabled.mb-10 Save
+          = render 'change_password'
         .col-sm-12
-          .divider-lg-bottom
-          %p.in-gold-500.font-18.mb-25.pt-20 Remove Account
-          %form
-            .general-settings-btn
-              %button.btn.disabled.mb-20 Please Remove My Account
-            .form-group.checkbox.general-settings-checkbox
-              %label.font-weight-light.pl-0
-                %input.checkbox-input{type: "checkbox", hidden: "true"}
-                %span.checkbox-icon
-                  %i.fa.fa-check
-                %span.checkbox-text I understand that all data will be lost
+          = render 'remove_account'

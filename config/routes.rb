@@ -37,15 +37,6 @@ Rails.application.routes.draw do
   post '/cart/update', to: 'cart#update', as: :cart_update
   delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
 
-  # resources :checkout
-  # get '/checkout/address', to: 'checkout#address'
-  # post '/checkout/address', to: 'checkout#submit_address'
-  # get '/checkout/delivery', to: 'checkout#delivery'
-  # post '/checkout/delivery', to: 'checkout#submit_delivery'
-  # get '/checkout/payment', to: 'checkout#payment'
-  # post '/checkout/payment', to: 'checkout#submit_payment'
-  # get '/checkout/confirm', to: 'checkout#confirm'
-  # post '/checkout/confirm', to: 'checkout#submit_confirm'
   %w(address delivery payment confirm).each do |action|
     get "/checkout/#{action}", to: "checkout##{action}"
     post "/checkout/#{action}", to: "checkout#submit_#{action}"
@@ -54,6 +45,8 @@ Rails.application.routes.draw do
   get '/checkout/complete', to: 'checkout#complete'
 
   get '/user/:id/settings', to: 'user_settings#show', as: :user_settings
-  post '/user/:id/settings/', to: 'user_settings#update',
-                              as: :user_settings_update
+  post '/user/:id/settings/', to: 'user_settings#update_address',
+                              as: :user_settings_update_address
+  patch '/user/:id/settings/email', to: 'user_settings#update_email',
+                                   as: :user_settings_update_email
 end

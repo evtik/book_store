@@ -14,18 +14,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # GET /resource/edit
   # def edit
-  #   super
+    # super
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if resource.update_with_password(permitted)
+      flash[:success] = 'Your password has been successfully changed'
+      sign_in resource_name, resource, bypass: true
+    else
+      clean_up_passwords(resource)
+      flash[:error] = resource.errors.full_messages.first
+    end
+    flash[:show_privacy] = true
+    redirect_to after_update_path_for(resource)
+  end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    super
+    flash[:success] = 'Your account has been successfully deleted.'
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -57,4 +66,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private
+
+  def after_update_path_for(resource)
+    user_settings_path(resource)
+  end
+
+  def permitted
+    params.require(resource_name).permit(:emal, :current_password,
+                                         :password, :password_confirmation)
+  end
 end

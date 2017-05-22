@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_many :reviews
-  has_many :addresses
-  has_many :orders, autosave: false
+  has_many :reviews, dependent: :destroy
+  has_many :addresses, dependent: :destroy
+  has_many :orders, dependent: :destroy, autosave: false
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
