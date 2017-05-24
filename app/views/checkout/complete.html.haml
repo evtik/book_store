@@ -9,7 +9,7 @@
       .visible-xs
         %p.general-order-number.mb-0 Order ##{@order.number}
         %p.general-address.mb-30= l @order.created_at, format: :long_date
-      = render 'address_summary', address: @order.addresses.first,
+      = render '/orders/address_summary', address: @order.addresses.first,
         render_edit_link: false
     .col-sm-6.hidden-xs.text-right
       %p.general-order-number.mb-0 Order ##{@order.number}
@@ -22,8 +22,7 @@
   .text-center.general-text-right
     %p.in-gold-500.font-18 Order Summary
     %table.general-summary-table.general-summary-table-right.general-text-right
-      = render 'delivery_totals', subtotal: @order.subtotal,
-        shipment_price: @order.shipment.price, total: @order.total
+      = render '/orders/delivery_totals'
   .text-center
     = link_to 'Back to Store',
       catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),

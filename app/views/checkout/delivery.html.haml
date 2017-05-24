@@ -10,8 +10,6 @@
     .general-text-align
       %p.in-gold-500.font-18 Order Summary
       %table.general-summary-table
-        = render 'delivery_totals', subtotal: session[:order_subtotal],
-          shipment_price: @shipment_price,
-          total: session[:order_subtotal].to_f + @shipment_price
+        = render '/orders/delivery_totals'
     = hidden_field_tag(:shipment_price, @shipment_price)
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

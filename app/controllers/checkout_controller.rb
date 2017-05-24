@@ -21,7 +21,9 @@ class CheckoutController < ApplicationController
     return redirect_to action: 'address' if @order.nil?
     @shipments = Shipment.all
     @order.shipment_id ||= 1
+    @subtotal = session[:order_subtotal].to_f
     @shipment_price = @shipments.find(@order.shipment_id).price
+    @total = @subtotal + @shipment_price
   end
 
   def submit_delivery
@@ -44,6 +46,7 @@ class CheckoutController < ApplicationController
     else
       @card = CreditCardForm.new
     end
+    totals_from_session
   end
 
   def submit_payment
@@ -60,11 +63,12 @@ class CheckoutController < ApplicationController
     @order_items = order_items_from_cart
     @card = CreditCardForm.from_params(card)
     @shipment = Shipment.find(@order.shipment_id)
+    totals_from_session
   end
 
   def submit_confirm
     order = session[:order]
-    @order = Order.new(user_id: current_user.id)
+    @order = Order.new(user_id: current_user.id, state: 'in_progress')
     populate_addresses(order)
     @order.shipment_id = order['shipment_id']
     @order.credit_card = CreditCard.new(order['card'])
@@ -80,6 +84,9 @@ class CheckoutController < ApplicationController
     return redirect_to '/cart' unless flash[:order_confirmed]
     @order = UserLastOrder.new(current_user.id).to_a.first.decorate
     @order_items = @order.order_items
+    @subtotal = @order.subtotal
+    @shipment_price = @order.shipment.price
+    @total = @order.total
   end
 
   private
@@ -94,6 +101,12 @@ class CheckoutController < ApplicationController
     @order = OrderForm.new
     @order.billing = fetch_or_create_address('billing')
     @order.shipping = fetch_or_create_address('shipping')
+  end
+
+  def totals_from_session
+    @subtotal = session[:order_subtotal]
+    @shipment_price = session[:shipment]
+    @total = session[:order_total]
   end
 
   def populate_addresses(order)

@@ -33,6 +33,5 @@
     .general-text-align
       %p.in-gold-500.font-18 Order Summary
       %table.general-summary-table
-        = render 'delivery_totals', subtotal: session[:order_subtotal],
-          shipment_price: session[:shipment], total: session[:order_total]
+        = render '/orders/delivery_totals'
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

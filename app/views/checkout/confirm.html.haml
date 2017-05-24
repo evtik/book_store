@@ -1,41 +1,7 @@
 %main.container.general-main-wrap
   %h1.general-title-margin Checkout
   = render 'progress'
-  .row.mb-20
-    .col-sm-3
-      %h3.general-subtitle Shipping Address
-      = render 'address_summary',
-        address: @order.use_billing_address == 1 ? @order.billing : @order.shipping,
-        render_edit_link: true
-    .col-sm-3
-      %h3.general-subtitle Billing Address
-      = render 'address_summary', address: @order.billing, render_edit_link: true
-    .col-sm-3
-      %h3.general-subtitle Shipments
-      %p.general-address
-        = @shipment.method
-        %span.general-edit
-          = link_to 'edit', '/checkout/delivery'
-        %br
-        from #{@shipment.days_min} to #{@shipment.days_max} days
-    .col-sm-3
-      %h3.general-subtitle Payment Information
-      %p.general-address
-        = @card.starred_number
-        %span.general-edit
-          = link_to 'edit', '/checkout/payment'
-        %br
-        = @card.month_full_year
-  .general-cart-item.divider-lg.visible-xs
-  .visible-xs
-    = render '/cart/xs_cart_items', render_inputs: false
-  .hidden-xs.divider-lg.pt-20
-    = render '/cart/cart_items', render_inputs: false
-  .text-center.general-text-right
-    %p.in-gold-500.font-18 Order Summary
-    %table.general-summary-table.general-summary-table-right.general-text-right
-      = render 'delivery_totals', subtotal: session[:order_subtotal],
-        shipment_price: session[:shipment], total: session[:order_total]
+  = render '/orders/order_details'
   = form_tag('/checkout/confirm') do
     .text-center
       = submit_tag('Place order', class: 'btn btn-default')
