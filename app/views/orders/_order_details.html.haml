@@ -1,26 +1,28 @@
 .row.mb-20
   .col-sm-3
     %h3.general-subtitle Shipping Address
-    = render '/orders/address_summary',
-      address: @order.use_billing_address == 1 ? @order.billing : @order.shipping,
-      render_edit_link: true
+    = render '/orders/address_summary', address: @shipping,
+      render_edit_link: render_links
   .col-sm-3
     %h3.general-subtitle Billing Address
-    = render '/orders/address_summary', address: @order.billing, render_edit_link: true
+    = render '/orders/address_summary', address: @billing,
+      render_edit_link: render_links
   .col-sm-3
     %h3.general-subtitle Shipments
     %p.general-address
       = @shipment.method
-      %span.general-edit
-        = link_to 'edit', '/checkout/delivery'
+      -if render_links
+        %span.general-edit
+          = link_to 'edit', '/checkout/delivery'
       %br
       from #{@shipment.days_min} to #{@shipment.days_max} days
   .col-sm-3
     %h3.general-subtitle Payment Information
     %p.general-address
       = @card.starred_number
-      %span.general-edit
-        = link_to 'edit', '/checkout/payment'
+      - if render_links
+        %span.general-edit
+          = link_to 'edit', '/checkout/payment'
       %br
       = @card.month_full_year
 .general-cart-item.divider-lg.visible-xs

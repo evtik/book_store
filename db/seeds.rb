@@ -173,6 +173,14 @@ num_orders.times do |order_index|
     end
   end
 
+  subtotal = order.order_items.sum do |oi|
+    oi.book.price * oi.quantity
+  end
+  subtotal *= (1 - order.coupon.discount / 100) if order.coupon&.discount
+  order.subtotal = subtotal
+  order.total = subtotal + order.shipment.price
+  order.addresses << create_address('billing')
+  order.addresses << create_address('shipping') if booleans.sample
   order.created_at = DateTime.now - (num_orders - order_index).hours
   order.save!
 end

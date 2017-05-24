@@ -16,13 +16,5 @@ class CreditCardForm < Rectify::Form
                         format: { with: field[2], message: field[3] }
   end
 
-  def starred_number
-    "** ** ** #{self.number[-4..-1]}"
-  end
-
-  def month_full_year
-    ('' << self.month_year).insert(3, '20')
-  end
-
   validates_with CardLuhnValidator, CardExpiryValidator
 end

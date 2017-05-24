@@ -1,7 +1,7 @@
 %main.container.general-main-wrap
   %h1.general-title-margin Checkout
   = render 'progress'
-  = render '/orders/order_details'
+  = render '/orders/order_details', render_links: true
   = form_tag('/checkout/confirm') do
     .text-center
       = submit_tag('Place order', class: 'btn btn-default')

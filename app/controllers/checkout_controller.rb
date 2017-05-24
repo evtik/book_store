@@ -60,22 +60,25 @@ class CheckoutController < ApplicationController
     card = session[:order]['card'] if session[:order]
     return redirect_to action: 'payment' unless card
     order_from_session
+    @shipping = @order.use_billing_address == 1 ? @order.billing
+                                                : @order.shipping
+    @billing = @order.billing
     @order_items = order_items_from_cart
-    @card = CreditCardForm.from_params(card)
+    @card = CreditCard.new(card).decorate
     @shipment = Shipment.find(@order.shipment_id)
     totals_from_session
   end
 
   def submit_confirm
     order = session[:order]
-    @order = Order.new(user_id: current_user.id, state: 'in_progress')
+    @order = Order.new(
+      user_id: current_user.id, state: 'in_progress',
+      coupon_id: session[:coupon_id], shipment_id: order['shipment_id'],
+      subtotal: session[:order_subtotal], total: session[:order_total]
+    )
     populate_addresses(order)
-    @order.shipment_id = order['shipment_id']
     @order.credit_card = CreditCard.new(order['card'])
     @order.order_items << order_items_from_cart
-    @order.coupon_id = session[:coupon_id]
-    @order.subtotal = session[:order_subtotal]
-    @order.total = session[:order_total]
     submit_order
   end
 
