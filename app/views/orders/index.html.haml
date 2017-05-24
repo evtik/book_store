@@ -1,0 +1,19 @@
+%main.container.general-main-wrap
+  %h1.mt-0.mb-25 My Orders
+  = render 'orders_filters'
+  .visible-xs
+    = render partial: 'xs_order', collection: @orders, as: :order
+  .hidden-xs.mb-res-50
+    %table.table.table-hover
+      %thead
+        %tr
+          %th
+            %span.in-grey-600 Number
+          %th
+            %span.in-grey-600 Completed at
+          %th
+            %span.in-grey-600 Status
+          %th
+            %span.in-grey-600 Total
+      %tbody
+        = render @orders

@@ -7,15 +7,8 @@
         %span.icon-bar
         %span.icon-bar
       %a.navbar-brand Bookstore
-      %a.shop-link.pull-right.visible-xs{href: "/"}
-        %s.panshom-icon
-          %span.shop-quantity 3
-    %a.shop-link.pull-right.hidden-xs{href: "/cart"}
-      %span.shop-icon
-        - if cart_items_count.zero?
-          %span.shop-quantity 0
-        - else
-          %span.shop-quantity= cart_items_count
+      = render '/layouts/cart_icon', css_class: 'visible-xs'
+    = render '/layouts/cart_icon', css_class: 'hidden-xs'
     #navbar.navbar-collapse.collapse.pl-30{'aria-expanded': "false"}
       .visible-xs
         %button.close{type: "button", 'aria-label': "Close"}
@@ -49,9 +42,8 @@
                   %li
                     %a{href: '/admin'} Admin panel
                 %li
-                  %a{href: "#"} Orders
+                  = link_to 'Orders', user_orders_path(current_user)
                 %li
-                  -# %a{href: "#"} Settings
                   = link_to 'Settings', user_settings_path(current_user)
                 %li.divider{role: "separator"}
                 %li

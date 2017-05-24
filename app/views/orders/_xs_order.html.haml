@@ -1,0 +1,23 @@
+.general-cart-item.divider-lg-bottom.pt-0.mb-20
+  %table.table.order-row{'data-link': "#{user_order_path(current_user, order)}"}
+    %tr
+      %td.col-half
+        %span.in-grey-600 Number
+      %td.col-half
+        %span.general-order-number= order.number
+    %tr
+      %td
+        %span.in-grey-600 Completed at
+      %td
+        %span.in-grey-900.font-16.font-weight-light= order.created_at.strftime('%F')
+    %tr
+      %td
+        %span.in-grey-600 Status
+      %td
+        %span.font-16.in-grey-900
+          .font-weight-light{class: ('text-success' if order.state == 'delivered')}= order.state.humanize
+    %tr
+      %td
+        %span.in-grey-600 Total
+      %td
+        %strong.font-16= number_to_currency order.total
