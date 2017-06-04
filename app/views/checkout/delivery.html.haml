@@ -11,5 +11,9 @@
       %p.in-gold-500.font-18 Order Summary
       %table.general-summary-table
         = render '/orders/delivery_totals'
-    = hidden_field_tag(:shipment_price, @shipment_price)
+    = fields_for :shipment, @order.shipment do |fields|
+      = fields.hidden_field :price, value: @order.shipment.price
+      = fields.hidden_field :days_min, value: @order.shipment.days_min
+      = fields.hidden_field :days_max, value: @order.shipment.days_max
+      = fields.hidden_field :method, value: @order.shipment.method
     = f.submit 'Save and continue', class: "btn btn-default center-block mb-20"

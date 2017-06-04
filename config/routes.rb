@@ -1,16 +1,16 @@
 Rails.application.routes.draw do
-  get 'orders/index'
+  # get 'orders/index'
 
-  get 'orders/show'
+  # get 'orders/show'
 
   root to: 'home#index'
   get 'home/index'
   get 'catalog/index'
 
   resources :books, only: :show
-  resources :users do
-    resources :orders, only: [:index, :show]
-  end
+  # scope 'user' do
+    # resources :orders, only: [:index, :show]
+  # end
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -48,8 +48,10 @@ Rails.application.routes.draw do
     get "/checkout/#{action}", to: "checkout##{action}"
     post "/checkout/#{action}", to: "checkout#submit_#{action}"
   end
-
   get '/checkout/complete', to: 'checkout#complete'
+
+  get '/user/:id/orders', to: 'orders#index', as: :user_orders
+  get '/user/:id/orders/:order_id', to: 'orders#show', as: :user_order
 
   get '/user/:id/settings', to: 'user_settings#show', as: :user_settings
   post '/user/:id/settings/', to: 'user_settings#update_address',

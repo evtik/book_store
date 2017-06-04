@@ -12,23 +12,19 @@ class OrdersController < ApplicationController
     initialize_order
     initialize_addresses
     @order_items = @order.order_items
-    @card = @order.credit_card.decorate
-    @shipment = @order.shipment
-    @subtotal = @order.subtotal
-    @shipment_price = @order.shipment.price
-    @total = @order.total
+    @order.credit_card = @order.credit_card.decorate
   end
 
   private
 
   def permitted
-    params.permit(:filter, :user_id, :id)
+    params.permit(:filter, :id, :order_id)
   end
 
   def initialize_order
     @order = Order.includes(:addresses, :credit_card, :shipment,
                             :coupon, order_items: [:book])
-                  .where(id: permitted[:id])
+                  .where(id: permitted[:order_id])
                   .first
                   .decorate
     authorize! :show, @order

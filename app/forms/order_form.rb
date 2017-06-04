@@ -1,13 +1,15 @@
 class OrderForm < Rectify::Form
-  attribute :use_billing_address, Integer
+  attribute :use_billing, Boolean
   attribute :billing, AddressForm
   attribute :shipping, AddressForm
   attribute :shipment_id, Integer
   attribute :card, CreditCardForm
+  attribute :credit_card, CreditCard
+  attribute :items_total, Decimal
+  attribute :subtotal, Decimal
+  attribute :shipment, ShipmentForm
 
   def addresses_valid?
-    shipping_valid = use_billing_address == 1 ||
-                     (use_billing_address.zero? && shipping.valid?)
-    billing.valid? && shipping_valid
+    [billing.valid?, use_billing ? true : shipping.valid?].all?
   end
 end

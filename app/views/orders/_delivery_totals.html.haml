@@ -2,14 +2,14 @@
   %td
     %p.font-16 Order subtotal:
   %td
-    %p.font-16= number_to_currency @subtotal
+    %p.font-16= number_to_currency @order.subtotal
 %tr
   %td
     %p.font-16 Shipping:
   %td
-    %p#shipment-label.font-16= number_to_currency @shipment_price
+    %p#shipment-label.font-16= number_to_currency @order.shipment.price
 %tr
   %td
     %strong.font-18 Order Total:
   %td
-    %strong#order-total-label.font-18{'data-subtotal': @subtotal}= number_to_currency @total
+    %strong#order-total-label.font-18{'data-subtotal': @order.subtotal}= number_to_currency(@order.subtotal + @order.shipment.price)

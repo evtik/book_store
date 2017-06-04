@@ -10,7 +10,10 @@
             = radio_button_tag :shipment_id, shipment.id,
               false,
               class: "radio-input", hidden: true,
-              id: "xs-shipment-#{shipment.id}",  data: {price: shipment.price}
+              id: "xs-shipment-#{shipment.id}", 'data-price': shipment.price,
+                'data-days-min': shipment.days_min,
+                'data-days-max': shipment.days_max,
+                'data-method': shipment.method
             %span.radio-icon
             %span.radio-text= shipment.method
     %tr

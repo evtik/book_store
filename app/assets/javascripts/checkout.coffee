@@ -1,5 +1,5 @@
 $ ->
-  $('#order_use_billing_address').change ->
+  $('#order_use_billing').change ->
     if @checked
       $('.shipping-hideable').addClass 'hidden'
     else
@@ -32,7 +32,10 @@ $ ->
     totalEl = $('#order-total-label')[0]
     subTotal = parseFloat totalEl.getAttribute 'data-subtotal'
     $(totalEl).text(I18n.l('currency', subTotal + shipmentPrice))
-    $("input[name='shipment_price']").val shipmentPrice
+    $('#shipment_price').val shipmentPrice
+    $('#shipment_days_min').val @getAttribute 'data-days-min'
+    $('#shipment_days_max').val @getAttribute 'data-days-max'
+    $('#shipment_method').val @getAttribute 'data-method'
 
   $('[data-toggle="tooltip"]').tooltip()
 

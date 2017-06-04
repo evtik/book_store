@@ -10,21 +10,21 @@
   .col-sm-3
     %h3.general-subtitle Shipments
     %p.general-address
-      = @shipment.method
+      = @order.shipment.method
       -if render_links
         %span.general-edit
           = link_to 'edit', '/checkout/delivery'
       %br
-      from #{@shipment.days_min} to #{@shipment.days_max} days
+      from #{@order.shipment.days_min} to #{@order.shipment.days_max} days
   .col-sm-3
     %h3.general-subtitle Payment Information
     %p.general-address
-      = @card.starred_number
+      = @order.credit_card.starred_number
       - if render_links
         %span.general-edit
           = link_to 'edit', '/checkout/payment'
       %br
-      = @card.month_full_year
+      = @order.credit_card.month_full_year
 .general-cart-item.divider-lg.visible-xs
 .visible-xs
   = render '/cart/xs_cart_items', render_inputs: false
