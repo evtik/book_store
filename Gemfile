@@ -35,6 +35,7 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 # gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
+gem 'aasm'
 gem 'activeadmin', git: 'git://github.com/gregbell/active_admin.git'
 gem 'cancancan'
 gem 'countries', require: 'countries/global'
@@ -51,7 +52,6 @@ gem 'omniauth-facebook'
 gem 'rails-i18n'
 gem 'rectify'
 gem 'virtus'
-gem 'wicked'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
