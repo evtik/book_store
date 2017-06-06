@@ -51,25 +51,27 @@ materials = Material.all
 authors = Author.all
 
 num_books = 200
+image_paths = [*'1'..'25']
 
 num_books.times do |i|
-  Book.create! do |book|
-    book.title = Faker::Book.title
-    book.year = (1997..2016).to_a.sample
-    book.description = Faker::Hipster.paragraph(9, false, 17)
-    book.height = rand(8..10)
-    book.width = rand(4..7)
-    book.thickness = rand(1..3)
-    book.category = categories.sample
-    book.price = (rand(4.99..119.99) * 20).round / 20.0
-    book.materials.concat [materials[rand(0..4)], materials[rand(5..7)]]
-    if (i % 3).zero?
-      book.authors.concat authors.sample(rand(1..3))
-    else
-      book.authors << authors.sample
-    end
-    book.created_at = DateTime.now - (num_books - i).days
+  book = Book.new
+  image_paths.sample(3).each { |path| book.images << Image.new(path: path) }
+  book.title = Faker::Book.title
+  book.year = (1997..2016).to_a.sample
+  book.description = Faker::Hipster.paragraph(9, false, 17)
+  book.height = rand(8..10)
+  book.width = rand(4..7)
+  book.thickness = rand(1..3)
+  book.category = categories.sample
+  book.price = (rand(4.99..119.99) * 20).round / 20.0
+  book.materials.concat [materials[rand(0..4)], materials[rand(5..7)]]
+  if (i % 3).zero?
+    book.authors.concat authors.sample(rand(1..3))
+  else
+    book.authors << authors.sample
   end
+  book.created_at = DateTime.now - (num_books - i).days
+  book.save!
 end
 
 users = User.where(admin: nil)
@@ -178,7 +180,6 @@ num_orders.times do |order_index|
   end
   subtotal *= (1 - order.coupon.discount / 100) if order.coupon&.discount
   order.subtotal = subtotal
-  order.total = subtotal + order.shipment.price
   order.addresses << create_address('billing')
   order.addresses << create_address('shipping') if booleans.sample
   order.created_at = DateTime.now - (num_orders - order_index).hours

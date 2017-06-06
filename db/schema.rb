@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170520122303) do
+ActiveRecord::Schema.define(version: 20170606111818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -109,6 +109,13 @@ ActiveRecord::Schema.define(version: 20170520122303) do
     t.index ["order_id"], name: "index_credit_cards_on_order_id", using: :btree
   end
 
+  create_table "images", force: :cascade do |t|
+    t.string   "path"
+    t.integer  "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "materials", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -130,7 +137,6 @@ ActiveRecord::Schema.define(version: 20170520122303) do
     t.integer  "coupon_id"
     t.integer  "shipment_id"
     t.string   "state"
-    t.decimal  "total",       precision: 6, scale: 2
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.decimal  "subtotal",    precision: 6, scale: 2
