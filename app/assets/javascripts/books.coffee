@@ -1,4 +1,8 @@
 $ ->
+  $('.img-link').click (e) ->
+    e.preventDefault()
+    $('#main-image').attr 'src', @getAttribute 'data-image'
+
   $('.quantity-decrement').click (e) ->
     e.preventDefault()
     targetInput = $ "##{@getAttribute 'data-target'}"

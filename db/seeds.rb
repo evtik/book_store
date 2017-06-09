@@ -51,10 +51,11 @@ materials = Material.all
 authors = Author.all
 
 num_books = 200
-image_paths = [*'1'..'25']
+image_paths = [*'26'..'30']
 
 num_books.times do |i|
   book = Book.new
+  book.images << Image.new(path: [*1..25].sample.to_s)
   image_paths.sample(3).each { |path| book.images << Image.new(path: path) }
   book.title = Faker::Book.title
   book.year = (1997..2016).to_a.sample

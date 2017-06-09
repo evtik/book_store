@@ -11,4 +11,8 @@ module ApplicationHelper
   def capitalize_category(name)
     name.split.map(&:capitalize).join(' ')
   end
+
+  def book_image_path(path)
+    "https://s3.eu-central-1.amazonaws.com/sybookstore/images/#{path}.png"
+  end
 end

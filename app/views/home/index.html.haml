@@ -26,4 +26,5 @@
       class: 'btn btn-default'
   .mb-35
     %h3 Best Sellers
-    = render '/catalog/books', books: @most_popular_books
+    .row
+      = render partial: '/books/book', collection: @most_popular_books, as: :book

@@ -11,7 +11,8 @@
     .dropdown
       =render 'catalog_sorters'
   .mb-20
-    =render 'books', books: @books
+    .row
+      = render @books
   .text-center
     %span
       -if more_books?
