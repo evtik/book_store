@@ -11,6 +11,6 @@ class BooksSorter < Rectify::Query
               Book.order("#{@params['sort_by']} #{@params['order'].upcase}")
             end
 
-    books.includes(:authors).limit(@params['limit'])
+    books.includes(:authors, :images).limit(@params['limit'])
   end
 end

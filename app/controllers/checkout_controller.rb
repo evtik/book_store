@@ -61,7 +61,8 @@ class CheckoutController < ApplicationController
   def complete
     flash.keep
     return redirect_to '/cart' unless flash[:order_confirmed]
-    @order = UserLastOrder.new(current_user.id).to_a.first.decorate
+    # @order = UserLastOrder.new(current_user.id).to_a.first.decorate
+    @order = UserLastOrder.new(current_user.id).first.decorate
     @order_items = @order.order_items
   end
 
