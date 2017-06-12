@@ -2,12 +2,12 @@ ActiveAdmin.register Book do
   # permit_params :title, :description, :year, :height, :width, :thickness,
                 # :price
 
-  # batch_action :destroy do |ids|
-    # batch_action_collection.find(ids).each do |book|
-      # book.destroy
-    # end
-    # redirect_to collection_path, notice: 'Deleted!'
-  # end
+  batch_action :destroy do |ids|
+    batch_action_collection.find(ids).each do |book|
+      book.destroy
+    end
+    redirect_to collection_path, notice: 'Deleted!'
+  end
 
   index do
     selectable_column

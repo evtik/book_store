@@ -1,3 +1,4 @@
+//= require activeadmin_addons/all
 // SASS variable overrides must be declared before loading up Active Admin's styles.
 //
 // To view the variables that Active Admin provides, take a look at
@@ -11,7 +12,28 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
-// Overriding any non-variable SASS must be done after the fact.
-// For example, to change the default status-tag color:
-//
-//   .status_tag { background: #6090DB; }
+@mixin state_button($state_color){
+  $lighter: lighten($state_color, 15%);
+  $darker: darken($state_color, 12%);
+  background-color: $lighter !important;
+  background-image: linear-gradient(180deg, $lighter, $darker) !important;
+  border: solid 1px $state_color !important;
+}
+
+$in_queue_color: #7abcff;
+$in_delivery_color: #009ec3;
+$delivered_color: #009900;
+$canceled_color: #cc0000;
+
+.status_tag { 
+  &.in_progress { background: #a1dbff; }
+  &.in_queue { background: $in_queue_color; }
+  &.in_delivery { background: $in_delivery_color; }
+  &.delivered { background: $delivered_color; }
+  &.canceled { background: $canceled_color; }
+}
+
+.queue_button { @include state_button($in_queue_color); }
+.deliver_button { @include state_button($in_delivery_color); }
+.complete_button { @include state_button($delivered_color); }
+.cancel_button { @include state_button($canceled_color); }

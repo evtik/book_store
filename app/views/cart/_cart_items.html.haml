@@ -15,7 +15,8 @@
     %tr
       %td
         .general-img-wrap-table
-          %img.cart-img-shadow.pull-left{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}
+          = image_tag book_image_path(order_item.book.images.first.path), alt: order_item.book.title,
+            class: 'cart-img-shadow pull-left'
       %td
         %p.general-title= order_item.book.title
         - unless render_inputs

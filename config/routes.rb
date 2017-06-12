@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  # get 'orders/index'
-
-  # get 'orders/show'
-
   root to: 'home#index'
   get 'home/index'
   get 'catalog/index'
@@ -37,7 +33,14 @@ Rails.application.routes.draw do
   # end
 
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope '/admin/aasm', module: :admin do
+    resources :orders, only: [:queue, :deliver, :complete, :cancel] do
+      put :queue
+      put :deliver
+      put :complete
+      put :cancel
+    end
+  end
 
   get '/cart', to: 'cart#index'
   post '/cart/add', to: 'cart#add', as: :cart_add
