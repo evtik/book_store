@@ -2,12 +2,10 @@ ActiveAdmin.register Order do
   config.batch_actions = true
   config.filters = false
 
-  # filter :state, as: :select
-
   scope :all, default: true
-  scope :in_progress
-  scope :in_queue
-  scope :in_delivery
+  scope('In progress') do |scope|
+    scope.where(state: %w(in_progress in_queue in_delivery))
+  end
   scope :delivered
   scope :canceled
 
@@ -17,7 +15,9 @@ ActiveAdmin.register Order do
     state_column :state
     column 'Date', :created_at
     column 'Customer', :user, sortable: :user_id
-    column('Subtotal') { |order| number_to_currency order.subtotal }
+    column('Total') do |order|
+      number_to_currency order.subtotal + order.shipment.price
+    end
     column 'Actions' do |order|
       actions = %w(queue deliver complete cancel).map do |action|
         next unless order.send("may_#{action}?")
@@ -31,32 +31,11 @@ ActiveAdmin.register Order do
   end
 
   controller do
-    before_action :set_order, only: [:queue, :deliver, :complete, :cancel]
-
-    def queue
-      @order.queue!
-      redirect_to request.referrer
-    end
-
-    def deliver
-      @order.deliver!
-      redirect_to request.referrer
-    end
-
-    def complete
-      @order.complete!
-      redirect_to request.referrer
-    end
-
-    def cancel
-      @order.cancel!
-      redirect_to request.referrer
-    end
-
-    private
-
-    def set_order
-      @order = Order.find(params[:order_id])
+    %i(queue deliver complete cancel).each do |action|
+      define_method action do
+        Order.find(params[:order_id]).send(action.to_s << '!')
+        redirect_to request.referrer
+      end
     end
   end
 

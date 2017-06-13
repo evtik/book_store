@@ -33,12 +33,18 @@ Rails.application.routes.draw do
   # end
 
   ActiveAdmin.routes(self)
+
   scope '/admin/aasm', module: :admin do
     resources :orders, only: [:queue, :deliver, :complete, :cancel] do
       put :queue
       put :deliver
       put :complete
       put :cancel
+    end
+
+    resources :reviews, only: [:approve, :reject] do
+      put :approve
+      put :reject
     end
   end
 

@@ -20,20 +20,25 @@
   border: solid 1px $state_color !important;
 }
 
+$in_progress_color: #a1dbff;
 $in_queue_color: #7abcff;
 $in_delivery_color: #009ec3;
-$delivered_color: #009900;
-$canceled_color: #cc0000;
+$green_color: #009900;
+$red_color: #990000;
 
 .status_tag { 
-  &.in_progress { background: #a1dbff; }
+  &.in_progress { background: $in_progress_color; }
   &.in_queue { background: $in_queue_color; }
   &.in_delivery { background: $in_delivery_color; }
-  &.delivered { background: $delivered_color; }
-  &.canceled { background: $canceled_color; }
+  &.delivered { background: $green_color; }
+  &.canceled { background: $red_color; }
+
+  &.unprocessed { background: $in_progress_color; }
+  &.approved { background: $green_color; }
+  &.rejected { background: $red_color; }
 }
 
 .queue_button { @include state_button($in_queue_color); }
 .deliver_button { @include state_button($in_delivery_color); }
-.complete_button { @include state_button($delivered_color); }
-.cancel_button { @include state_button($canceled_color); }
+.complete_button, .approve_button { @include state_button($green_color); }
+.cancel_button, .reject_button { @include state_button($red_color); }
