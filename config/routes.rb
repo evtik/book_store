@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   get 'catalog/index'
 
   resources :books, only: :show
+  # resources :reviews, only: :create
+
+  authenticate :user do
+    resources :reviews, only: :create
+  end
   # scope 'user' do
     # resources :orders, only: [:index, :show]
   # end

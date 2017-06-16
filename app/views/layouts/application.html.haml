@@ -8,6 +8,7 @@
     %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600", rel: "stylesheet"}
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application', params[:controller]
+    = yield :head
   %body
     = render 'layouts/header'
     .container{style: "visibility:#{flash[:error] ? 'visible' : 'hidden'}"}

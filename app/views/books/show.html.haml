@@ -1,3 +1,6 @@
+- if flash[:review_error]
+  = content_for :head do
+    = javascript_include_tag 'books'
 %main.container
   = link_to flash[:referrer], class: 'general-back-link' do
     %i.fa.fa-long-arrow-left.mr-15
@@ -48,22 +51,51 @@
           %p.general-item-info.pull-right= @book.materials_string
           %p.break-word Materials
   .mb-80
-    %h3.in-gold-500.mb-25= "Reviews (#{@book.reviews.length})"
-    %ul.media-list
-      - @book.reviews.each do |review|
-        %li.media.divider-lg
-          .media-left
-            %a{href: "#"}
-              %span.img-circle.logo-size.logo-empty.media-object= review.user.email.first.upcase
-          .media-body
-            %div
-              %p.general-message-date.hidden-xs= l review.updated_at, format: :long_date
-              %h4.media-heading.max-240.general-message-name
-                %span.general-message-verified Verified Reviewer
-                Rita J. Lewis
-            .mb-15
-              - review.score.times do
-                %i.fa.fa-star.rate-star
-              - (5 - review.score).times do
-                %i.fa.fa-star.rate-star.rate-empty
-            %p.text-justify= review.body
+    %ul.nav.nav-tabs.mb-20{role: "tablist"}
+      %li.mb-10{class: ('active' unless flash[:review_error]), role: "presentation"}
+        %a{href: "#reviews", 'aria-controls': "reviews", role: "tab", 'data-toggle': "tab"}
+          %h3.in-gold-500.mb-25= "Reviews (#{@book.reviews.length})"
+      %li.mb-10{class: ('active' if flash[:review_error]), role: "presentation"}
+        %a{href: "#write-review", 'aria-controls': "write-review", role: "tab", 'data-toggle': "tab"}
+          %h3.in-gold-500.mb-25 Write a review
+    .tab-content
+      #reviews.tab-pane.general-main-wrap{class: ('active fade in' unless flash[:review_error]), role: "tabpanel"}
+        .row
+          .col-xs-12.col-sm-8
+            %ul.media-list
+              - @book.reviews.each do |review|
+                %li.media.divider-lg
+                  .media-left
+                    %a{href: "#"}
+                      %span.img-circle.logo-size.logo-empty.media-object= review.user.email.first.upcase
+                  .media-body
+                    %div
+                      %p.general-message-date.hidden-xs= l review.updated_at, format: :long_date
+                      %h4.media-heading.max-240.general-message-name
+                        %span.general-message-verified Verified Reviewer
+                        Rita J. Lewis
+                    .mb-15
+                      - review.score.times do
+                        %i.fa.fa-star.rate-star
+                      - (5 - review.score).times do
+                        %i.fa.fa-star.rate-star.rate-empty
+                    %p.text-justify= review.body
+      #write-review.tab-pane.general-main-wrap{class: ('active fade in' if flash[:review_error]), role: "tabpanel"}
+        .row
+          .col-xs-12.col-sm-8
+            %p.font-weight-light Score
+            - 5.times do |index|
+              %i.fa.fa-2x.fa-star.rate-star.rate-empty.review-star{id: "star-#{index + 1}"}
+            = form_for @review, url: reviews_path do |f|
+              = f.hidden_field :book_id
+              = f.hidden_field :score
+              .form-group{class: ('has-error' if @review.errors[:title].any?)}
+                = f.label :title, 'Title', class: 'control-label font-weight-light'
+                = f.text_field :title, class: 'form-control'
+                %span.help-block= @review.errors[:title].first
+              .form-group{class: ('has-error' if @review.errors[:body].any?)}
+                = f.label :body, 'Review', class: 'control-label font-weight-light'
+                = f.text_area :body, rows: '5', class: 'form-control'
+                %span.help-block= @review.errors[:body].first
+              = f.submit 'Post', class: 'btn btn-default pull-right'
+
