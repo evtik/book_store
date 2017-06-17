@@ -1,38 +1,22 @@
 class ReviewsController < ApplicationController
-  # def create
-    # flash.keep
-    # if current_user
-      # @review = if params[:review].present?
-                  # Review.new(review_params)
-                # else
-                  # Review.new(session[:review])
-                # end
-      # @review.user = current_user
-      # if @review.save
-        # flash[:notice] = 'Review posted!'
-        # redirect_to flash[:book_page]
-      # else
-        # flash[:review_error] = true
-        # @book = BookWithAssociated.new(review_params[:book_id]).first.decorate
-        # render 'books/show'
-      # end
-    # else
-      # session[:review] = review_params
-      # redirect_to new_user_session_path
-    # end
-  # end
+  before_action :authenticate_user!
+
+  def new
+    @book = BookWithAssociated.new(params[:book_id], load_reviews: false)
+                              .first.decorate
+    @review = Review.new(book_id: @book.id, score: 0)
+  end
 
   def create
-    flash.keep
     @review = Review.new(review_params)
     @review.user = current_user
     if @review.save
       flash[:notice] = 'Review posted!'
-      redirect_to flash[:book_page]
+      redirect_to book_path(params[:book_id])
     else
-      flash[:review_error] = true
-      @book = BookWithAssociated.new(review_params[:book_id]).first.decorate
-      render 'books/show'
+      @book = BookWithAssociated
+        .new(review_params[:book_id], load_reviews: false).first.decorate
+      render 'new'
     end
   end
 

@@ -3,15 +3,9 @@ Rails.application.routes.draw do
   get 'home/index'
   get 'catalog/index'
 
-  resources :books, only: :show
-  # resources :reviews, only: :create
-
-  authenticate :user do
-    resources :reviews, only: :create
+  resources :books, only: :show do
+    resources :reviews, only: [:new, :create]
   end
-  # scope 'user' do
-    # resources :orders, only: [:index, :show]
-  # end
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
@@ -71,5 +65,5 @@ Rails.application.routes.draw do
   post '/user/:id/settings/', to: 'user_settings#update_address',
                               as: :user_settings_update_address
   patch '/user/:id/settings/email', to: 'user_settings#update_email',
-                                   as: :user_settings_update_email
+                                    as: :user_settings_update_email
 end

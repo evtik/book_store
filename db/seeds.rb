@@ -84,8 +84,8 @@ books.each do |book|
       review.book = book
       review.user = user
       review.score = rand(1..5)
-      review.title = Faker::Hipster.sentence
-      review.body = Faker::Hipster.paragraph(8, false, 10)
+      review.title = Faker::Hipster.sentence.truncate(70)
+      review.body = Faker::Hipster.paragraph(8, false, 10).truncate(490)
       review.state = review_states.sample
     end
   end

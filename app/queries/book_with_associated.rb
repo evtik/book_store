@@ -1,11 +1,11 @@
 class BookWithAssociated < Rectify::Query
-  def initialize(id)
+  def initialize(id, options)
     @id = id
+    @include_reviews = options[:load_reviews]
   end
 
   def query
-    Book.includes(:authors, :images, :materials, reviews: :user)
-        .where(id: @id)
-        .limit(1)
+    books = Book.where(id: @id).eager_load(:authors, :images, :materials)
+    @include_reviews ? books.eager_load(approved_reviews: :user) : books
   end
 end
