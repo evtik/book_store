@@ -15,4 +15,9 @@ module ApplicationHelper
   def book_image_path(path)
     "https://s3.eu-central-1.amazonaws.com/sybookstore/images/#{path}.png"
   end
+
+  def markdown(text)
+    renderer = Redcarpet::Render::HTML.new
+    Redcarpet::Markdown.new(renderer).render(text)
+  end
 end

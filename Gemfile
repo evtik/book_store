@@ -52,6 +52,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'rails-i18n'
 gem 'rectify'
+gem 'redcarpet'
 gem 'virtus'
 
 group :development, :test do
