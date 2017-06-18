@@ -1,8 +1,6 @@
 class Review < ApplicationRecord
   include AASM
 
-  belongs_to :user
-
   REGEXP = /\A([\w!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   belongs_to :book

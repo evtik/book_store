@@ -1,21 +1,21 @@
 %h3.in-gold-500.mb-25= "Reviews (#{@book.approved_reviews.length})"
-= link_to 'Write review', new_book_review_path(@book), class: 'pull-right'
 .row
   .col-xs-12.col-sm-8
     %ul.media-list
-      - @book.approved_reviews.each do |review|
+      - @book.approved_reviews.sort_by(&:created_at).reverse.each do |review|
         %li.media.divider-lg
           .media-left
-            %a{href: "#"}
-              %span.img-circle.logo-size.logo-empty.media-object= review.user.email.first.upcase
+            %span.img-circle.logo-size.logo-empty.media-object= review.user.billing_addresses.first.first_name.first
           .media-body
             %div
               %p.general-message-date.hidden-xs= l review.updated_at, format: :long_date
               %h4.media-heading.max-240.general-message-name
-                %span.general-message-verified Verified Reviewer
-                -# Rita J. Lewis
-                = review.user.email
+                %p= "#{review.user.billing_addresses.first.first_name} #{review.user.billing_addresses.first.last_name}"
+                %span.general-message-verified{style: "margin-left: 50px;"} Verified Reviewer
             .mb-15
               - 5.times do |index|
                 %i.fa.fa-star.rate-star{class: ('rate-empty' if review.score < index + 1)}
+            %h4= review.title
             %p.text-justify= review.body
+  .col-xs-12.col-sm-8
+    = link_to 'Write review', new_book_review_path(@book), class: 'btn btn-primary pull-right'

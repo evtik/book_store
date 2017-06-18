@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :destroy, autosave: false
+  has_many :billing_addresses, -> { where(address_type: 'billing') },
+           class_name: 'Address'
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
