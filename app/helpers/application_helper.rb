@@ -20,4 +20,9 @@ module ApplicationHelper
     renderer = Redcarpet::Render::HTML.new
     Redcarpet::Markdown.new(renderer).render(text)
   end
+
+  def verified_reviewer?(book_id, user_id)
+    OrderItem.eager_load(order: :user)
+             .exists?(book_id: book_id, 'orders.user_id' => user_id)
+  end
 end

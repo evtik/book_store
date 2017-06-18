@@ -11,7 +11,8 @@
               %p.general-message-date.hidden-xs= l review.updated_at, format: :long_date
               %h4.media-heading.max-240.general-message-name
                 %p= "#{review.user.billing_addresses.first.first_name} #{review.user.billing_addresses.first.last_name}"
-                %span.general-message-verified{style: "margin-left: 50px;"} Verified Reviewer
+                - if verified_reviewer?(@book.id, review.user_id)
+                  %span.general-message-verified{style: "margin-left: 50px;"} Verified Reviewer
             .mb-15
               - 5.times do |index|
                 %i.fa.fa-star.rate-star{class: ('rate-empty' if review.score < index + 1)}
