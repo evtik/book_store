@@ -4,7 +4,7 @@
     %p.font-weight-light Score
     - 5.times do |index|
       %i.fa.fa-2x.fa-star.rate-star.review-star{id: "star-#{index + 1}",
-        class: ('rate-empty' if @review.score < index + 1)}
+        class: ((@review.score < index + 1) ? 'rate-empty' : 'star-checked' )}
     = form_for @review, url: book_reviews_path do |f|
       = f.hidden_field :book_id
       = f.hidden_field :score

@@ -20,4 +20,4 @@
       %td
         %span.in-grey-600 Total
       %td
-        %strong.font-16= number_to_currency order.total
+        %strong.font-16= number_to_currency order.subtotal + order.shipment.price
