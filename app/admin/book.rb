@@ -12,7 +12,13 @@ ActiveAdmin.register Book do
   index do
     selectable_column
     column :title
-    column :description
+    column 'Image' do |book|
+      image = MiniMagick::Image.open(book_image_path(book.images.first.path))
+      image_tag(image.resize('100x100'))
+    end
+    column 'Description' do |book|
+      p truncate(book.description)
+    end
     column :year
     column :height
     column :width
