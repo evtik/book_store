@@ -11,19 +11,14 @@ ActiveAdmin.register Book do
 
   index do
     selectable_column
-    column :title
     column 'Image' do |book|
-      image = MiniMagick::Image.open(book_image_path(book.images.first.path))
-      image_tag(image.resize('100x100'))
+      image_tag(book_image_path(book.images.first.path), width: 45, height: 67)
     end
-    column 'Description' do |book|
-      p truncate(book.description)
-    end
-    column :year
-    column :height
-    column :width
-    column :thickness
-    column :price
+    column(:category) { |book| book.category.name.capitalize }
+    column :title
+    column('Authors') { |book| book.decorate.authors_short }
+    column(:description) { |book| p truncate(book.description, length: 60) }
+    column(:price) { |book| number_to_currency book.price }
     actions
   end
 

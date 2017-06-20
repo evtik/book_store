@@ -18,6 +18,11 @@ module ApplicationHelper
 
   def markdown(text)
     renderer = Redcarpet::Render::HTML.new
-    Redcarpet::Markdown.new(renderer).render(text)
+    Redcarpet::Markdown.new(renderer).render(text).html_safe
+  end
+
+  def markdown_truncate(text, options = {})
+    length = options[:length] || 60
+    truncate(markdown(text), length: length, escape: false)
   end
 end

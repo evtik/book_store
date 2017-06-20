@@ -17,6 +17,6 @@
               - 5.times do |index|
                 %i.fa.fa-star.rate-star{class: ('rate-empty' if review.score < index + 1)}
             %h4= review.title
-            = markdown(review.body).html_safe
+            = markdown(review.body)
   .col-xs-12.col-sm-8
     = link_to 'Write review', new_book_review_path(@book), class: 'btn btn-primary pull-right'
