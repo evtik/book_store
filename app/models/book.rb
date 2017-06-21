@@ -7,6 +7,7 @@ class Book < ApplicationRecord
   has_many :reviews
   has_many :approved_reviews, -> { where(state: 'approved') },
            class_name: 'Review'
+  accepts_nested_attributes_for :authors
 
   paginates_per 12
 end

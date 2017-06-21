@@ -42,3 +42,9 @@ $red_color: #990000;
 .deliver_button { @include state_button($in_delivery_color); }
 .complete_button, .approve_button { @include state_button($green_color); }
 .cancel_button, .reject_button { @include state_button($red_color); }
+
+ol.choices-group {
+  height: 200px;
+  width: 200px !important;
+  overflow: auto;
+}
