@@ -14,7 +14,7 @@ ActiveAdmin.register Book do
   index do
     selectable_column
     column 'Image' do |book|
-      image_tag(book_image_path(book.images.first.path), width: 45, height: 67)
+      image_tag(book_image_path(book.images.first), width: 45, height: 67)
     end
     column(:category) { |book| book.category.name.capitalize }
     column :title

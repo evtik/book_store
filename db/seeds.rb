@@ -39,11 +39,11 @@ materials.each do |item|
 end
 
 50.times do
-  Author.create! do |author|
-    author.first_name = Faker::Name.first_name
-    author.last_name = Faker::Name.last_name
-    author.description = Faker::Hipster.paragraph(3, false, 5)
-  end
+  author = Author.new
+  author.first_name = Faker::Name.first_name
+  author.last_name = Faker::Name.last_name
+  author.description = Faker::Hipster.paragraph(3, false, 5)
+  author.save!
 end
 
 categories = Category.all
@@ -54,9 +54,10 @@ num_books = 200
 
 num_books.times do |i|
   book = Book.new
-  book.images << [*'1'..'25'].sample
-  [*'26'..'30'].sample(3).each { |path| book.images << path }
+  # book.images << [*'1'..'25'].sample
+  # [*'26'..'30'].sample(3).each { |path| book.images << path }
   book.title = Faker::Book.title.truncate(70)
+  puts book.title
   book.year = (1997..2016).to_a.sample
   book.description = Faker::Hipster.paragraph(9, false, 17).truncate(490)
   book.height = rand(8..15)
