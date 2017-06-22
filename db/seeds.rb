@@ -1,14 +1,14 @@
-OrderItem.delete_all
-Order.delete_all
-Shipment.delete_all
-CreditCard.delete_all
-Coupon.delete_all
-Review.delete_all
-User.delete_all
-Book.delete_all
-Category.delete_all
-Material.delete_all
-Author.delete_all
+OrderItem.destroy_all
+Shipment.destroy_all
+CreditCard.destroy_all
+Coupon.destroy_all
+Order.destroy_all
+Review.destroy_all
+Book.destroy_all
+Category.destroy_all
+Material.destroy_all
+Author.destroy_all
+User.destroy_all
 
 User.create! do |u|
   u.email = 'admin@bookstore.com'
@@ -51,16 +51,15 @@ materials = Material.all
 authors = Author.all
 
 num_books = 200
-image_paths = [*'26'..'30']
 
 num_books.times do |i|
   book = Book.new
-  book.images << Image.new(path: [*1..25].sample.to_s)
-  image_paths.sample(3).each { |path| book.images << Image.new(path: path) }
-  book.title = Faker::Book.title
+  book.images << [*'1'..'25'].sample
+  [*'26'..'30'].sample(3).each { |path| book.images << path }
+  book.title = Faker::Book.title.truncate(70)
   book.year = (1997..2016).to_a.sample
-  book.description = Faker::Hipster.paragraph(9, false, 17)
-  book.height = rand(8..10)
+  book.description = Faker::Hipster.paragraph(9, false, 17).truncate(490)
+  book.height = rand(8..15)
   book.width = rand(4..7)
   book.thickness = rand(1..3)
   book.category = categories.sample

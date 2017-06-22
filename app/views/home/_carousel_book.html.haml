@@ -1,7 +1,8 @@
 .row
   .col-sm-5
     .general-img-wrap
-      = image_tag book_image_path(book.images.first.path), alt: book.title
+      -# = image_tag book_image_path(book.images.first), alt: book.title
+      = image_tag book.images.first, alt: book.title
       -# = image_tag book_image_path('ResponsiveWebDesign'), alt: book.title,
         -# style: "vertical-align:middle"
       -# %img.img-shadow.general-thumbnail-img{src: "http://jonathantweedy.com/resources/thumbs/SmashingBook5ResponsiveWebDesign.jpg", alt: "design-book"}

@@ -8,12 +8,12 @@ class Review < ApplicationRecord
 
   validates :title,
             presence: true,
-            format: { with: REGEXP, message: 'Invalid title format' },
+            format: { with: REGEXP, message: 'Invalid review title format' },
             length: { maximum: 80 }
 
   validates :body,
             presence: true,
-            format: { with: REGEXP, message: 'Invalid body format' },
+            format: { with: REGEXP, message: 'Invalid review body format' },
             length: { maximum: 500 }
 
   aasm column: 'state', whiny_transitions: false do

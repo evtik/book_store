@@ -15,8 +15,8 @@
     %tr
       %td
         .general-img-wrap-table
-          = image_tag book_image_path(order_item.book.images.first.path), alt: order_item.book.title,
-            class: 'cart-img-shadow pull-left'
+          -# = image_tag book_image_path(order_item.book.images.first), alt: order_item.book.title,
+          = image_tag order_item.book.images.first, alt: order_item.book.title, class: 'cart-img-shadow pull-left'
       %td
         %p.general-title= order_item.book.title
         - unless render_inputs

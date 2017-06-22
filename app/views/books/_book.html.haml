@@ -1,7 +1,8 @@
 .col-xs-6.col-sm-3
   .general-thumb-wrap
     .thumbnail.general-thumbnail
-      = image_tag book_image_path(book.images.first.path), alt: book.title,
+      -# = image_tag book_image_path(book.images.first), alt: book.title,
+      = image_tag book.images.first, alt: book.title,
         class: 'img img-shadow general-thumbnail-img'
       .thumb-hover
         .general-thumb-link-wrap

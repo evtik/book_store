@@ -7,13 +7,13 @@
     .col-sm-6
       .product-gallery
         .mb-20
-          = image_tag book_image_path(@book.images[1].path), alt: @book.title,
+          = image_tag book_image_path(@book.images[1]), alt: @book.title,
             class: 'img-responsive', id: 'main-image'
         .images.clearfix
           - @book.images[1..-1].each do |image|
             = link_to '#', class: 'img-link',
-              'data-image': book_image_path(image.path) do
-              = image_tag book_image_path(image.path), alt: image.path
+              'data-image': book_image_path(image) do
+              = image_tag book_image_path(image), alt: image
     .col-sm-6
       %h1.mt-res-0= @book.title
       %p.in-grey-600.small= @book.authors_full

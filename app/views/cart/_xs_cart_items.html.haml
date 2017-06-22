@@ -3,7 +3,8 @@
     = link_to(cart_remove_path(order_item.book.id), data: { confirm: 'Are you sure?' }, class: "close general-cart-close", method: :delete) do
       %span{'aria-hidden': "true"} &times;
   .general-img-wrap-table
-    = image_tag book_image_path(order_item.book.images.first.path), alt: order_item.book.title,
+    -# = image_tag book_image_path(order_item.book.images.first), alt: order_item.book.title,
+    = image_tag order_item.book.images.first, alt: order_item.book.title,
       class: 'cart-image-shadow'
   %p.general-title= order_item.book.title
   - unless render_inputs
