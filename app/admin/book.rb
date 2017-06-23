@@ -13,7 +13,7 @@ ActiveAdmin.register Book do
   index do
     selectable_column
     column 'Image' do |book|
-      image_tag(book.main_image, width: 45, height: 67)
+      image_tag(book.main_image.url(:thumb)) unless book.main_image.blank?
     end
     column(:category) { |book| book.category.name.capitalize }
     column :title
@@ -21,6 +21,28 @@ ActiveAdmin.register Book do
     column(:description) { |book| markdown_truncate(book.description) }
     column(:price) { |book| number_to_currency book.price }
     actions
+  end
+
+  show do
+    attributes_table do
+      row(:category) { |book| h5 b capitalize_category(book.category.name) }
+      row(:title) { |book| h3 b book.title }
+      row(:main_image) do |book|
+        image_tag(book.main_image.url(:small)) unless book.main_image.blank?
+      end
+      row('Images') do |book|
+        unless book.images.empty?
+          ul class: 'images-row' do
+            book.images.each do |image|
+              li image_tag(image.url(:small))
+            end
+          end
+        end
+      end
+      row :description
+      row('Dimensions') { |book| book.decorate.dimensions }
+      row(:price) { |book| number_to_currency book.price }
+    end
   end
 
   form do |f|
@@ -33,8 +55,10 @@ ActiveAdmin.register Book do
 
       images_hint = unless f.object.images.empty?
                       f.object.images.map { |image|
-                        image_tag(image.url(:thumb))
-                      }.join('<br>').html_safe
+                        '<span class="row-thumb">' <<
+                          image_tag(image.url(:thumb)) <<
+                          '</span>'
+                      }.join.html_safe
                     end
       f.input :images, as: :file, input_html: { multiple: true },
                        hint: images_hint
@@ -45,10 +69,9 @@ ActiveAdmin.register Book do
                             }.sort
       f.input :title
       f.input :author_ids, label: 'Authors', as: :check_boxes,
-                           collection: Author.all.map { |author|
-                             [author.full_name, author.id]
-                           }.sort
-                # [[author.last_name, author.first_name].join(', '), author.id]
+              collection: Author.all.map { |author|
+                [[author.last_name, author.first_name].join(', '), author.id]
+              }.sort
       f.input :description, input_html: { rows: 5 }
       f.input :material_ids, label: 'Materials', as: :check_boxes,
                              collection: Material.all.map { |material|
