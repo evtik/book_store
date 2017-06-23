@@ -1,6 +1,6 @@
 class Author < ApplicationRecord
   NAME_REGEXP = /\A[A-z\'\-\s]+\z/
-  DESCRIPTION_REGEXP = /\A([\w!#$%&'*+-\/=?^_`{|}~\s])+\z/
+  DESCRIPTION_REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   has_and_belongs_to_many :books
 

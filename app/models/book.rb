@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-  REGEXP = /\A([\w!#$%&'*+-\/=?^_`{|}~\s])+\z/
+  REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   belongs_to :category
   has_and_belongs_to_many :authors
@@ -13,6 +13,7 @@ class Book < ApplicationRecord
 
   paginates_per 12
 
+  mount_uploader :main_image, ImageUploader
   mount_uploaders :images, ImageUploader
 
   validate :must_have_category, :must_have_authors, :must_have_materials

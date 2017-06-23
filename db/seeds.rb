@@ -42,7 +42,12 @@ end
   author = Author.new
   author.first_name = Faker::Name.first_name
   author.last_name = Faker::Name.last_name
-  author.description = Faker::Hipster.paragraph(3, false, 5)
+  desc = Faker::Hipster.paragraph(3, false, 5)
+  # unless desc =~ /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
+    # p desc
+  # end
+  # puts desc
+  author.description = desc
   author.save!
 end
 
@@ -57,9 +62,12 @@ num_books.times do |i|
   # book.images << [*'1'..'25'].sample
   # [*'26'..'30'].sample(3).each { |path| book.images << path }
   book.title = Faker::Book.title.truncate(70)
-  puts book.title
   book.year = (1997..2016).to_a.sample
-  book.description = Faker::Hipster.paragraph(9, false, 17).truncate(490)
+  desc = Faker::Hipster.paragraph(9, false, 17).truncate(490)
+  # unless desc =~ /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
+    # p desc
+  # end
+  book.description = desc
   book.height = rand(8..15)
   book.width = rand(4..7)
   book.thickness = rand(1..3)

@@ -15,8 +15,8 @@
     %tr
       %td
         .general-img-wrap-table
-          -# = image_tag book_image_path(order_item.book.images.first), alt: order_item.book.title,
-          = image_tag order_item.book.images.first, alt: order_item.book.title, class: 'cart-img-shadow pull-left'
+          = image_tag order_item.book.main_image,
+            alt: order_item.book.title, class: 'cart-img-shadow pull-left'
       %td
         %p.general-title= order_item.book.title
         - unless render_inputs
@@ -44,5 +44,7 @@
         %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
       - if render_inputs
         %td
-          = link_to(cart_remove_path(order_item.book.id), data: { confirm: 'Are you sure?' }, class: "close general-cart-close", method: :delete) do
+          = link_to(cart_remove_path(order_item.book.id),
+            data: { confirm: 'Are you sure?' },
+            class: "close general-cart-close", method: :delete) do
             %span{'aria-hidden': "true"} &times;

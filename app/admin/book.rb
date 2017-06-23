@@ -1,8 +1,7 @@
 ActiveAdmin.register Book do
   permit_params :category_id, :title, :description, :year, :height,
-                :width, :thickness, :price,
-                author_ids: [], material_ids: [], images: [],
-                images_cache: []
+                :width, :thickness, :price, :main_image,
+                author_ids: [], material_ids: [], images: []
 
   batch_action :destroy do |ids|
     batch_action_collection.find(ids).each do |book|
@@ -14,7 +13,7 @@ ActiveAdmin.register Book do
   index do
     selectable_column
     column 'Image' do |book|
-      image_tag(book_image_path(book.images.first), width: 45, height: 67)
+      image_tag(book.main_image, width: 45, height: 67)
     end
     column(:category) { |book| book.category.name.capitalize }
     column :title
@@ -27,16 +26,20 @@ ActiveAdmin.register Book do
   form do |f|
     f.semantic_errors
     f.inputs 'Book details' do
-      # f.input :image_ids, label: 'Images', as: :check_boxes,
-        # # input_html: f.template.image_tag(book_image_path('11'), width: 5, height: 7),
-              # collection: Image.all.map { |image| [image.path, image.id] }
-      hint = f.object.images.map { |i| image_tag(i.url(:thumb)) }.join('<br>').html_safe
-      f.input :images, as: :file, input_html: {multiple: true}, hint: hint
-      f.input :images_cache, as: :hidden
-      # f.input :description, as: :file, image_preveiw: true
-      # f.input :description_cache, as: :hidden, image_preview: true
+      image_hint = if f.object.main_image.present?
+                     image_tag(f.object.main_image.url(:thumb))
+                   end
+      f.input :main_image, as: :file, hint: image_hint
+
+      images_hint = unless f.object.images.empty?
+                      f.object.images.map { |image|
+                        image_tag(image.url(:thumb))
+                      }.join('<br>').html_safe
+                    end
+      f.input :images, as: :file, input_html: { multiple: true },
+                       hint: images_hint
+
       f.input :category_id, label: 'Category', as: :select,
-              # include_blank: false,
                             collection: Category.all.map { |category|
                               [category.name.capitalize, category.id]
                             }.sort
