@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   before_action :fetch_categories
   before_action :store_current_location, unless: :devise_controller?
 
+  rescue_from CanCan::AccessDenied do
+    render file: "#{Rails.root}/public/403.html", staus: 403, layout: false
+  end
+
   def authenticate_active_admin_user!
     authenticate_user!
     return if current_user.admin?

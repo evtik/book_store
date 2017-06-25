@@ -44,6 +44,7 @@ gem 'countries', require: 'countries/global'
 gem 'devise'
 gem 'draper', '3.0.0.pre1'
 gem 'draper-cancancan'
+gem 'faker'
 gem 'fog-aws'
 gem 'hamlit'
 gem 'hamlit-rails'
@@ -64,7 +65,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'faker'
   gem 'listen', '~> 3.0.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'

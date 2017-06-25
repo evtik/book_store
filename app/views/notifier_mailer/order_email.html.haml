@@ -1,0 +1,4 @@
+%h1 Order #{@order.number} has been added for processing
+= link_to 'View order', user_order_url(@user, @order)
+= render 'cart/cart_items', render_inputs: false, order_items: @order.order_items
+= render 'orders/delivery_totals'

@@ -4,8 +4,8 @@ class Book < ApplicationRecord
   belongs_to :category
   has_and_belongs_to_many :authors
   has_and_belongs_to_many :materials
-  has_many :order_items
-  has_many :reviews
+  has_many :order_items, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_many :approved_reviews, -> { where(state: 'approved') },
 
            class_name: 'Review'
