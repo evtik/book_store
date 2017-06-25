@@ -29,14 +29,23 @@ module BookStore
     end
 
     config.action_mailer.delivery_method = :smtp
+    # config.action_mailer.smtp_settings = {
+      # address: 'smtp.mailgun.org',
+      # port: 587,
+      # domain: 'app2e789712b1534af188bcb839ad15d822.mailgun.org',
+      # authentication: 'plain',
+      # enable_starttls_auto: true,
+      # user_name: 'postmaster@app2e789712b1534af188bcb839ad15d822.mailgun.org',
+      # password: 'd51d97fe22de10bb324a995fdda62126'
+    # }
     config.action_mailer.smtp_settings = {
       address: 'smtp.mailgun.org',
       port: 587,
-      domain: 'app2e789712b1534af188bcb839ad15d822.mailgun.org',
+      domain: 'https://api.mailgun.net/v3/sy.bookstore.com',
       authentication: 'plain',
       enable_starttls_auto: true,
-      user_name: 'postmaster@app2e789712b1534af188bcb839ad15d822.mailgun.org',
-      password: 'd51d97fe22de10bb324a995fdda62126'
+      user_name: 'postmaster@sy.bookstore.com',
+      password: '56e8a3acceaa11703ae5154c944aad1a'
     }
   end
 end
