@@ -10,6 +10,17 @@ Rails.application.configure do
     # authentication: :plain
   # }
   # ActionMailer::Base.delivery_method = :smtp
+  #
+  config.action_mailer.smtp_settings = {
+    address: 'smtp.gmail.com',
+    port: '587',
+    domain: 'bookstore.com',
+    user_name: ENV['GMAIL_USERNAME'],
+    password: ENV['GMAIL_PASSWORD'],
+    authentication: 'plain',
+    enable_starttls_auto: true
+  }
+  config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_url_options = {
     host: 'fternoon-fjord-56962.herokuapp.com'
