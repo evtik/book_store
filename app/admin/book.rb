@@ -13,7 +13,7 @@ ActiveAdmin.register Book do
   index do
     selectable_column
     column 'Image' do |book|
-      image_tag(book.main_image.url(:thumb)) unless book.main_image.blank?
+      image_tag(book.main_image.url(:thumb))
     end
     column(:category) { |book| book.category.name.capitalize }
     column :title
@@ -28,7 +28,7 @@ ActiveAdmin.register Book do
       row(:category) { |book| h5 b capitalize_category(book.category.name) }
       row(:title) { |book| h3 b book.title }
       row(:main_image) do |book|
-        image_tag(book.main_image.url(:small)) unless book.main_image.blank?
+        image_tag(book.main_image.url(:small))
       end
       row('Images') do |book|
         unless book.images.empty?

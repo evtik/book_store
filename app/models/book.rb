@@ -24,7 +24,7 @@ class Book < ApplicationRecord
   validates :description,
             presence: true,
             format: { with: REGEXP, message: 'Invalid book description format' },
-            length: { maximum: 500 }
+            length: { maximum: 1000 }
   validates :year, numericality: {
     only_integer: true,
     greater_than: 1990,
