@@ -27,5 +27,16 @@ module BookStore
     ISO3166.configure do |config|
       config.locales = [:en, :gb, :ua]
     end
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: 'smtp.mailgun.org',
+      port: 587,
+      domain: 'app2e789712b1534af188bcb839ad15d822.mailgun.org',
+      authentication: 'plain',
+      enable_starttls_auto: true,
+      user_name: 'postmaster@app2e789712b1534af188bcb839ad15d822.mailgun.org',
+      password: 'd51d97fe22de10bb324a995fdda62126'
+    }
   end
 end
