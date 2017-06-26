@@ -15,6 +15,12 @@ class User < ApplicationRecord
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
+      user.addresses << Address.new(
+        first_name: auth.info.first_name,
+        last_name: auth.info.last_name,
+        city: auth.info.hometown,
+        address_type: 'billing'
+      )
       user.password = Devise.friendly_token[0, 20]
     end
   end

@@ -23,7 +23,7 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
 
   config.action_mailer.default_url_options = {
-    host: 'fternoon-fjord-56962.herokuapp.com'
+    host: 'afternoon-fjord-56962.herokuapp.com'
   }
 
   # Code is not reloaded between requests.
