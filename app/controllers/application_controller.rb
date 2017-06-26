@@ -27,7 +27,11 @@ class ApplicationController < ActionController::Base
 
   def fetch_or_create_address(type)
     address = UserAddress.new(current_user.id, type).first
-    address ? AddressForm.from_model(address) : AddressForm.new
+    if address
+      AddressForm.from_model(address)
+    else
+      AddressForm.new(address_type: type)
+    end
   end
 
   private

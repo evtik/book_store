@@ -61,7 +61,6 @@ class CheckoutController < ApplicationController
   def complete
     flash.keep
     return redirect_to '/cart' unless flash[:order_confirmed]
-    # @order = UserLastOrder.new(current_user.id).to_a.first.decorate
     @order = UserLastOrder.new(current_user.id).first.decorate
     @order_items = @order.order_items
   end
@@ -105,6 +104,7 @@ class CheckoutController < ApplicationController
     if @order.save
       %i(cart order discount coupon_id).each { |key| session.delete(key) }
       flash[:order_confirmed] = true
+      NotifierMailer.order_email(@order).deliver
       redirect_to action: 'complete'
     else
       flash[:error] = 'Something went wrong...'

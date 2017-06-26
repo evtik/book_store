@@ -6,6 +6,8 @@ class Order < ApplicationRecord
   belongs_to :coupon
   has_many :order_items, dependent: :destroy
   has_many :addresses, dependent: :destroy
+  has_many :billing_addresses, -> { where(address_type: 'billing') },
+           class_name: 'Address'
   has_one :credit_card, dependent: :destroy
 
   aasm column: 'state', whiny_transitions: false do

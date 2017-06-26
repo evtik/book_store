@@ -1,50 +1,37 @@
 Rails.application.routes.draw do
   root to: 'home#index'
-  get 'home/index'
-  get 'catalog/index'
-
-  resources :books, only: :show do
-    resources :reviews, only: [:new, :create]
-  end
 
   devise_for :users, controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     passwords: 'users/passwords',
     omniauth_callbacks: 'users/omniauth_callbacks'
-  }#, path_names: { sign_in: 'login', sign_up: 'logout' }
+  }
 
   devise_scope :user do
     get 'login', to: 'devise/sessions#new'
     get 'logout', to: 'devise/sessions#destroy'
   end
 
-  # devise_scope :user do
-    # get 'login', to: 'devise/sessions#new'
-
-    # authenticated :user do
-      # root to: 'admin/dashboard#index', as: :authenticated_root
-    # end
-
-    # unauthenticated :user do
-      # root to: 'users/sessions#new', as: :unauthenticated_root
-    # end
-  # end
-
   ActiveAdmin.routes(self)
 
   scope '/admin/aasm', module: :admin do
-    resources :orders, only: [:queue, :deliver, :complete, :cancel] do
-      put :queue
-      put :deliver
-      put :complete
-      put :cancel
+    order_events = [:queue, :deliver, :complete, :cancel]
+    resources :orders, only: order_events do
+      order_events.each { |event| put event }
     end
 
-    resources :reviews, only: [:approve, :reject] do
-      put :approve
-      put :reject
+    review_events = [:approve, :reject]
+    resources :reviews, only: review_events do
+      review_events.each { |event| put event }
     end
+  end
+
+  get 'home/index'
+  get 'catalog/index'
+
+  resources :books, only: :show do
+    resources :reviews, only: [:new, :create]
   end
 
   get '/cart', to: 'cart#index'
@@ -54,7 +41,8 @@ Rails.application.routes.draw do
 
   %w(address delivery payment confirm).each do |action|
     get "/checkout/#{action}", to: "checkout##{action}"
-    post "/checkout/#{action}", to: "checkout#submit_#{action}"
+    post "/checkout/#{action}", to: "checkout#submit_#{action}",
+                                as: "checkout_submit_#{action}"
   end
   get '/checkout/complete', to: 'checkout#complete'
 

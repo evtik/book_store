@@ -5,9 +5,7 @@ class UserLastOrder < Rectify::Query
 
   def query
     Order.where(user_id: @user_id).order('orders.created_at DESC')
-         .limit(1)
-         .includes(:addresses, :credit_card, :shipment, :coupon,
+         .includes(:billing_addresses, :credit_card, :shipment, :coupon,
                    order_items: [:book])
-         .where('addresses.address_type' => 'billing')
   end
 end

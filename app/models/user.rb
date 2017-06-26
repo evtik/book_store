@@ -4,6 +4,9 @@ class User < ApplicationRecord
   has_many :orders, dependent: :destroy, autosave: false
   has_many :billing_addresses, -> { where(address_type: 'billing') },
            class_name: 'Address'
+
+  after_create :send_welcome_user
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -23,5 +26,11 @@ class User < ApplicationRecord
       )
       user.password = Devise.friendly_token[0, 20]
     end
+  end
+
+  private
+
+  def send_welcome_user
+    NotifierMailer.user_email(self).deliver
   end
 end
