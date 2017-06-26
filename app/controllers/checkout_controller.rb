@@ -2,7 +2,9 @@ class CheckoutController < ApplicationController
   before_action :authenticate_user!
 
   def address
-    return redirect_to '/cart' if session[:cart].nil? || session[:cart].empty?
+    if session[:cart].nil? || session[:cart].empty?
+      return redirect_to cart_path
+    end
     order_from_session
     initialize_order unless @order
     @countries = COUNTRIES

@@ -1,7 +1,7 @@
 %main.container
   %h1.general-title-margin Checkout
   =render 'progress'
-  = form_for @order, url: '/checkout/address', method: :post, class: "res-mb-100" do |f|
+  = form_for @order, url: checkout_submit_address_path, class: "res-mb-100" do |f|
     .hidden-xs.hidden-sm
       .row
         .col-md-5

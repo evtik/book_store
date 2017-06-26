@@ -2,7 +2,7 @@
   %h1.general-title-margin Checkout
   = render 'progress'
   %h3.general-subtitle Credit Card
-  =form_for @order, url: '/checkout/payment', method: :post,
+  =form_for @order, url: checkout_submit_payment_path,
     class: 'max-600 mb-80' do |f|
     = f.fields_for :card, @order.card do |fields|
       .form-group{ class: ('has-error' if @order.card.errors[:number].any?)}
