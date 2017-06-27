@@ -4,7 +4,7 @@ module ApplicationHelper
     0
   end
 
-  def permitted
+  def catalog_params
     params.permit(:category, :sort_by, :order, :limit)
   end
 

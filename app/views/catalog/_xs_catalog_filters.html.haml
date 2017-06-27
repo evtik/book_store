@@ -8,4 +8,4 @@
     -@categories.each do |category|
       %li
         =link_to capitalize_category(category.first.first),
-          permitted.merge('category' => category.first.second)
+          catalog_params.merge('category' => category.first.second)

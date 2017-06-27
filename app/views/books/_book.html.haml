@@ -12,6 +12,6 @@
             %i.fa.fa-shopping-cart.thumb-icon
   .general-thumb-info
     %p.pull-right.font-16.in-gold-500= number_to_currency book.price
-    %p.general-title= truncate book.title, length: 25
+    %p.general-title= truncate book.title, length: 23
     %span.divider-sm
-    %p.in-grey-600.small= book.authors_short
+    %p.in-grey-600.small= truncate book.authors_short, length: 40
