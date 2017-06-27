@@ -1,18 +1,18 @@
 %main.container.general-main-wrap
-  %h1.general-title-margin Checkout
+  %h1.general-title-margin= t 'checkout.caption'
   = render 'progress'
   .text-center.mb-40
-    %h3.general-subtitle Thank You for your Order!
-    %p.font-weight-light An order confirmation has been sent to #{current_user.email}
+    %h3.general-subtitle= t '.thanks'
+    %p.font-weight-light #{t('.email_sent')} #{current_user.email}
   .row.mb-20
     .col-sm-6
       .visible-xs
-        %p.general-order-number.mb-0 Order ##{@order.number}
+        %p.general-order-number.mb-0 #{t('.order')} ##{@order.number}
         %p.general-address.mb-30= l @order.created_at, format: :long_date
       = render '/orders/address_summary', address: @order.addresses.first,
         render_edit_link: false
     .col-sm-6.hidden-xs.text-right
-      %p.general-order-number.mb-0 Order ##{@order.number}
+      %p.general-order-number.mb-0 #{t('.order')} ##{@order.number}
       %p.general-address.mb-30= l @order.created_at, format: :long_date
   .visible-xs
     .general-cart-item.divider-lg
@@ -20,10 +20,10 @@
   .hidden-xs.divider-lg.pt-20
     = render '/cart/cart_items', render_inputs: false
   .text-center.general-text-right
-    %p.in-gold-500.font-18 Order Summary
+    %p.in-gold-500.font-18= t 'cart.index.order_summary'
     %table.general-summary-table.general-summary-table-right.general-text-right
       = render '/orders/delivery_totals'
   .text-center
-    = link_to 'Back to Store',
+    = link_to t('.back_to_store'),
       catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
       class: 'btn btn-default mb-20'

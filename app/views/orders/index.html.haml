@@ -1,5 +1,5 @@
 %main.container.general-main-wrap
-  %h1.mt-0.mb-25 My Orders
+  %h1.mt-0.mb-25= t '.my_orders'
   = render 'orders_filters'
   .visible-xs
     = render partial: 'xs_order', collection: @orders, as: :order
@@ -8,12 +8,12 @@
       %thead
         %tr
           %th
-            %span.in-grey-600 Number
+            %span.in-grey-600= t '.number'
           %th
-            %span.in-grey-600 Completed at
+            %span.in-grey-600= t '.completed_at'
           %th
-            %span.in-grey-600 Status
+            %span.in-grey-600= t '.status'
           %th
-            %span.in-grey-600 Total
+            %span.in-grey-600= t '.total'
       %tbody
         = render @orders

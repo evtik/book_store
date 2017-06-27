@@ -85,6 +85,9 @@ en:
       complete: 'Complete'
     order_subtotal: 'Order Subtotal:'
     shipping: 'Shipping:'
+    edit: 'edit'
+    shipments: 'Shipments'
+    payment_info: 'Payment Information'
     save_continue: 'Save and continue'
     address:
       billing_address: 'Billing Address'
@@ -97,6 +100,34 @@ en:
       method: 'Method'
       days: 'Days'
       price: 'Price'
+    payment:
+      credit_card: 'Credit Card'
+      card_number: 'Card Number'
+      cardholder: 'Name on Card'
+      month_year: 'MM / YY'
+      cvv: 'CVV'
+    confirm:
+      place_order: 'Place order'
+    complete:
+      thanks: 'Thank You for your Order!'
+      email_sent: 'An order confirmation has been sent to'
+      order: 'Order'
+      back_to_store: 'Back to Store'
+
+  orders:
+    index:
+      my_orders: 'My Orders'
+      number: 'Number'
+      completed_at: 'Completed at'
+      status: 'Status'
+      total: 'Total'
+    orders_filters:
+      all: 'All'
+      in_progress: 'In progress'
+      in_queue: 'In queue'
+      in_delivery: 'In delivery'
+      delivered: 'Delivered'
+      canceled: 'Canceled'
 
   number:
     currency:
