@@ -13,12 +13,12 @@
   %table.table
     %tr
       %td
-        %span.in-grey-600 Price
+        %span.in-grey-600= t 'cart.price'
       %td
         %span.font-16.in-gold-500= number_to_currency order_item.book.price
     %tr
       %td.vertical-middle
-        %span.in-grey-600 Quantity
+        %span.in-grey-600= t 'cart.quantity'
       %td
         - if render_inputs
           .input-group
@@ -38,7 +38,7 @@
           %span= order_item.quantity
     %tr
       %td
-        %span.in-grey-600 SubTotal
+        %span.in-grey-600= t 'cart.subtotal'
       %td
         %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
   .general-cart-item.divider-lg-bottom.mb-30

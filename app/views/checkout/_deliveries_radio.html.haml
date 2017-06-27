@@ -2,11 +2,11 @@
   %thead
     %tr
       %th.col-method
-        %span.in-grey-600.ml-40 Method
+        %span.in-grey-600.ml-40= t 'checkout.delivery.method'
       %th
-        %span.in-grey-600 Days
+        %span.in-grey-600= t 'checkout.delivery.days'
       %th
-        %span.in-grey-600 Price
+        %span.in-grey-600= t 'checkout.delivery.price'
   %tbody
     - @shipments.each do |shipment|
       %tr

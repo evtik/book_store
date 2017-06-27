@@ -2,7 +2,7 @@
   = link_to (session[:back_to_catalog] || catalog_index_path),
     class: 'general-back-link' do
     %i.fa.fa-long-arrow-left.mr-15
-    Back to results
+    = t '.back_to_results'
   .row
     .col-sm-6
       .product-gallery
@@ -32,20 +32,20 @@
               %a.input-link.quantity-increment{data: {target: "quantities-#{@book.id}"}, href: "#"}
                 %i.fa.fa-plus.line-height-40
           .col-xs-7.col-md-5
-            = submit_tag('Add to Cart', class: 'btn btn-default pull-right general-position')
+            = submit_tag t('.add_to_cart'), class: 'btn btn-default pull-right general-position'
       .pt-20.divider-lg
-        %p Description
+        %p= t '.description'
         %p#book-description.in-grey-600.small.line-height-2.text-justify
           = @book.description
       .pt-20.divider-lg
         .clearfix
           %p.general-item-info.pull-right= @book.year
-          %p.break-word Year of publication
+          %p.break-word= t '.year'
       .pt-20.divider-lg
         .clearfix
           %p.general-item-info.pull-right= @book.dimensions
-          %p.break-word Dimensions
+          %p.break-word= t '.dimensions'
       .pt-20.divider-lg
         .clearfix
           %p.general-item-info.pull-right= @book.materials_string
-          %p.break-word Materials
+          %p.break-word= t '.materials'

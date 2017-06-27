@@ -1,4 +1,4 @@
-%h3.in-gold-500.mb-25= "Reviews (#{@book.approved_reviews.length})"
+%h3.in-gold-500.mb-25= "#{t('.reviews')} (#{@book.approved_reviews.length})"
 .row
   .col-xs-12.col-sm-8
     %ul.media-list
@@ -12,11 +12,11 @@
               %h4.media-heading.max-240.general-message-name
                 %p= "#{review.user.billing_addresses.first.first_name} #{review.user.billing_addresses.first.last_name}"
                 - if verified_reviewer?(@book.id, review.user_id)
-                  %span.general-message-verified{style: "margin-left: 50px;"} Verified Reviewer
+                  %span.general-message-verified{style: "margin-left: 50px;"}= t '.verified_reviewer'
             .mb-15
               - 5.times do |index|
                 %i.fa.fa-star.rate-star{class: ('rate-empty' if review.score < index + 1)}
             %h4= review.title
             = markdown(review.body)
   .col-xs-12.col-sm-8
-    = link_to 'Write review', new_book_review_path(@book), class: 'btn btn-primary pull-right'
+    = link_to t('.write_review'), new_book_review_path(@book), class: 'btn btn-primary pull-right'

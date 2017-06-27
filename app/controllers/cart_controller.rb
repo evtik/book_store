@@ -9,8 +9,6 @@ class CartController < ApplicationController
   def add
     book_id = params[:id]
     quantity = params[:quantity].present? ? params[:quantity].to_i : 1
-    # don't know why it is nil by default
-    # though session[:cart] is created like Hash.new(0)
     session[:cart][book_id] ||= 0
     session[:cart][book_id] += quantity
     flash.keep
@@ -34,7 +32,6 @@ class CartController < ApplicationController
 
   def set_cart
     session[:cart] ||= Cart.new
-    # session[:cart] ||= Hash.new(0)
   end
 
   def items_total
@@ -64,9 +61,9 @@ class CartController < ApplicationController
 
   def coupon_messages
     {
-      [false, true, nil] => 'This coupon is already used!',
-      [false, false, true] => 'This coupon has expired!',
-      [true, false, nil] => 'This coupon does not exist!'
+      [false, true, nil] => I18n.t('coupon.taken'),
+      [false, false, true] => I18n.t('coupon.expired'),
+      [true, false, nil] => I18n.t('coupon.not_exist')
     }
   end
 

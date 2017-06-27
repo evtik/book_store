@@ -18,13 +18,13 @@
       %span.sr-only Next
 .container
   .jumbotron.text-center.mb-0
-    %h2.h1 Welcome to our amazing Bookstore!
+    %h2.h1= t '.welcome'
     .mb-res-50
-      %p.in-grey-600 We pore through hundreds of new books each month and select the five best we can find to share with our members.
-    = link_to 'Get started',
+      %p.in-grey-600= t '.description'
+    = link_to t('.get_started'),
       catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
       class: 'btn btn-default'
   .mb-35
-    %h3 Best Sellers
+    %h3= t '.best_sellers'
     .row
       = render partial: '/books/book', collection: @most_popular_books, as: :book

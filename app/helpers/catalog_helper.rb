@@ -1,11 +1,17 @@
 module CatalogHelper
   SORTERS = {
-    { 'sort_by' => 'created_at', 'order' => 'desc' } => 'Newest first',
-    { 'sort_by' => 'popular', 'order' => 'desc' } => 'Popular first',
-    { 'sort_by' => 'price', 'order' => 'asc' } => 'Price: Low to high',
-    { 'sort_by' => 'price', 'order' => 'desc' } => 'Price: High to low',
-    { 'sort_by' => 'title', 'order' => 'asc' } => 'Title: A-Z',
-    { 'sort_by' => 'title', 'order' => 'desc' } => 'Title: Z-A'
+    { 'sort_by' => 'created_at', 'order' => 'desc' } =>
+      I18n.t('catalog.catalog_sorters.newest'),
+    { 'sort_by' => 'popular', 'order' => 'desc' } =>
+      I18n.t('catalog.catalog_sorters.popular'),
+    { 'sort_by' => 'price', 'order' => 'asc' } =>
+      I18n.t('catalog.catalog_sorters.price_low'),
+    { 'sort_by' => 'price', 'order' => 'desc' } =>
+      I18n.t('catalog.catalog_sorters.price_high'),
+    { 'sort_by' => 'title', 'order' => 'asc' } =>
+      I18n.t('catalog.catalog_sorters.title_az'),
+    { 'sort_by' => 'title', 'order' => 'desc' } =>
+      I18n.t('catalog.catalog_sorters.title_za')
   }.freeze
 
   def more_books?
