@@ -15,41 +15,41 @@
           %span{'aria-hidden': "true"} &times;
         %ul.nav.navbar-nav
           %li
-            %a{href: "/"} Home
+            = link_to t('.home'), root_path
           %li
-            %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"} Shop
+            %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.shop'
             %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
               -@categories.each do |category|
                 %li
                   =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'), class: 'collapse-link'
           %li
-            %a{href: "#"} My account
+            %a{href: "#"}= t '.my_account'
       .hidden-xs
         %ul.nav.navbar-nav
           %li
-            %a{href: "/"} Home
+            %a{href: "/"}= t '.home'
           %li.dropdown
-            %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} Shop
+            %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.shop'
             %ul.dropdown-menu
               -@categories.each do |category|
                 %li
                   =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12')
           -if user_signed_in?
             %li.dropdown
-              %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"} My account
+              %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.my_account'
               %ul.dropdown-menu
                 - if current_user.admin?
                   %li
-                    %a{href: '/admin'} Admin panel
+                    %a{href: '/admin'}= t '.admin_panel'
                 %li
-                  = link_to 'Orders', user_orders_path(current_user)
+                  = link_to t('.orders'), user_orders_path(current_user)
                 %li
-                  = link_to 'Settings', user_settings_path(current_user)
+                  = link_to t('.settings'), user_settings_path(current_user)
                 %li.divider{role: "separator"}
                 %li
-                  %a{href: '/logout'} Log Out
+                  %a{href: '/logout'}= t '.logout'
           -else
             %li
-              %a{href: '/login'} Log in
+              %a{href: '/login'}= t '.login'
             %li
-              %a{href: '/users/sign_up'} Sign up
+              %a{href: '/users/sign_up'}= t '.signup'

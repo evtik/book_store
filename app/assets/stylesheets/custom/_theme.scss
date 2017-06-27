@@ -226,6 +226,9 @@
     color: $gold-500;
     text-decoration: none;
   }
+  &:visited {
+    color: $grey-600;
+  }
   &:first-child {
     padding-left: 0;
   }
