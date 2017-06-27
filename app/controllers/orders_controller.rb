@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
-  # load_and_authorize_resource only: [:index, :show]
   load_and_authorize_resource only: :index
 
   def index
-    filter = permitted[:filter]
-    @orders = @orders.where(state: filter) if filter
+    filter = order_params[:filter]
+    @orders = @orders.order('id desc')
+    @orders = @orders.where(state: filter).order('id desc') if filter
     @orders = OrderDecorator.decorate_collection(@orders)
   end
 
@@ -18,14 +18,14 @@ class OrdersController < ApplicationController
 
   private
 
-  def permitted
+  def order_params
     params.permit(:filter, :id, :order_id)
   end
 
   def initialize_order
     @order = Order.includes(:addresses, :credit_card, :shipment,
                             :coupon, order_items: [:book])
-                  .where(id: permitted[:order_id])
+                  .where(id: order_params[:order_id])
                   .first
                   .decorate
     authorize! :show, @order
