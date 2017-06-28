@@ -117,6 +117,7 @@ en:
   orders:
     index:
       my_orders: 'My Orders'
+      no_orders: 'No orders in current selection'
       number: 'Number'
       completed_at: 'Completed at'
       status: 'Status'

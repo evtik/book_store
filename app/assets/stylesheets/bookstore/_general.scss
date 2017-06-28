@@ -34,6 +34,11 @@ img {
 .general-main-container {
   min-height: calc(100vh - #{$footer-sticky-height});
 }
+.bs-wrapper {
+  min-height: 100%;
+  margin-bottom: -($footer-sticky-height);
+  padding-bottom: $footer-sticky-height;
+}
 .general-main-wrap {
   margin-bottom: 60px;
 }
@@ -321,6 +326,9 @@ img {
   }
   .mt-res-0 {
     margin-top: 0;
+  }
+  .mt-100 {
+    margin-top: 100px;
   }
   .mb-res-50 {
     margin-bottom: 50px;
