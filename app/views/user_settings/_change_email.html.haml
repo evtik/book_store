@@ -1,8 +1,8 @@
-%p.in-gold-500.font-18.mb-25 Email
+%p.in-gold-500.font-18.mb-25= t '.caption'
 = form_for current_user, url: user_settings_update_email_path(current_user),
   class: 'general-form-md' do |f|
   .form-group.mb-35
-    %label.control-label.font-weight-light{for: "email"} Enter Email
-    = f.email_field :email, class: 'form-control', placeholder: 'Enter your email'
+    %label.control-label.font-weight-light{for: "email"}= t '.enter_email'
+    = f.email_field :email, class: 'form-control', placeholder: t('.placeholder')
   .general-text-align
-    = f.submit 'Save', class: 'btn btn-default mb-35'
+    = f.submit t('user_settings.show.save'), class: 'btn btn-default mb-35'

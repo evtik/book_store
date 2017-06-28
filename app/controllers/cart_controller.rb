@@ -20,6 +20,7 @@ class CartController < ApplicationController
       session[:cart][book_id] = quantity.present? ? quantity.to_i : 1
     end
     handle_coupon
+    calculate_totals
     redirect_to :cart
   end
 

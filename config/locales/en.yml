@@ -129,6 +129,27 @@ en:
       delivered: 'Delivered'
       canceled: 'Canceled'
 
+  user_settings:
+    show:
+      caption: 'Settings'
+      address: 'Address'
+      privacy: 'Privacy'
+      save: 'Save'
+    change_email:
+      caption: 'Email'
+      enter_email: 'Enter Email'
+      placeholder: 'Enter your email'
+    change_password:
+      caption: 'Password'
+      old_password: 'Old Password'
+      new_password: 'New Password'
+      confirm: 'Confirm Password'
+      change: 'Change'
+    remove_account:
+      caption: 'Remove Account'
+      label: 'Please Remove My Account'
+      understood: 'I understand that all data will be lost'
+
   number:
     currency:
       format:
