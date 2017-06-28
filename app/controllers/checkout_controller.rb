@@ -38,7 +38,7 @@ class CheckoutController < ApplicationController
 
   def confirm
     order_from_session
-    return redirect_to action: 'payment' unless @order.card
+    return redirect_to action: 'payment' unless @order&.card
     @shipping = @order.use_billing ? @order.billing : @order.shipping
     @billing = @order.billing
     @order_items = order_items_from_cart
