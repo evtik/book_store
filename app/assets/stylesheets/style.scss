@@ -5,3 +5,13 @@
 @import "bookstore/utils/helpers";
 @import "variables";
 @import "overrides";
+
+html, body {
+  height: 100%;
+}
+
+.bs-wrapper {
+  min-height: 100%;
+  margin-bottom: -($footer-sticky-height);
+  padding-bottom: $footer-sticky-height;
+}

@@ -17,11 +17,14 @@
           %li
             = link_to t('.home'), root_path
           %li
-            %a{type: "button", 'data-toggle': "collapse", href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.shop'
+            %a{type: "button", 'data-toggle': "collapse",
+            href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.shop'
             %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
               -@categories.each do |category|
                 %li
-                  =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'), class: 'collapse-link'
+                  =link_to capitalize_category(category.first.first),
+                    catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'),
+                    class: 'collapse-link'
           %li
             %a{href: "#"}= t '.my_account'
       .hidden-xs
@@ -29,14 +32,17 @@
           %li
             %a{href: "/"}= t '.home'
           %li.dropdown
-            %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.shop'
+            %a.dropdown-toggle{'data-toggle': "dropdown",
+              role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.shop'
             %ul.dropdown-menu
               -@categories.each do |category|
                 %li
-                  =link_to capitalize_category(category.first.first), catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12')
+                  =link_to capitalize_category(category.first.first),
+                    catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12')
           -if user_signed_in?
             %li.dropdown
-              %a.dropdown-toggle{'data-toggle': "dropdown", role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.my_account'
+              %a.dropdown-toggle{'data-toggle': "dropdown", role: "button",
+                'aria-haspopup': "true", 'aria-expanded': "false"}= t '.my_account'
               %ul.dropdown-menu
                 - if current_user.admin?
                   %li
