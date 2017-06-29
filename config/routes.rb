@@ -34,24 +34,30 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
-  get '/cart', to: 'cart#index'
-  post '/cart/add', to: 'cart#add', as: :cart_add
-  post '/cart/update', to: 'cart#update', as: :cart_update
-  delete '/cart/remove/:id', to: 'cart#remove', as: :cart_remove
-
-  %w(address delivery payment confirm).each do |action|
-    get "/checkout/#{action}", to: "checkout##{action}"
-    post "/checkout/#{action}", to: "checkout#submit_#{action}",
-                                as: "checkout_submit_#{action}"
+  scope 'cart' do
+    get '/', to: 'cart#index', as: :cart_index
+    post 'add', to: 'cart#add', as: :cart_add
+    post 'update', to: 'cart#update', as: :cart_update
+    delete 'remove/:id', to: 'cart#remove', as: :cart_remove
   end
-  get '/checkout/complete', to: 'checkout#complete'
 
-  get '/user/:id/orders', to: 'orders#index', as: :user_orders
-  get '/user/:id/orders/:order_id', to: 'orders#show', as: :user_order
+  scope 'checkout' do
+    %w(address delivery payment confirm).each do |action|
+      get "#{action}", to: "checkout##{action}", as: "checkout_#{action}"
+      post "#{action}", to: "checkout#submit_#{action}",
+                        as: "checkout_submit_#{action}"
+    end
+    get 'complete', to: 'checkout#complete', as: :checkout_complete
+  end
 
-  get '/user/:id/settings', to: 'user_settings#show', as: :user_settings
-  post '/user/:id/settings/', to: 'user_settings#update_address',
-                              as: :user_settings_update_address
-  patch '/user/:id/settings/email', to: 'user_settings#update_email',
-                                    as: :user_settings_update_email
+  scope 'user' do
+    get ':id/orders', to: 'orders#index', as: :user_orders
+    get ':id/orders/:order_id', to: 'orders#show', as: :user_order
+
+    get ':id/settings', to: 'user_settings#show', as: :user_settings
+    post ':id/settings', to: 'user_settings#update_address',
+                         as: :user_settings_update_address
+    patch ':id/settings/email', to: 'user_settings#update_email',
+                                as: :user_settings_update_email
+  end
 end

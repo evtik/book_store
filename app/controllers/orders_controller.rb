@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.permit(:filter, :id, :order_id)
+    params.permit(:id, :order_id, :filter)
   end
 
   def initialize_order

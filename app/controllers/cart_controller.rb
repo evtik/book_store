@@ -21,12 +21,12 @@ class CartController < ApplicationController
     end
     handle_coupon
     calculate_totals
-    redirect_to :cart
+    redirect_to cart_index_path
   end
 
   def remove
     session[:cart].except!(params[:id])
-    redirect_to :cart
+    redirect_to cart_index_path
   end
 
   private

@@ -38,13 +38,13 @@ class UserSettingsController < ApplicationController
 
   def find_or_initialize_address
     address = Address.find_or_initialize_by(id: @current_address.id)
-    address.attributes = permitted(@current_type)
-    address.user_id ||= params.permit(:id)[:id]
+    address.attributes = settings_params(@current_type)
+    address.user_id ||= current_user.id
     address.address_type = @current_type if address.address_type.blank?
     address
   end
 
-  def permitted(type)
+  def settings_params(type)
     params.require(:address).require(type.to_sym).permit(
       :user_id, :first_name, :last_name, :street_address,
       :city, :zip, :country, :phone, :address_type
