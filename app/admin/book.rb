@@ -27,6 +27,7 @@ ActiveAdmin.register Book do
     attributes_table do
       row(:category) { |book| h5 b capitalize_category(book.category.name) }
       row(:title) { |book| h3 b book.title }
+      row(:authors) { |book| h4 book.decorate.authors_full }
       row(:main_image) do |book|
         image_tag(book.main_image.url(:small))
       end
