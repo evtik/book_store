@@ -1,15 +1,17 @@
 en:
   layouts:
     header:
-        home: 'Home'
-        shop: 'Shop'
-        my_account: 'My account'
-        admin_panel: 'Admin panel'
-        orders: 'Orders'
-        settings: 'Settings'
-        signup: 'Sign up'
-        login: 'Log in'
-        logout: 'Log out'
+      home: 'Home'
+      shop: 'Shop'
+      account: 'My account'
+    my_account:
+      admin_panel: 'Admin panel'
+      orders: 'Orders'
+      settings: 'Settings'
+      logout: 'Log out'
+    login:
+      signup: 'Sign up'
+      login: 'Log in'
   home:
     index:
       welcome: 'Welcome to our amazing Bookstore!'

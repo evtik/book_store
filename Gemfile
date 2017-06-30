@@ -34,9 +34,7 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-# gem 'activeadmin', git: 'https://github.com/activeadmin/activeadmin'
 gem 'aasm'
-# gem 'activeadmin', git: 'git://github.com/gregbell/active_admin.git'
 gem 'activeadmin'
 gem 'activeadmin_addons'
 gem 'cancancan'
@@ -49,7 +47,6 @@ gem 'faker'
 gem 'fog-aws'
 gem 'hamlit'
 gem 'hamlit-rails'
-# gem 'inherited_resources', git: 'https://github.com/activeadmin/inherited_resources'
 gem 'i18n-js'
 gem 'kaminari'
 gem 'mini_magick'
@@ -63,6 +60,13 @@ gem 'virtus'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.5'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'poltergeist'
 end
 
 group :development do

@@ -18,44 +18,31 @@
             = link_to t('.home'), root_path
           %li
             %a{type: "button", 'data-toggle': "collapse",
-            href: "#menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.shop'
-            %ul#menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
-              -@categories.each do |category|
-                %li
-                  =link_to capitalize_category(category.first.first),
-                    catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'),
-                    class: 'collapse-link'
-          %li
-            %a{href: "#"}= t '.my_account'
+            href: "#shop-menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.shop'
+            %ul#shop-menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
+              = render 'layouts/categories', css_class: 'collapse-link'
+          - if user_signed_in?
+            %li
+              %a{type: "button", 'data-toggle': "collapse",
+              href: "#account-menu", 'aria-expanded': "false", 'aria-controls': "menu"}= t '.account'
+              %ul#account-menu.collapse.list-unstyled.pl-30.mb-10{'aria-expanded': "false"}
+                = render 'layouts/my_account', css_class: 'collapse-link'
+          - else
+            = render 'layouts/login'
       .hidden-xs
         %ul.nav.navbar-nav
           %li
-            %a{href: "/"}= t '.home'
+            = link_to t('.home'), root_path
           %li.dropdown
             %a.dropdown-toggle{'data-toggle': "dropdown",
               role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}= t '.shop'
             %ul.dropdown-menu
-              -@categories.each do |category|
-                %li
-                  =link_to capitalize_category(category.first.first),
-                    catalog_index_path('category' => category.first.second, 'sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12')
+              = render 'layouts/categories', css_class: nil
           -if user_signed_in?
             %li.dropdown
               %a.dropdown-toggle{'data-toggle': "dropdown", role: "button",
-                'aria-haspopup': "true", 'aria-expanded': "false"}= t '.my_account'
+                'aria-haspopup': "true", 'aria-expanded': "false"}= t '.account'
               %ul.dropdown-menu
-                - if current_user.admin?
-                  %li
-                    %a{href: '/admin'}= t '.admin_panel'
-                %li
-                  = link_to t('.orders'), user_orders_path(current_user)
-                %li
-                  = link_to t('.settings'), user_settings_path(current_user)
-                %li.divider{role: "separator"}
-                %li
-                  %a{href: '/logout'}= t '.logout'
+                = render 'layouts/my_account', css_class: nil
           -else
-            %li
-              %a{href: '/login'}= t '.login'
-            %li
-              %a{href: '/users/sign_up'}= t '.signup'
+            = render 'layouts/login'

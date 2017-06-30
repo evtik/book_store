@@ -14,13 +14,11 @@
 #
 # The `.rspec` file also contains a few flags that are not defaults but that
 # users commonly want.
+require 'rails_helper'
 require 'capybara/rspec'
 require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'factory_girl_rails'
-
-FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
-FactoryGirl.find_definitions
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, browser: :phantomjs)

@@ -2,7 +2,7 @@ class CheckoutController < ApplicationController
   before_action :authenticate_user!
 
   def address
-    return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?
+    return redirect_to cart_index_path if session[:cart].nil? || session[:cart].empty?
     order_from_session
     initialize_order unless @order
     @countries = COUNTRIES
@@ -60,7 +60,7 @@ class CheckoutController < ApplicationController
 
   def complete
     flash.keep
-    return redirect_to '/cart' unless flash[:order_confirmed]
+    return redirect_to cart_index_path unless flash[:order_confirmed]
     @order = UserLastOrder.new(current_user.id).first.decorate
     @order_items = @order.order_items
   end
@@ -102,10 +102,13 @@ class CheckoutController < ApplicationController
 
   def submit_order
     if @order.save
-      %i(cart order discount coupon_id).each { |key| session.delete(key) }
-      flash[:order_confirmed] = true
-      NotifierMailer.order_email(@order).deliver
-      redirect_to action: 'complete'
+      begin
+        %i(cart order discount coupon_id).each { |key| session.delete(key) }
+        flash[:order_confirmed] = true
+        NotifierMailer.order_email(@order).deliver
+      ensure 
+        redirect_to action: 'complete'
+      end
     else
       flash[:error] = 'Something went wrong...'
       redirect_to action: 'confirm'
