@@ -19,17 +19,14 @@ require 'capybara/rspec'
 require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'factory_girl_rails'
+require_relative 'support/database_cleaner'
+require_relative 'support/factory_girl'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app, browser: :phantomjs)
-  # Capybara::Poltergeist::Driver.new(app)
 end
 Capybara.configure do |config|
-  config.run_server = true
-  config.current_driver = :poltergeist
-  # config.javascript_driver = :poltergeist
-  # config.app_host = 'http://localhost:3000'
-  config.app_host = 'http://0.0.0.0:3000'
+  config.javascript_driver = :poltergeist
 end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
