@@ -12,7 +12,7 @@ class CartController < ApplicationController
     session[:cart][book_id] ||= 0
     session[:cart][book_id] += quantity
     flash.keep
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def update

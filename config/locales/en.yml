@@ -18,6 +18,7 @@ en:
       description: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
       get_started: 'Get started'
       best_sellers: 'Best sellers'
+    carousel_book:
       buy_now: 'Buy Now'
 
   catalog:

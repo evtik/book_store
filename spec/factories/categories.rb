@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :category do
-    name { Faker::Book.genre }
+    cats = ['mobile development', 'photo', 'web design', 'web development']
+    sequence(:name) { |n| "#{cats[n % cats.length]}" }
   end
 end
