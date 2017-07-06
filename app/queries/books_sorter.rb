@@ -6,7 +6,8 @@ class BooksSorter < Rectify::Query
   def query
     books = if @params['sort_by'] == 'popular'
               Book.joins(:order_items).group('books.id')
-                  .order('count(books.id) DESC')
+                  .order('sum(order_items.quantity) DESC')
+                  # .order('count(books.id) DESC')
             else
               Book.order("#{@params['sort_by']} #{@params['order'].upcase}")
             end
