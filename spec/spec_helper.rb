@@ -23,10 +23,14 @@ require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, browser: :phantomjs)
+  Capybara::Poltergeist::Driver.new(app,
+    browser: :phantomjs,
+    window_size: [1280, 1024])
+    # window_size: [800, 600])
 end
 Capybara.configure do |config|
   config.javascript_driver = :poltergeist
+  # config.default_driver = :selenium
 end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
@@ -110,4 +114,6 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+  config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Warden::Test::Helpers
 end

@@ -51,7 +51,7 @@ class CartController < ApplicationController
   end
 
   def coupon_message
-    flash[:error] = coupon_messages[@coupon_states]
+    flash[:alert] = coupon_messages[@coupon_states]
     flash.keep
   end
 

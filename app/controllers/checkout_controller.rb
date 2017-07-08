@@ -110,7 +110,7 @@ class CheckoutController < ApplicationController
         redirect_to action: 'complete'
       end
     else
-      flash[:error] = 'Something went wrong...'
+      flash[:alert] = 'Something went wrong...'
       redirect_to action: 'confirm'
     end
   end
