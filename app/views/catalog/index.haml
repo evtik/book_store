@@ -16,5 +16,6 @@
   .text-center
     %span
       -if more_books?
-        =link_to t('.view_more'), catalog_params.merge('limit' => params['limit'].to_i + 12),
+        =link_to t('.view_more'),
+          catalog_params.merge('limit' => current_limit + 12),
           class: 'btn btn-primary mb-60'

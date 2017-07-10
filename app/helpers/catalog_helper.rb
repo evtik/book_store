@@ -15,7 +15,7 @@ module CatalogHelper
   }.freeze
 
   def more_books?
-    limit = params[:limit].to_i
+    limit = current_limit
     category_id = params[:category].to_i
     if category_id.zero?
       limit < @categories.first.second
@@ -30,5 +30,14 @@ module CatalogHelper
 
   def current_category?(id = nil)
     id == params[:category].to_i || (id.nil? && params[:category].nil?)
+  end
+
+  def current_sorter
+    SORTERS[catalog_params.to_h.slice('sort_by', 'order')] ||
+      I18n.t('catalog.catalog_sorters.newest')
+  end
+
+  def current_limit
+    params[:limit] ? params[:limit].to_i : 12
   end
 end
