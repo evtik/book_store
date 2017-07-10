@@ -29,8 +29,8 @@ Capybara.register_driver :poltergeist do |app|
     # window_size: [800, 600])
 end
 Capybara.configure do |config|
-  # config.javascript_driver = :poltergeist
-  config.default_driver = :selenium
+  config.javascript_driver = :poltergeist
+  # config.default_driver = :selenium
 end
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
