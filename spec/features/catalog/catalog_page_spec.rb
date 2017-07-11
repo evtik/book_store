@@ -14,15 +14,20 @@ feature 'Catalog page' do
     end
 
     scenario 'has catalog filter dropdown in xs layout' do
-      expect(page).to have_css('.visible-xs ul.dropdown-menu li a', text: 'All')
       expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a', text: 'Mobile Development')
+        '.visible-xs ul.dropdown-menu li a', visible: false, text: 'All')
       expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a', text: 'Photo')
+        '.visible-xs ul.dropdown-menu li a',
+        visible: false, text: 'Mobile Development')
       expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a', text: 'Web Design')
+        '.visible-xs ul.dropdown-menu li a',
+        visible: false, text: 'Photo')
       expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a', text: 'Web Development')
+        '.visible-xs ul.dropdown-menu li a',
+        visible: false, text: 'Web Design')
+      expect(page).to have_css(
+        '.visible-xs ul.dropdown-menu li a',
+        visible: false, text: 'Web Development')
     end
 
     scenario 'has 4 book items' do
@@ -43,13 +48,16 @@ feature 'Catalog page' do
 
     context 'click on category menu item in xs layout' do
       scenario 'makes it current menu item' do
-        find('.visible-xs ul.dropdown-menu li a', text: 'Web Development').click
+        find('.visible-xs ul.dropdown-menu li a',
+             visible: false, text: 'Web Development').trigger('click')
         expect(page).to have_css(
-          '.visible-xs a.dropdown-toggle', text: 'Web Development')
+          '.visible-xs a.dropdown-toggle',
+          visible: false, text: 'Web Development')
       end
 
       scenario 'only leaves books of that category on page' do
-        find('a.filter-link', text: 'Web Design').click
+        find('.visible-xs ul.dropdown-menu li a',
+             visible: false, text: 'Web Design').trigger('click')
         expect(page).to have_css('.general-thumb-wrap', count: 1)
       end
     end

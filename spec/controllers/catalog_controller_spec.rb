@@ -5,7 +5,7 @@ describe CatalogController do
     end
 
     it 'renders :index template' do
-      expect(response).to render_template(:new)
+      expect(response).to render_template(:index)
     end
 
     it 'assigns value to @books' do

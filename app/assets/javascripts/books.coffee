@@ -18,10 +18,12 @@ $ ->
   $('#book-description').trunk8
     lines: 6
     tooltip: false
-    fill: '&hellip; <a class="in-gold-500" id="read-more" href="#">Read more</a>'
+    fill: '&hellip; <a class="in-gold-500" id="read-more" ' +
+          "href='#'>#{I18n.t('books.book_details.read_more')}</a>"
 
   $(document).on 'click', '#read-more', ->
-    $(@).parent().trunk8('revert').append ' <a class="in-gold-500" id="read-less" href="#">Read less</a>'
+    $(@).parent().trunk8('revert').append("<a class='in-gold-500' " +
+      "id='read-less' href='#'>#{I18n.t('books.book_details.read_less')}</a>")
     false
 
   $(document).on 'click', '#read-less', ->

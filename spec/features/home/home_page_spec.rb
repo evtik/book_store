@@ -12,27 +12,21 @@ feature 'Home page' do
 
     scenario 'has shop links' do
       expect(page).to have_link(t 'layouts.header.shop')
-      expect(page).to have_link('Mobile Development')
-      expect(page).to have_link('Web Development')
-      expect(page).to have_link('Photo')
-      expect(page).to have_link('Web Design')
+      expect(page).to have_link('Mobile Development', visible: false)
+      expect(page).to have_link('Web Development', visible: false)
+      expect(page).to have_link('Photo', visible: false)
+      expect(page).to have_link('Web Design', visible: false)
     end
 
     context 'carousel slider' do
       scenario 'has 3 newest books' do
-        expect(page).to have_css('.carousel-inner .item', count: 3)
+        expect(page).to have_css('.carousel-inner .item',
+                                 visible: false, count: 3)
       end
 
       scenario 'has newest book as active item' do
         expect(page).to have_css(
           '.carousel-inner .item.active h1', text: books.last.title)
-      end
-
-      scenario 'sets other two slides to prelast and 3rd from end books' do
-        slides = all('.carousel-inner .item h1')
-        2.times do |n|
-          expect(slides[n + 1].text).to eq(books.reverse[n + 1].title)
-        end
       end
 
       scenario 'click on buy now adds book to cart' do
@@ -58,7 +52,7 @@ feature 'Home page' do
       end
 
       scenario 'click on view button navigates to book page' do
-        first('.thumb-hover-link').click
+        first('.thumb-hover-link', visible: false).click
         expect(page.current_path).to match(/\/books\//)
       end
 
@@ -123,18 +117,19 @@ feature 'Home page' do
     scenario 'has no login/signup links' do
       expect(page).not_to have_link(t 'layouts.login.login')
       expect(page).not_to have_link(t 'layouts.login.signup')
-      expect(page).to have_link(t 'layouts.header.account')
+      expect(page).to have_css(
+        'a.dropdown-toggle', text: (t 'layouts.header.account'))
     end
 
     scenario 'has my account links in header' do
       expect(page).to have_css(
         'header a', text: t('layouts.header.account'))
       expect(page).to have_css(
-        'header a', text: t('layouts.my_account.orders'))
+        'header a', visible: false, text: t('layouts.my_account.orders'))
       expect(page).to have_css(
-        'header a', text: t('layouts.my_account.settings'))
+        'header a', visible: false, text: t('layouts.my_account.settings'))
       expect(page).to have_css(
-        'header a', text: t('layouts.my_account.logout'))
+        'header a', visible: false, text: t('layouts.my_account.logout'))
     end
 
     scenario 'has orders and settings links in footer' do
@@ -146,7 +141,8 @@ feature 'Home page' do
 
     scenario 'has no admin panel link in my account section' do
       expect(page).not_to have_css(
-        'header a', text: t('layouts.my_account.admin_panel'))
+        'header a', visible: false,
+        text: t('layouts.my_account.admin_panel'))
     end
   end
 
@@ -160,7 +156,8 @@ feature 'Home page' do
 
     scenario 'has admin panel link in my account section' do
       expect(page).to have_css(
-        'header a', text: t('layouts.my_account.admin_panel'))
+        'header a', visible: false,
+        text: t('layouts.my_account.admin_panel'))
     end
   end
 end

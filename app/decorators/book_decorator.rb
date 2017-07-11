@@ -7,12 +7,14 @@ class BookDecorator < Draper::Decorator
 
   def authors_short
     model.authors
+         .sort_by(&:last_name)
          .map { |author| "#{author.first_name[0]}. #{author.last_name}" }
          .join(', ')
   end
 
   def authors_full
     model.authors
+         .sort_by(&:last_name)
          .map { |author| "#{author.first_name} #{author.last_name}" }
          .join(', ')
   end

@@ -44,6 +44,8 @@ en:
       year: 'Year of publication'
       dimensions: 'Dimensions'
       materials: 'Materials'
+      read_more: 'Read more'
+      read_less: 'Read less'
     book_reviews:
       reviews: 'Reviews'
       verified_reviewer: 'Verified reviewer'
