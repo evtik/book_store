@@ -24,6 +24,42 @@ feature 'Book page' do
       expect(page).to have_css('p.h1', text: book.price)
     end
 
+    context 'quantity controls' do
+      scenario 'has defualt value of 1' do
+        expect(find_field("quantities-#{book.id}").value).to eq('1')
+      end
+
+      scenario 'clicked plus button adds 1 to quantity' do
+        find("a.quantity-increment[data-target='quantities-#{book.id}']").click
+        expect(find_field("quantities-#{book.id}").value).to eq('2')
+      end
+
+      context 'clicked minus button' do
+        scenario 'subtract 1 from quantity if it is greater than 1' do
+          3.times do
+            find("a.quantity-increment[data-target='quantities-#{book.id}']")
+              .click
+          end
+          find("a.quantity-decrement[data-target='quantities-#{book.id}']")
+            .click
+          expect(find_field("quantities-#{book.id}").value).to eq('3')
+        end
+
+        scenario 'does not subtract 1 from quatity if it is 1' do
+          find("a.quantity-decrement[data-target='quantities-#{book.id}']")
+            .click
+          expect(find_field("quantities-#{book.id}").value).to eq('1')
+        end
+      end
+    end
+
+    scenario 'click add to cart adds books to cart' do
+      click_button(t('books.book_details.add_to_cart'))
+      expect(page).to have_css('.visible-xs .shop-quantity',
+        visible: false, text: '1')
+      expect(page).to have_css('.hidden-xs .shop-quantity', text: '1')
+    end
+
     scenario 'has book publication year' do
       expect(page).to have_css('p.general-item-info', text: book.year)
     end
@@ -56,6 +92,13 @@ feature 'Book page' do
       scenario 'has empty reviews header' do
         expect(page).to have_css(
           'h3', text: "#{I18n.t('books.book_reviews.reviews')} (0)")
+      end
+    end
+
+    context 'with guest user' do
+      scenario 'redirects to login page' do
+        click_link(t 'books.book_reviews.write_review')
+        expect(page).to have_content(t 'devise.failure.unauthenticated')
       end
     end
   end
