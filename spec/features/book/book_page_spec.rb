@@ -131,4 +131,24 @@ feature 'Book page' do
       expect(page).to have_css('strong', text: 'bold text')
     end
   end
+
+  context 'with review verified by user' do
+    given!(:book) do
+      book = create(:book_with_reviews, reviews_count: 1)
+      order_item = create(:order_item, book_id: 1)
+      order = create(:order)
+      order.order_items << order_item
+      user = User.first
+      user.orders << order
+      user.save
+      book
+    end
+
+    scenario 'it has verified reviewer mark' do
+      visit book_path(book)
+      expect(page).to have_css(
+        '.general-message-verified',
+        text: t('books.book_reviews.verified_reviewer'))
+    end
+  end
 end
