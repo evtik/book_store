@@ -33,6 +33,16 @@ FactoryGirl.define do
           book.order_items << build_list(:order_item, evaluator.order_items_count)
         end
       end
+
+      factory :book_with_reviews do
+        transient do
+          reviews_count 2
+        end
+
+        after(:build) do |book, evaluator|
+          book.reviews << build_list(:review, evaluator.reviews_count)
+        end
+      end
     end
   end
 end
