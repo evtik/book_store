@@ -81,22 +81,22 @@ feature 'Book page' do
       end
 
       scenario 'has read more button' do
-        expect(page).to have_link(I18n.t('books.book_details.read_more'))
+        expect(page).to have_link(t 'books.book_details.read_more')
       end
 
       scenario 'when clicked read more link it shows read less' do
-        click_link(I18n.t('books.book_details.read_more'))
-        expect(page).to have_link(I18n.t('books.book_details.read_less'))
+        click_link(t('books.book_details.read_more'))
+        expect(page).to have_link(t 'books.book_details.read_less')
       end
 
       scenario 'has empty reviews header' do
         expect(page).to have_css(
-          'h3', text: "#{I18n.t('books.book_reviews.reviews')} (0)")
+          'h3', text: "#{t 'books.book_reviews.reviews'} (0)")
       end
     end
 
     context 'with guest user' do
-      scenario 'redirects to login page' do
+      scenario 'click write review redirects to login page' do
         click_link(t 'books.book_reviews.write_review')
         expect(page).to have_content(t 'devise.failure.unauthenticated')
       end
@@ -104,5 +104,31 @@ feature 'Book page' do
   end
 
   context 'with reviews' do
+    given!(:book) { create(:book_with_reviews) }
+
+    background do
+      visit book_path(book)
+    end
+
+    scenario 'has review header with reviews count' do
+        expect(page).to have_css(
+          'h3', text: "#{t 'books.book_reviews.reviews'} (2)")
+    end
+
+    scenario "has user's first name's first letter in circle image" do
+      first_name = book.reviews.first.user.addresses.first.first_name
+      expect(page).to have_css('.img-circle', text: first_name.first)
+    end
+
+    scenario "has users's name in review header" do
+      name = book.reviews.first.user.addresses.first.first_name + ' ' +
+        book.reviews.first.user.addresses.first.last_name
+      expect(page).to have_css('h4.media-heading', text: name)
+    end
+
+    scenario 'has markdown in reviews' do
+      expect(page).to have_css('em', text: 'italic text')
+      expect(page).to have_css('strong', text: 'bold text')
+    end
   end
 end
