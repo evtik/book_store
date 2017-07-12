@@ -58,6 +58,7 @@ en:
       title: 'Title'
       review: 'Review'
       post: 'Post'
+      success_message: "Review posted! It will be visible upon admin's approval."
 
   cart:
     product: 'Product'

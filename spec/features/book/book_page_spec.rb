@@ -1,3 +1,5 @@
+require_relative '../../support/forms/new_review_form'
+
 feature 'Book page' do
   context 'without reviews' do
     given!(:book) do
@@ -149,6 +151,21 @@ feature 'Book page' do
       expect(page).to have_css(
         '.general-message-verified',
         text: t('books.book_reviews.verified_reviewer'))
+    end
+  end
+
+  context 'write review' do
+    given!(:user) { create(:user) }
+    given!(:book) { create(:book_with_authors_and_materials) }
+
+    background do
+      login_as(user, scope: :user)
+      visit book_path(book)
+    end
+
+    scenario 'with valid review data' do
+      NewReviewForm.new.visit_page.fill_in_with.submit
+      expect(page).to have_content(t 'reviews.form.success_message')
     end
   end
 end

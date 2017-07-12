@@ -7,6 +7,5 @@ FactoryGirl.define do
       ('Some *italic text* with some **bold text**. ' +
        Faker::Hipster.paragraph(5, false, 3)[0..499])
     end
-    state 'approved'
   end
 end

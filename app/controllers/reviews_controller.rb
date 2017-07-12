@@ -11,7 +11,7 @@ class ReviewsController < ApplicationController
     @review = Review.new(review_params)
     @review.user = current_user
     if @review.save
-      flash[:notice] = 'Review posted!'
+      flash[:notice] = t 'reviews.form.success_message'
       redirect_to book_path(params[:book_id])
     else
       @book = BookWithAssociated
