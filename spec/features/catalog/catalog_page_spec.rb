@@ -1,6 +1,6 @@
 feature 'Catalog page' do
   context 'with less than 12 available books' do
-    before do
+    background do
       create_list(:book_with_authors_and_materials, 4)
       visit catalog_index_path
     end

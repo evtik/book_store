@@ -69,6 +69,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'poltergeist'
   gem 'rails-controller-testing'
+  gem 'rack_session_access'
   gem 'selenium-webdriver'
 end
 
