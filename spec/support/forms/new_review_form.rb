@@ -17,6 +17,5 @@ class NewReviewForm
 
   def submit
     click_on(t 'reviews.form.post')
-    self
   end
 end

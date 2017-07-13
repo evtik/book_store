@@ -5,9 +5,9 @@ class BookWithAssociated < Rectify::Query
   end
 
   def query
-    books = Book.where(id: @id).eager_load(:authors, :materials)
+    books = Book.where(id: @id).includes(:authors, :materials)
     if @load_reviews
-      books.eager_load(approved_reviews: [user: :billing_addresses])
+      books.includes(approved_reviews: [user: :billing_addresses])
     else
       books
     end
