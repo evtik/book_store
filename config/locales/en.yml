@@ -79,7 +79,7 @@ en:
   coupon:
     taken: 'This coupon is already used!'
     expired: 'This coupon has expired!'
-    not_exist: 'This coupon does not exist!'
+    non_existent: 'This coupon does not exist!'
 
   checkout:
     caption: 'Checkout'

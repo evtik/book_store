@@ -64,7 +64,7 @@ class CartController < ApplicationController
     {
       [false, true, nil] => I18n.t('coupon.taken'),
       [false, false, true] => I18n.t('coupon.expired'),
-      [true, false, nil] => I18n.t('coupon.not_exist')
+      [true, false, nil] => I18n.t('coupon.non_existent')
     }
   end
 

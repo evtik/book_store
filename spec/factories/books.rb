@@ -7,7 +7,7 @@ FactoryGirl.define do
     height 10
     width 6
     thickness 1
-    price 9.95
+    price 1.0
     main_image do
       Rack::Test::UploadedFile.new(
         File.join(Rails.root, 'spec', 'fixtures', '16.png'), 'image/png')
