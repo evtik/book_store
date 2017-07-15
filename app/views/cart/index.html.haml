@@ -2,8 +2,7 @@
   %h1.general-title-margin= t '.caption'
   - if @order_items.empty?
     .container.text-center.mt-50
-      %h2= t('.cart_empty_html', href: link_to(t('catalog.index.caption'),
-        catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12})))
+      %h2= t('.cart_empty_html', href: link_to(t('catalog.index.caption'), catalog_index_path))
   - else
     = form_tag(cart_update_path) do
       .visible-xs
