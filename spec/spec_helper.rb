@@ -13,8 +13,8 @@ Capybara.register_driver :poltergeist do |app|
     window_size: [1280, 1024],)
 end
 Capybara.configure do |config|
-  # config.default_driver = :selenium
-  config.default_driver = :poltergeist
+  config.default_driver = :selenium
+  # config.default_driver = :poltergeist
   # config.javascript_driver = :poltergeist
 end
 
