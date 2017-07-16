@@ -165,16 +165,13 @@ feature 'Book page' do
     end
 
     scenario 'with valid review data' do
-      new_review_form.visit_page.fill_in_with.submit
+      new_review_form.visit_page.fill_in_with(attributes_for(:review)).submit
       expect(page).to have_content(t 'reviews.form.success_message')
     end
 
     scenario 'with invalid review data' do
       new_review_form.visit_page.fill_in_with(
-        score: 3,
-        title: 'Some title',
-        body: nil
-      ).submit
+        attributes_for(:review, body: nil)).submit
       expect(page).to have_content(t 'errors.messages.blank')
     end
   end
