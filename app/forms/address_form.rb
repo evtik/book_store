@@ -10,14 +10,11 @@ class AddressForm < Rectify::Form
 
   fields.each do |field, format|
     attribute field, String
-    humanized = field.to_s.humanize(capitalize: false)
-    validates field,
-              presence: { message: "Please enter your #{humanized}" },
-              format: { with: format, message: "Invalid #{humanized} format" }
+    validates field, presence: true, format: { with: format }
   end
 
   attribute :country, String
-  validates :country, presence: { message: 'Please choose a country' }
+  validates :country, presence: true
 
   attribute :address_type, String
 end

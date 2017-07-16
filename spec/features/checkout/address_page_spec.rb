@@ -10,7 +10,7 @@ feature 'Checkout address page' do
 
   context 'with logged in user' do
     context 'with empty cart' do
-      it 'has cart empty message' do
+      it 'redirects to cart page' do
         login_as(create(:user), scope: :user)
         visit checkout_address_path
         expect(page).to have_content(
@@ -54,17 +54,36 @@ feature 'Checkout address page' do
       end
 
       context 'filling in addresses' do
-       context 'billing' do
-         given(:billing_address_form) do
-           NewAddressForm.new('order', 'billing')
-         end
+        context 'billing' do
+          given(:billing_address_form) do
+            NewAddressForm.new('order', 'billing')
+          end
 
-         scenario 'with valid data' do
-          billing_address_form.fill_in_form(
-            attributes_for(:address, city: 'Billburg',
-                           phone: '+1234567891011'))
-         end
-       end
+          context 'with vaild data' do
+            background do
+              create_list(:shipment, 3)
+              billing_address_form.fill_in_form(
+                attributes_for(:address, city: 'Billburg',
+                country: 'Ukraine', phone: '+1234567891011'))
+            end
+
+            context 'and empty shipping address' do
+              scenario  "shows 'empty' errors" do
+                click_on(t 'checkout.save_continue')
+                expect(page).to have_content(
+                  t('errors.attributes.first_name.blank'))
+              end
+
+              scenario "with 'use billing' checked goes to delivery page" do
+                find('i.fa-check').click
+                click_on(t 'checkout.save_continue')
+                expect(page).to have_css(
+                  'h3.general-subtitle',
+                  text: t('checkout.delivery.shipping_method'))
+              end
+            end
+          end
+        end
       end
     end
   end

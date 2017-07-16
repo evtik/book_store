@@ -9,7 +9,6 @@ class CheckoutController < ApplicationController
   end
 
   def submit_address
-    byebug
     order_from_params(params.require(:order))
     redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end
