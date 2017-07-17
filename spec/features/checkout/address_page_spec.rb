@@ -83,6 +83,46 @@ feature 'Checkout address page' do
               end
             end
           end
+
+          context 'with invalid data' do
+            scenario "shows some 'invalid format' errors" do
+              billing_address_form.fill_in_form(
+                attributes_for(:address, last_name: '#(*&@#'))
+              click_on(t 'checkout.save_continue')
+              expect(page).to have_content(t 'errors.messages.invalid')
+            end
+          end
+
+          context 'and shipping' do
+            given(:shipping_address_form) do
+              NewAddressForm.new('order', 'shipping')
+            end
+
+            scenario 'with valid data proceeds to delivery page' do
+              create_list(:shipment, 3)
+              billing_address_form.fill_in_form(
+                attributes_for(:address, city: 'Billburg',
+                country: 'France', phone: '+1234567891011'))
+              shipping_address_form.fill_in_form(
+                attributes_for(:address, city: 'Shipburg',
+                country: 'Spain', phone: '+987654321987'))
+              click_on(t 'checkout.save_continue')
+              expect(page).to have_css(
+                'h3.general-subtitle',
+                text: t('checkout.delivery.shipping_method'))
+            end
+
+            scenario 'with some invalid data shows errors' do
+              billing_address_form.fill_in_form(
+                attributes_for(:address, street_address: '(*&(*&'))
+              shipping_address_form.fill_in_form(
+                attributes_for(:address, city: ''))
+              click_on(t 'checkout.save_continue')
+              expect(page).to have_content(t 'errors.messages.invalid')
+              expect(page).to have_content(
+                t('errors.attributes.city.blank'))
+            end
+          end
         end
       end
     end
