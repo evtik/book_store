@@ -103,10 +103,10 @@ class CheckoutController < ApplicationController
   def submit_order
     if @order.save
       begin
-        %i(cart order discount coupon_id).each { |key| session.delete(key) }
+        %i[cart order discount coupon_id].each { |key| session.delete(key) }
         flash[:order_confirmed] = true
         NotifierMailer.order_email(@order).deliver
-      ensure 
+      ensure
         redirect_to action: 'complete'
       end
     else

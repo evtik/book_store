@@ -2,22 +2,20 @@ require_relative '../../support/forms/new_address_form'
 
 feature 'Checkout address page' do
   context 'with guest user' do
-    it 'redirects to login page' do
+    scenario 'redirects to login page' do
       visit checkout_address_path
-      expect(page).to have_content(t 'devise.failure.unauthenticated')
+      expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
   end
 
   context 'with logged in user' do
     context 'with empty cart' do
-      it 'redirects to cart page' do
+      scenario 'redirects to cart page' do
         login_as(create(:user), scope: :user)
         visit checkout_address_path
         expect(page).to have_content(
-          t('cart.index.cart_empty_html',
-            href: (t 'catalog.index.caption')
-           )
-         )
+          t('cart.index.cart_empty_html', href: (t 'catalog.index.caption'))
+        )
       end
     end
 
@@ -37,15 +35,16 @@ feature 'Checkout address page' do
 
       scenario 'has 1 as current checkout progress step' do
         expect(page).not_to have_css('li.step.done')
-        expect(page).to have_css(
-          'li.step.active span.step-number', text: '1')
+        expect(page).to have_css('li.step.active span.step-number', text: '1')
       end
 
       scenario 'has addresses headers' do
         expect(page).to have_css(
-          'h3.general-subtitle', text: t('checkout.address.billing_address'))
+          'h3.general-subtitle', text: t('checkout.address.billing_address')
+        )
         expect(page).to have_css(
-          'h3.general-subtitle', text: t('checkout.address.shipping_address'))
+          'h3.general-subtitle', text: t('checkout.address.shipping_address')
+        )
       end
 
       scenario 'has correct totals' do
@@ -63,23 +62,27 @@ feature 'Checkout address page' do
             background do
               create_list(:shipment, 3)
               billing_address_form.fill_in_form(
-                attributes_for(:address, city: 'Billburg',
-                country: 'Ukraine', phone: '+1234567891011'))
+                attributes_for(:address,
+                               city: 'Billburg', country: 'Ukraine',
+                               phone: '+1234567891011')
+              )
             end
 
             context 'and empty shipping address' do
-              scenario  "shows 'empty' errors" do
-                click_on(t 'checkout.save_continue')
+              scenario "shows 'empty' errors" do
+                click_on(t('checkout.save_continue'))
                 expect(page).to have_content(
-                  t('errors.attributes.first_name.blank'))
+                  t('errors.attributes.first_name.blank')
+                )
               end
 
               scenario "with 'use billing' checked goes to delivery page" do
                 find('i.fa-check').click
-                click_on(t 'checkout.save_continue')
+                click_on(t('checkout.save_continue'))
                 expect(page).to have_css(
                   'h3.general-subtitle',
-                  text: t('checkout.delivery.shipping_method'))
+                  text: t('checkout.delivery.shipping_method')
+                )
               end
             end
           end
@@ -87,9 +90,10 @@ feature 'Checkout address page' do
           context 'with invalid data' do
             scenario "shows some 'invalid format' errors" do
               billing_address_form.fill_in_form(
-                attributes_for(:address, last_name: '#(*&@#'))
-              click_on(t 'checkout.save_continue')
-              expect(page).to have_content(t 'errors.messages.invalid')
+                attributes_for(:address, last_name: '#(*&@#')
+              )
+              click_on(t('checkout.save_continue'))
+              expect(page).to have_content(t('errors.messages.invalid'))
             end
           end
 
@@ -101,26 +105,32 @@ feature 'Checkout address page' do
             scenario 'with valid data proceeds to delivery page' do
               create_list(:shipment, 3)
               billing_address_form.fill_in_form(
-                attributes_for(:address, city: 'Billburg',
-                country: 'France', phone: '+1234567891011'))
+                attributes_for(:address,
+                               city: 'Billburg', country: 'France',
+                               phone: '+1234567891011')
+              )
               shipping_address_form.fill_in_form(
-                attributes_for(:address, city: 'Shipburg',
-                country: 'Spain', phone: '+987654321987'))
-              click_on(t 'checkout.save_continue')
+                attributes_for(:address,
+                               city: 'Shipburg', country: 'Spain',
+                               phone: '+987654321987')
+              )
+              click_on(t('checkout.save_continue'))
               expect(page).to have_css(
                 'h3.general-subtitle',
-                text: t('checkout.delivery.shipping_method'))
+                text: t('checkout.delivery.shipping_method')
+              )
             end
 
             scenario 'with some invalid data shows errors' do
               billing_address_form.fill_in_form(
-                attributes_for(:address, street_address: '(*&(*&'))
+                attributes_for(:address, street_address: '(*&(*&')
+              )
               shipping_address_form.fill_in_form(
-                attributes_for(:address, city: ''))
-              click_on(t 'checkout.save_continue')
-              expect(page).to have_content(t 'errors.messages.invalid')
-              expect(page).to have_content(
-                t('errors.attributes.city.blank'))
+                attributes_for(:address, city: '')
+              )
+              click_on(t('checkout.save_continue'))
+              expect(page).to have_content(t('errors.messages.invalid'))
+              expect(page).to have_content(t('errors.attributes.city.blank'))
             end
           end
         end

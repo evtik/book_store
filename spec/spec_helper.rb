@@ -9,13 +9,13 @@ require_relative 'support/factory_girl'
 
 Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
-    browser: :phantomjs,
-    window_size: [1280, 1024],
-    js_errors: false)
+                                    browser: :phantomjs,
+                                    window_size: [1280, 1024],
+                                    js_errors: false)
 end
 Capybara.configure do |config|
-  # config.default_driver = :selenium
-  config.default_driver = :poltergeist
+  config.default_driver = :selenium
+  # config.default_driver = :poltergeist
   # config.javascript_driver = :poltergeist
 end
 
@@ -28,5 +28,6 @@ RSpec.configure do |config|
   end
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.include Devise::Test::IntegrationHelpers, type: :feature
+  config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
 end

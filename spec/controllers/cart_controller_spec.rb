@@ -7,7 +7,7 @@ describe CartController do
 
     it 'assigns order total variables' do
       create_list(:book_with_authors_and_materials, 3)
-      get :index, session: { cart: { 1 => 1, 2 => 2, 3 => 3} }
+      get :index, session: { cart: { 1 => 1, 2 => 2, 3 => 3 } }
       expect(assigns(:items_total)).to be_truthy
       expect(assigns(:discount)).to be_truthy
       expect(assigns(:order_subtotal)).to be_truthy
@@ -41,8 +41,7 @@ describe CartController do
       before do
         create_list(:book_with_authors_and_materials, 3)
         session[:cart] = { '1' => 1, '2' => 2, '3' => 3 }
-        post :update, params: { quantities: {
-          1 => 4, 2 => 5, 3 => 6 } }
+        post :update, params: { quantities: { 1 => 4, 2 => 5, 3 => 6 } }
       end
 
       it 'updates book quantities in cart' do
@@ -64,7 +63,8 @@ describe CartController do
         create(:coupon)
         post :update, params: {
           quantities: { 1 => 1, 2 => 2, 3 => 3 },
-          coupon: '123456' }
+          coupon: '123456'
+        }
         expect(session[:coupon_id]).to eq(1)
         expect(session[:discount]).to eq(10)
         expect(response).to redirect_to(cart_index_path)
@@ -74,7 +74,8 @@ describe CartController do
         create(:coupon)
         post :update, params: {
           quantities: { 1 => 1, 2 => 2, 3 => 3 },
-          coupon: '222222' }
+          coupon: '222222'
+        }
         expect(session[:coupon_id]).to be_nil
         expect(session[:discount]).to be_nil
         expect(response).to redirect_to(cart_index_path)
