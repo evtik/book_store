@@ -22,7 +22,7 @@ class CheckoutController < ApplicationController
 
   def submit_delivery
     order_from_params(params)
-    redirect_to action: 'payment'
+    redirect_to action: @order&.shipment ? 'payment' : 'delivery'
   end
 
   def payment
@@ -48,9 +48,8 @@ class CheckoutController < ApplicationController
   def submit_confirm
     order = session[:order]
     @order = Order.new(
-      user_id: current_user.id, state: 'in_progress',
-      coupon_id: session[:coupon_id], shipment_id: order['shipment_id'],
-      subtotal: order['subtotal']
+      user_id: current_user.id, coupon_id: session[:coupon_id],
+      shipment_id: order['shipment_id'], subtotal: order['subtotal']
     )
     populate_addresses(order)
     @order.credit_card = CreditCard.new(order['card'])

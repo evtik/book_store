@@ -1,13 +1,4 @@
 describe CheckoutController do
-  context 'guest user' do
-    describe 'GET address' do
-      it 'redirects to login page' do
-        get :address
-        expect(response).to redirect_to(new_user_session_path)
-      end
-    end
-  end
-
   context 'logged in user' do
     let(:user) { create(:user) }
     before do
@@ -37,6 +28,89 @@ describe CheckoutController do
         expect(order.shipping).to be_truthy
         expect(order.items_total).to eq(6.0)
         expect(order.subtotal).to eq(5.4)
+      end
+    end
+
+    context 'POST submit_address' do
+      it 'with valid data redirects to checkout#delivery' do
+        post :submit_address, params: {
+          order: {
+            billing: attributes_for(:address, address_type: 'billing'),
+            shipping: attributes_for(:address, address_type: 'shipping')
+          }
+        }, session: { order: {} }
+        expect(response).to redirect_to(checkout_delivery_path)
+      end
+
+      it 'with invalid data redirects back to checkout#address' do
+        post :submit_address, params: {
+          order: {
+            billing: attributes_for(:address, address_type: 'billing',
+                                              city: '2822'),
+            shipping: attributes_for(:address, address_type: 'shipping')
+          }
+        }, session: { order: {} }
+        expect(response).to redirect_to(checkout_address_path)
+      end
+    end
+
+    context 'GET delivery' do
+      let!(:shipments) { create_list(:shipment, 3) }
+
+      it 'renders :delivery template' do
+        get :delivery, session: { order: {} }
+        expect(response).to render_template(:delivery)
+      end
+
+      it 'assigns shipment to @order' do
+        get :delivery, session: { order: {} }
+        order = assigns(:order)
+        expect(order.shipment_id).to eq(1)
+        expect(order.shipment.method).to eq(shipments.first.method)
+      end
+    end
+
+    context 'POST submit_delivery' do
+      it 'with shipment present redirects to checkout#payment' do
+        post :submit_delivery,
+             params: { shipment: attributes_for(:shipment) },
+             session: { order: {} }
+        expect(response).to redirect_to(checkout_payment_path)
+      end
+
+      it 'with no shipment redirects back to checkout#delivery' do
+        post :submit_delivery, session: { order: {} }
+        expect(response).to redirect_to(checkout_delivery_path)
+      end
+    end
+  end
+
+  context 'guest user' do
+    describe 'GET address' do
+      it 'redirects to login page' do
+        get :address
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'POST submit_address' do
+      it 'redirects to login page' do
+        post :submit_address
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'GET delivery' do
+      it 'redirects to login page' do
+        get :delivery
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'POST submit_delivery' do
+      it 'redirects to login page' do
+        post :submit_delivery
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end

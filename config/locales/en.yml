@@ -182,6 +182,21 @@ en:
         blank: 'Please enter phone number in format +123456789101112'
         invalid: 'Please enter a valid phone'
 
+      number:
+        blank: 'Please enter a valid credit card number'
+        invalid: 'Should consist of 16 digits exactly'
+        luhn_invalid: 'Invalid card number'
+      cardholder:
+        blank: "Please enter the cardholder's name"
+        invalid: 'Invalid name format'
+      month_year:
+        blank: "Please enter the card's expiry date"
+        invalid: 'Invalid expiry date format'
+        past_date: 'Should be this month or later'
+      cvv:
+        blank: "Please enter the card's cvv"
+        invalid: 'Invalid cvv format'
+
   # cannot access like this
   # activerecord:
     # errors:

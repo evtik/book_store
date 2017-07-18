@@ -3,7 +3,7 @@ class NewReviewForm
   include Capybara::DSL
 
   def visit_page
-    click_on(t 'books.book_reviews.write_review')
+    click_on(t('books.book_reviews.write_review'))
     self
   end
 
@@ -15,6 +15,6 @@ class NewReviewForm
   end
 
   def submit
-    click_on(t 'reviews.form.post')
+    click_on(t('reviews.form.post'))
   end
 end

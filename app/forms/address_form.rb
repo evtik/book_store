@@ -1,9 +1,9 @@
 class AddressForm < Rectify::Form
   fields = {
-    first_name: /\A[A-Za-z]{,50}\z/,
-    last_name: /\A[A-Za-z]{,50}\z/,
-    street_address: /\A[A-Za-z0-9 ,-]{,50}\z/,
-    city: /\A[A-Za-z]{,50}\z/,
+    first_name: /\A\p{Alpha}{,50}\z/,
+    last_name: /\A\p{Alpha}{,50}\z/,
+    street_address: /\A[\p{Alnum} ,-]{,50}\z/,
+    city: /\A\p{Alpha}{,50}\z/,
     zip: /\A[0-9-]{3,10}\z/,
     phone: /\A\+\d{5,15}\z/
   }
