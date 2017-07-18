@@ -112,7 +112,7 @@ feature 'Checkout address page' do
               shipping_address_form.fill_in_form(
                 attributes_for(:address,
                                city: 'Shipburg', country: 'Spain',
-                               phone: '+987654321987')
+                               phone: '+9876543219876')
               )
               click_on(t('checkout.save_continue'))
               expect(page).to have_css(

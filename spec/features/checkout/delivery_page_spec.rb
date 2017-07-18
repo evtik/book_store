@@ -32,7 +32,8 @@ feature 'Checkout delivery page' do
 
     context 'with addresses set' do
       background do
-        create_list(:shipment, 3)
+        # create_list(:shipment, 3)
+        3.times { |n| create(:shipment, price: (n + 1) * 5.0) }
         page.set_rack_session(
           order: {
             billing: attributes_for(:address),

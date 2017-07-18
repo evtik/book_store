@@ -10,7 +10,8 @@ FactoryGirl.define do
     price 1.0
     main_image do
       Rack::Test::UploadedFile.new(
-        File.join(Rails.root, 'spec', 'fixtures', '16.png'), 'image/png')
+        File.join(Rails.root, 'spec', 'fixtures', '16.png'), 'image/png'
+      )
     end
 
     factory :book_with_authors_and_materials do
@@ -30,7 +31,9 @@ FactoryGirl.define do
         end
 
         after(:build) do |book, evaluator|
-          book.order_items << build_list(:order_item, evaluator.order_items_count)
+          book.order_items << build_list(
+            :order_item, evaluator.order_items_count
+          )
         end
       end
 

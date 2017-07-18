@@ -20,7 +20,7 @@ class BookDecorator < Draper::Decorator
   end
 
   def materials_string
-    model.materials.map(&:name).join(', ').capitalize
+    model.materials.map(&:name).sort.join(', ').capitalize
   end
 
   def dimensions

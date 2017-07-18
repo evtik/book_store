@@ -19,7 +19,8 @@ feature 'Book page' do
 
     scenario 'has authors with their full names' do
       expect(page).to have_css(
-        'p.in-grey-600.small', text: book.decorate.authors_full)
+        'p.in-grey-600.small', text: book.decorate.authors_full
+      )
     end
 
     scenario 'has book price' do
@@ -57,8 +58,10 @@ feature 'Book page' do
 
     scenario 'click add to cart adds books to cart' do
       click_button(t('books.book_details.add_to_cart'))
-      expect(page).to have_css('.visible-xs .shop-quantity',
-        visible: false, text: '1')
+      expect(page).to have_css(
+        '.visible-xs .shop-quantity',
+        visible: false, text: '1'
+      )
       expect(page).to have_css('.hidden-xs .shop-quantity', text: '1')
     end
 
@@ -68,39 +71,43 @@ feature 'Book page' do
 
     scenario 'has book dimensions' do
       expect(page).to have_css(
-        'p.general-item-info', text: book.decorate.dimensions)
+        'p.general-item-info', text: book.decorate.dimensions
+      )
     end
 
     scenario 'has book materials' do
       expect(page).to have_css(
-        'p.general-item-info', text: book.decorate.materials_string)
+        'p.general-item-info', text: book.decorate.materials_string
+      )
     end
 
     context 'description' do
       scenario 'has description paragraph' do
         expect(page).to have_css(
-          '#book-description', text: book.description[0..100])
+          '#book-description', text: book.description[0..100]
+        )
       end
 
       scenario 'has read more button' do
-        expect(page).to have_link(t 'books.book_details.read_more')
+        expect(page).to have_link(t('books.book_details.read_more'))
       end
 
       scenario 'when clicked read more link it shows read less' do
         click_link(t('books.book_details.read_more'))
-        expect(page).to have_link(t 'books.book_details.read_less')
+        expect(page).to have_link(t('books.book_details.read_less'))
       end
 
       scenario 'has empty reviews header' do
         expect(page).to have_css(
-          'h3', text: "#{t 'books.book_reviews.reviews'} (0)")
+          'h3', text: "#{t 'books.book_reviews.reviews'} (0)"
+        )
       end
     end
 
     context 'with guest user' do
       scenario 'click write review redirects to login page' do
-        click_link(t 'books.book_reviews.write_review')
-        expect(page).to have_content(t 'devise.failure.unauthenticated')
+        click_link(t('books.book_reviews.write_review'))
+        expect(page).to have_content(t('devise.failure.unauthenticated'))
       end
     end
   end
@@ -113,8 +120,9 @@ feature 'Book page' do
     end
 
     scenario 'has review header with reviews count' do
-        expect(page).to have_css(
-          'h3', text: "#{t 'books.book_reviews.reviews'} (2)")
+      expect(page).to have_css(
+        'h3', text: "#{t 'books.book_reviews.reviews'} (2)"
+      )
     end
 
     scenario "has user's first name's first letter in circle image" do
@@ -124,7 +132,7 @@ feature 'Book page' do
 
     scenario "has users's name in review header" do
       name = book.reviews.first.user.addresses.first.first_name + ' ' +
-        book.reviews.first.user.addresses.first.last_name
+             book.reviews.first.user.addresses.first.last_name
       expect(page).to have_css('h4.media-heading', text: name)
     end
 
@@ -150,7 +158,8 @@ feature 'Book page' do
       visit book_path(book)
       expect(page).to have_css(
         '.general-message-verified',
-        text: t('books.book_reviews.verified_reviewer'))
+        text: t('books.book_reviews.verified_reviewer')
+      )
     end
   end
 
@@ -166,13 +175,14 @@ feature 'Book page' do
 
     scenario 'with valid review data' do
       new_review_form.visit_page.fill_in_with(attributes_for(:review)).submit
-      expect(page).to have_content(t 'reviews.form.success_message')
+      expect(page).to have_content(t('reviews.form.success_message'))
     end
 
     scenario 'with invalid review data' do
       new_review_form.visit_page.fill_in_with(
-        attributes_for(:review, body: nil)).submit
-      expect(page).to have_content(t 'errors.messages.blank')
+        attributes_for(:review, body: nil)
+      ).submit
+      expect(page).to have_content(t('errors.messages.blank'))
     end
   end
 end
