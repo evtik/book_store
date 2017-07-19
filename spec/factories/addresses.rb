@@ -5,7 +5,7 @@ FactoryGirl.define do
     street_address { Faker::Address.street_address }
     city { Faker::Address.city.delete(' ') }
     zip { Faker::Address.zip }
-    country { Faker::Address.country }
+    country 'Italy'
     phone { '+' << Faker::PhoneNumber.subscriber_number(10) }
     address_type 'billing'
   end

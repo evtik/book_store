@@ -3,10 +3,8 @@ feature 'Cart page' do
     it 'has cart empty message' do
       visit cart_index_path
       expect(page).to have_content(
-        t('cart.index.cart_empty_html',
-          href: (t 'catalog.index.caption')
-         )
-       )
+        t('cart.index.cart_empty_html', href: (t 'catalog.index.caption'))
+      )
     end
   end
 
@@ -19,9 +17,11 @@ feature 'Cart page' do
       page.set_rack_session(cart: nil)
     end
 
-    scenario 'has correct number of books on cart icon' do 
-      expect(page).to have_css('.visible-xs .shop-quantity',
-        visible: false, text: '3')
+    scenario 'has correct number of books on cart icon' do
+      expect(page).to have_css(
+        '.visible-xs .shop-quantity',
+        visible: false, text: '3'
+      )
       expect(page).to have_css('.hidden-xs .shop-quantity', text: '3')
     end
 
@@ -61,12 +61,13 @@ feature 'Cart page' do
 
       scenario 'click on close button removes book from cart' do
         all('a.close.general-cart-close').last.click
-        # page.driver.browser.switch_to.alert.accept # for selenium
-        accept_alert # for poltergeist
+        accept_alert
         expect(page).to have_css('p.general-title', count: 2)
         expect(page).to have_css('strong.font-18', text: '3.00')
-        expect(page).to have_css('.visible-xs .shop-quantity',
-          visible: false, text: '2')
+        expect(page).to have_css(
+          '.visible-xs .shop-quantity',
+          visible: false, text: '2'
+        )
         expect(page).to have_css('.hidden-xs .shop-quantity', text: '2')
       end
     end
@@ -74,28 +75,28 @@ feature 'Cart page' do
     context 'filling in coupon code' do
       scenario 'with non-existent code' do
         fill_in('coupon', with: 'aslkd')
-        click_on(t 'cart.index.update_cart')
-        expect(page).to have_content(t 'coupon.non_existent')
+        click_on(t('cart.index.update_cart'))
+        expect(page).to have_content(t('coupon.non_existent'))
       end
 
       scenario 'with expired coupon' do
         create(:coupon, expires: Date.today - 1.day)
         fill_in('coupon', with: '123456')
-        click_on(t 'cart.index.update_cart')
-        expect(page).to have_content(t 'coupon.expired')
+        click_on(t('cart.index.update_cart'))
+        expect(page).to have_content(t('coupon.expired'))
       end
 
       scenario 'with coupon been already taken' do
         create(:coupon_with_order)
         fill_in('coupon', with: '123456')
-        click_on(t 'cart.index.update_cart')
-        expect(page).to have_content(t 'coupon.taken')
+        click_on(t('cart.index.update_cart'))
+        expect(page).to have_content(t('coupon.taken'))
       end
 
       scenario 'with valid coupon' do
         create(:coupon)
         fill_in('coupon', with: '123456')
-        click_on(t 'cart.index.update_cart')
+        click_on(t('cart.index.update_cart'))
         expect(page).to have_css('p.font-16', text: '6.00')
         expect(page).to have_css('p.font-16', text: '0.60')
         expect(page).to have_css('strong.font-18', text: '5.40')
@@ -113,15 +114,15 @@ feature 'Cart page' do
 
     scenario 'with guest user redirects to login page' do
       visit cart_index_path
-      click_on(t 'cart.index.checkout')
-      expect(page).to have_content(t 'devise.failure.unauthenticated')
+      click_on(t('cart.index.checkout'))
+      expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
 
     scenario 'with logged in user redirets to checkout address' do
       user = create(:user)
       login_as(user, scope: :user)
       visit cart_index_path
-      click_on(t 'cart.index.checkout')
+      click_on(t('cart.index.checkout'))
       expect(page).to have_css('h1', text: t('checkout.caption'))
     end
   end

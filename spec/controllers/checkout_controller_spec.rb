@@ -83,6 +83,39 @@ describe CheckoutController do
         expect(response).to redirect_to(checkout_delivery_path)
       end
     end
+
+    context 'GET payment' do
+      before do
+        get :payment, session: {
+          order: { shipment: attributes_for(:shipment) }
+        }
+      end
+
+      it 'renders :payment template' do
+        expect(response).to render_template(:payment)
+      end
+
+      it 'assigns value to @order.card' do
+        expect(assigns(:order).card).to be_truthy
+      end
+    end
+
+    context 'POST submit_payment' do
+      it 'with valid payment data redirects to checkout#confirm' do
+        post :submit_payment,
+             params: { order: { card: attributes_for(:credit_card) } },
+             session: { order: {} }
+        expect(response).to redirect_to(checkout_confirm_path)
+      end
+
+      it 'with invalid payment data redirects to checkout#payment' do
+        invalid_card = attributes_for(:credit_card, cardholder: '234&lj@')
+        post :submit_payment,
+             params: { order: { card: invalid_card } },
+             session: { order: {} }
+        expect(response).to redirect_to(checkout_payment_path)
+      end
+    end
   end
 
   context 'guest user' do
@@ -110,6 +143,20 @@ describe CheckoutController do
     describe 'POST submit_delivery' do
       it 'redirects to login page' do
         post :submit_delivery
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'GET payment' do
+      it 'redirects to login page' do
+        get :payment
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'POST submit_payment' do
+      it 'redirects to login page' do
+        post :submit_payment
         expect(response).to redirect_to(new_user_session_path)
       end
     end
