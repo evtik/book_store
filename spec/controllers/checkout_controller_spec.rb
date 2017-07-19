@@ -116,6 +116,60 @@ describe CheckoutController do
         expect(response).to redirect_to(checkout_payment_path)
       end
     end
+
+    context 'confirm actions' do
+      let(:session_data) do
+        {
+          cart: { 1 => 1, 2 => 2, 3 => 3 },
+          order: {
+            'billing' => attributes_for(:address),
+            'shipping' => attributes_for(:address, address_type: 'shipping'),
+            'shipment_id' => 1,
+            'shipment' => attributes_for(:shipment),
+            'card' => attributes_for(:credit_card),
+            'subtotal' => 5.4
+          }
+        }
+      end
+
+      context 'GET confirm' do
+        before do
+          get :confirm, session: session_data
+        end
+
+        it 'renders :confirm template' do
+          expect(response).to render_template(:confirm)
+        end
+
+        it 'assigns value to @order' do
+          expect(assigns(:order)).to be_truthy
+        end
+      end
+
+      context 'POST submit_confirm' do
+        before do
+          create_list(:book_with_authors_and_materials, 3)
+          create(:shipment)
+        end
+
+        it 'redirects to checkout#complete' do
+          post :submit_confirm, session: session_data
+          expect(response).to redirect_to(checkout_complete_path)
+        end
+
+        it 'creates new order in db' do
+          expect {
+            post :submit_confirm, session: session_data
+          }.to change(Order, :count).by(1)
+        end
+
+        it 'sends order confirmation email to user' do
+          post :submit_confirm, session: session_data
+          expect(ActionMailer::Base.deliveries.count).to eq(2)
+          expect(ActionMailer::Base.deliveries.last.to).to include(user.email)
+        end
+      end
+    end
   end
 
   context 'guest user' do
@@ -157,6 +211,20 @@ describe CheckoutController do
     describe 'POST submit_payment' do
       it 'redirects to login page' do
         post :submit_payment
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'GET confirm' do
+      it 'redirects to login page' do
+        get :confirm
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'POST submit_confirm' do
+      it 'redirects to login page' do
+        post :submit_confirm
         expect(response).to redirect_to(new_user_session_path)
       end
     end
