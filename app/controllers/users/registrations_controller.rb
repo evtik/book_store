@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+  include AbstractController::Translation
 # before_action :configure_sign_up_params, only: [:create]
 # before_action :configure_account_update_params, only: [:update]
 
@@ -20,11 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # PUT /resource
   def update
     if resource.update_with_password(permitted)
-      flash[:success] = 'Your password has been successfully changed'
+      flash[:notice] = t('user_settings.change_password.changed_message')
       sign_in resource_name, resource, bypass: true
     else
       clean_up_passwords(resource)
-      flash[:error] = resource.errors.full_messages.first
+      flash[:alert] = resource.errors.full_messages.first
     end
     flash[:show_privacy] = true
     redirect_to after_update_path_for(resource)
@@ -33,7 +34,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # DELETE /resource
   def destroy
     super
-    flash[:success] = 'Your account has been successfully deleted.'
+    flash[:notice] = t('user_settings.remove_account.removed_message')
   end
 
   # GET /resource/cancel

@@ -96,7 +96,9 @@ en:
     payment_info: 'Payment Information'
     save_continue: 'Save and continue'
     address:
+      billing: 'billing'
       billing_address: 'Billing Address'
+      shipping: 'shipping'
       shipping_address: 'Shipping Address'
       fields_required: 'all fields required'
       use_billing: 'Use Billing Address'
@@ -142,20 +144,24 @@ en:
       address: 'Address'
       privacy: 'Privacy'
       save: 'Save'
+      address_saved: 'Your %{address_type} address has been successfully saved!'
     change_email:
       caption: 'Email'
       enter_email: 'Enter Email'
       placeholder: 'Enter your email'
+      email_updated: 'Your email has been successfully updated!'
     change_password:
       caption: 'Password'
       old_password: 'Old Password'
       new_password: 'New Password'
       confirm: 'Confirm Password'
       change: 'Change'
+      changed_message: 'Your password has been successfully changed!'
     remove_account:
       caption: 'Remove Account'
       label: 'Please Remove My Account'
       understood: 'I understand that all data will be lost'
+      removed_message: 'Your account has been successfully deleted!'
 
   number:
     currency:
