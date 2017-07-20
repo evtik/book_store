@@ -165,9 +165,35 @@ describe CheckoutController do
 
         it 'sends order confirmation email to user' do
           post :submit_confirm, session: session_data
-          expect(ActionMailer::Base.deliveries.count).to eq(2)
           expect(ActionMailer::Base.deliveries.last.to).to include(user.email)
         end
+      end
+    end
+
+    context 'GET complete' do
+      before do
+        allow_any_instance_of(CheckoutController).to(
+          receive(:flash).and_return(
+            ActionDispatch::Flash::FlashHash.new(order_confirmed: true)
+          )
+        )
+        create_list(:book_with_authors_and_materials, 3)
+        order = build(:order)
+        order.order_items << build_list(:order_item, 3)
+        order.addresses << build(:address)
+        order.shipment = build(:shipment)
+        order.credit_card = build(:credit_card)
+        order.user = user
+        order.save
+        get :complete
+      end
+
+      it 'renders :complete template' do
+        expect(response).to render_template(:complete)
+      end
+
+      it 'assigns value to @order' do
+        expect(assigns(:order)).to be_truthy
       end
     end
   end
@@ -225,6 +251,13 @@ describe CheckoutController do
     describe 'POST submit_confirm' do
       it 'redirects to login page' do
         post :submit_confirm
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+
+    describe 'GET complete' do
+      it 'redirects to login page' do
+        get :complete
         expect(response).to redirect_to(new_user_session_path)
       end
     end
