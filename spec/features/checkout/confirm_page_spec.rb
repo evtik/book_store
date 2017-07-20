@@ -124,13 +124,6 @@ feature 'Checkout confirm page' do
       end
 
       scenario 'click on place order redirects to order complete page' do
-        # order = build(:order)
-        # order.order_items << build_list(:order_item_with_book_id, 3)
-        # order.addresses << build(:address)
-        # order.shipment = build(:shipment)
-        # order.user = user
-        # order.save
-
         create(:shipment)
         visit checkout_confirm_path
         click_on(t('checkout.confirm.place_order'))

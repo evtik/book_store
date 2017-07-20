@@ -24,6 +24,5 @@
     %table.general-summary-table.general-summary-table-right.general-text-right
       = render '/orders/delivery_totals'
   .text-center
-    = link_to t('.back_to_store'),
-      catalog_index_path(params: {sort_by: 'created_at', order: 'desc', limit: 12}),
+    = link_to t('.back_to_store'), catalog_index_path,
       class: 'btn btn-default mb-20'
