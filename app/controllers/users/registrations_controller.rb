@@ -22,7 +22,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     if resource.update_with_password(permitted)
       flash[:notice] = t('user_settings.change_password.changed_message')
-      sign_in resource_name, resource, bypass: true
+      # sign_in resource_name, resource, bypass: true
+      bypass_sign_in resource
     else
       clean_up_passwords(resource)
       flash[:alert] = resource.errors.full_messages.first
