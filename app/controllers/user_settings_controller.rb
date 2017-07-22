@@ -27,8 +27,11 @@ class UserSettingsController < ApplicationController
     user = User.find(current_user.id)
     user.email = params.require(:user).permit(:email)[:email]
     flash[:show_privacy] = true
-    flash[:notice] = t('user_settings.change_email.email_updated') if user.save
-    flash[:alert] = user.errors.full_messages.first unless user.save
+    if user.save
+      flash[:notice] = t('user_settings.change_email.email_updated')
+    else
+      flash[:alert] = user.errors.full_messages.first
+    end
     redirect_to action: :show
   end
 
