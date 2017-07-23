@@ -59,7 +59,7 @@ feature 'Orders index page' do
         expect(page).to have_css('tr.order-row', count: 5)
       end
 
-      scenario 'has the latest order first in list' do
+      scenario 'has the latest order as the first in list' do
         visit user_orders_path(user)
         expect(first('span.general-order-number').text).to eq('R00000005')
       end

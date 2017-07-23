@@ -10,9 +10,7 @@ describe UserSettingsController do
       end
     end
 
-    before do
-      sign_in(user)
-    end
+    before { sign_in(user) }
 
     context 'GET show' do
       before { get :show, params: { id: user } }

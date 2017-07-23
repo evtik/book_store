@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
   end
 
   def show
-    # authenticate_user!
     initialize_order
     initialize_addresses
     @order_items = @order.order_items
