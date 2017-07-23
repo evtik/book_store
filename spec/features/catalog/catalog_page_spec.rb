@@ -1,33 +1,28 @@
 feature 'Catalog page' do
   context 'with less than 12 available books' do
+    given(:categories) do
+      ['All', 'Mobile Development', 'Photo',
+       'Web Design', 'Web Development']
+    end
+
     background do
       create_list(:book_with_authors_and_materials, 4)
       visit catalog_index_path
     end
 
     scenario 'has catalog filter links' do
-      expect(page).to have_css('a.filter-link', text: 'All')
-      expect(page).to have_css('a.filter-link', text: 'Mobile Development')
-      expect(page).to have_css('a.filter-link', text: 'Photo')
-      expect(page).to have_css('a.filter-link', text: 'Web Design')
-      expect(page).to have_css('a.filter-link', text: 'Web Development')
+      categories.each do |category|
+        expect(page).to have_css('a.filter-link', text: category)
+      end
     end
 
     scenario 'has catalog filter dropdown in xs layout' do
-      expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a', visible: false, text: 'All')
-      expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a',
-        visible: false, text: 'Mobile Development')
-      expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a',
-        visible: false, text: 'Photo')
-      expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a',
-        visible: false, text: 'Web Design')
-      expect(page).to have_css(
-        '.visible-xs ul.dropdown-menu li a',
-        visible: false, text: 'Web Development')
+      categories.each do |category|
+        expect(page).to have_css(
+          '.visible-xs ul.dropdown-menu li a',
+          visible: false, text: category
+        )
+      end
     end
 
     scenario 'has 4 book items' do
@@ -52,7 +47,8 @@ feature 'Catalog page' do
              visible: false, text: 'Web Development').trigger('click')
         expect(page).to have_css(
           '.visible-xs a.dropdown-toggle',
-          visible: false, text: 'Web Development')
+          visible: false, text: 'Web Development'
+        )
       end
 
       scenario 'only leaves books of that category on page' do

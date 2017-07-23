@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
   load_and_authorize_resource only: :index
 
   def index
@@ -9,7 +10,7 @@ class OrdersController < ApplicationController
   end
 
   def show
-    authenticate_user!
+    # authenticate_user!
     initialize_order
     initialize_addresses
     @order_items = @order.order_items
