@@ -103,6 +103,15 @@ en:
       fields_required: 'all fields required'
       use_billing: 'Use Billing Address'
       item_total: 'Item total:'
+      first_name: 'First name'
+      last_name: 'Last name'
+      street_address: 'Street address'
+      city: 'City'
+      zip: 'Zip'
+      country: 'Country'
+      select_country: 'Select a country'
+      phone: 'Phone'
+      phone_example: 'Example +123456789101112'
     delivery:
       shipping_method: 'Shipping method'
       method: 'Method'
@@ -178,6 +187,8 @@ en:
         blank: 'Please enter your first name'
       last_name:
         blank: 'Please enter your last name'
+      street_address:
+        blank: 'Please enter your street address'
       city:
         blank: 'Please enter your city'
       zip:

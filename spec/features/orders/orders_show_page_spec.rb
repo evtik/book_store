@@ -31,6 +31,10 @@ feature 'Orders show page' do
         visit user_order_path(user, order)
       end
 
+      scenario 'has order number' do
+        expect(page).to have_css('h1', text: 'R00000001')
+      end
+
       include_examples 'order details'
       include_examples 'extended order details'
     end
