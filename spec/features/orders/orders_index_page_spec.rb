@@ -12,9 +12,7 @@ feature 'Orders index page' do
       %w[all in_progress in_queue in_delivery delivered canceled]
     }
 
-    before do
-      login_as(user, scope: :user)
-    end
+    background { login_as(user, scope: :user) }
 
     scenario 'has orders caption' do
       visit user_orders_path(user)
