@@ -15,7 +15,7 @@ class ReviewsController < ApplicationController
       redirect_to book_path(params[:book_id])
     else
       @book = BookWithAssociated
-        .new(review_params[:book_id], load_reviews: false).first.decorate
+              .new(params[:book_id], load_reviews: false).first.decorate
       render 'new'
     end
   end
