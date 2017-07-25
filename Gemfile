@@ -68,9 +68,12 @@ group :test do
   gem 'database_cleaner'
   gem 'factory_girl_rails'
   gem 'poltergeist'
-  gem 'rails-controller-testing'
   gem 'rack_session_access'
+  gem 'rails-controller-testing'
   gem 'selenium-webdriver'
+  gem 'shoulda-matchers',
+      git: 'https://github.com/thoughtbot/shoulda-matchers.git',
+      branch: 'rails-5'
 end
 
 group :development do

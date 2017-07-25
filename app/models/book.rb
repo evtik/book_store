@@ -17,6 +17,7 @@ class Book < ApplicationRecord
   mount_uploaders :images, ImageUploader
 
   validate :must_have_category, :must_have_authors, :must_have_materials
+
   validates :title,
             presence: true,
             format: { with: REGEXP, message: 'Invalid book title format' },

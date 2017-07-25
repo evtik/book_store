@@ -7,7 +7,7 @@ require 'rack_session_access/capybara'
 require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
-Dir[Rails.root.join('spec/features/shared_examples/*.rb')].each do |file|
+Dir[Rails.root.join('spec/**/shared_examples/*.rb')].each do |file|
   require file
 end
 
