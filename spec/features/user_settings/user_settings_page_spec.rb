@@ -74,7 +74,7 @@ feature 'User settings page' do
           )
         end
 
-        scenario 'with email taken by other user' do
+        scenario 'with email taken by another user' do
           another_user = create(:user)
           fill_in('user[email]', with: another_user.email)
           click_on(t('user_settings.show.save'))
