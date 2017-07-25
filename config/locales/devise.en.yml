@@ -35,6 +35,13 @@ en:
       updated: "Your password has been changed successfully. You are now signed in."
       updated_not_active: "Your password has been changed successfully."
     registrations:
+      new:
+        sign_up: 'Sign up'
+        or: 'or'
+        have_account: 'Have an Account?'
+        email: 'Enter Email'
+        password: 'Password'
+        confirm_password: 'Confirm Password'
       destroyed: "Bye! Your account has been successfully cancelled. We hope to see you again soon."
       signed_up: "Welcome! You have signed up successfully."
       signed_up_but_inactive: "You have signed up successfully. However, we could not sign you in because your account is not yet activated."
@@ -43,6 +50,15 @@ en:
       update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and follow the confirm link to confirm your new email address."
       updated: "Your account has been updated successfully."
     sessions:
+      new:
+        sign_in: 'Log in'
+        sign_in_with: 'Sign in with'
+        or: 'or'
+        email: 'Enter Email'
+        password: 'Password'
+        forgot_password: 'Forgot password?'
+        remember_me: 'Remember me'
+        have_no_account: 'Don’t have an Account?'
       signed_in: "Signed in successfully."
       signed_out: "Signed out successfully."
       already_signed_out: "Signed out successfully."
