@@ -1,7 +1,7 @@
 class Review < ApplicationRecord
   include AASM
 
-  REGEXP = /\A([\w!#$%&'*+-\/=?^_`{|}~\s])+\z/
+  REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   belongs_to :book
   belongs_to :user

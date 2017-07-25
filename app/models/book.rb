@@ -7,8 +7,8 @@ class Book < ApplicationRecord
   has_many :order_items, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_many :approved_reviews, -> { where(state: 'approved') },
-
            class_name: 'Review'
+
   accepts_nested_attributes_for :authors
 
   paginates_per 12

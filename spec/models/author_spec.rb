@@ -24,6 +24,6 @@ describe Author, type: :model do
   end
 
   context 'description' do
-    include_examples 'description'
+    include_examples 'description', :description
   end
 end
