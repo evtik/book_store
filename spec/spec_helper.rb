@@ -4,6 +4,7 @@ require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'factory_girl_rails'
 require 'rack_session_access/capybara'
+require 'carrierwave/test/matchers'
 require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
@@ -34,4 +35,5 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :feature
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
+  config.include CarrierWave::Test::Matchers
 end

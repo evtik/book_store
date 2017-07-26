@@ -6,11 +6,14 @@ CarrierWave.configure do |config|
     aws_access_key_id: 'AKIAJHFZHHFXAN3ECAFQ',
     aws_secret_access_key: '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',
     region: 'eu-central-1',
-    # host: 'lkjlk',
     endpoint: 'https://s3.eu-central-1.amazonaws.com'
   }
-  # config.fog_directory = 'name_of_directory'
   config.fog_directory = 'sybookstore'
-  # config.fog_public = true
-  # config.for_attributes = { cache_control: 
+end
+
+if Rails.env.test?
+  CarrierWave.configure do |config|
+    config.storage = :file
+    config.enable_processing = false
+  end
 end
