@@ -4,7 +4,7 @@ feature 'Signup page' do
   given(:signup_form) { SignupForm.new }
   given(:valid_data) do
     {
-      email: 'user1@example.com',
+      email: 'valid@example.com',
       password: '11111111',
       password_confirmation: '11111111'
     }
@@ -17,7 +17,7 @@ feature 'Signup page' do
   end
 
   scenario 'with email taken by another user' do
-    create(:user)
+    create(:user, email: 'valid@example.com')
     signup_form.visit_page.fill_in_with(valid_data).submit
     expect(page).to have_content(t('errors.messages.taken'))
   end

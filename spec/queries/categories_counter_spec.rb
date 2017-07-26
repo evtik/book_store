@@ -1,10 +1,13 @@
 describe CategoriesCounter do
   context '#query' do
     it 'returns array of categeroies with their ids and books count' do
-      categories = create_list(:category, 4)
-      categories.each.with_index do |category, index|
-        category.books << create_list(:book_with_authors_and_materials,
-                                      index + 1, category: category)
+      ['mobile development',
+       'photo',
+       'web design',
+       'web development'].each_with_index do |name, index|
+        category = build(:category, name: name)
+        category.books << build_list(:book_with_authors_and_materials,
+                                     index + 1)
         category.save
       end
 

@@ -3,12 +3,12 @@ require_relative '../../support/forms/login_form'
 feature 'Login page' do
   given(:login_form) { LoginForm.new }
 
-  background { create(:user) }
+  background { create(:user, email: 'valid@example.com') }
 
   scenario 'with valid data' do
     create_list(:book_with_authors_and_materials, 4)
     login_form.visit_page.fill_in_with(
-      email: 'user1@example.com',
+      email: 'valid@example.com',
       password: '11111111'
     ).submit
     expect(page).to have_content(t('devise.sessions.signed_in'))
@@ -40,7 +40,7 @@ feature 'Login page' do
 
   scenario 'with invalid password' do
     login_form.visit_page.fill_in_with(
-      email: 'user1@example.com',
+      email: 'valid@example.com',
       password: '555'
     ).submit
     expect(page).to have_content(
