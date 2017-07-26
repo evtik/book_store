@@ -11,7 +11,7 @@ describe BooksSorter do
 
     context 'popular first' do
       it 'sorts books by their overall quantity(not count) in orders' do
-        sorter =  BooksSorter.new('sort_by' => 'popular')
+        sorter = BooksSorter.new('sort_by' => 'popular')
         books = []
         4.times do |n|
           book = create(:book_with_authors_and_materials)

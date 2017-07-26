@@ -5,7 +5,6 @@ class UserAddress < Rectify::Query
   end
 
   def query
-    # Address.where('user_id = ? AND address_type = ?', @id, @type)
     Address.where(user_id: @id, address_type: @type)
   end
 end
