@@ -1,0 +1,8 @@
+%a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown",
+  role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
+  = current_sorter
+  %i.fa.fa-angle-down.dropdown-icon
+%ul.dropdown-menu
+  - CatalogHelper::SORTERS.each do |sorter_params, sorter_name|
+    %li
+      =link_to sorter_name, catalog_params.merge(sorter_params)

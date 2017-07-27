@@ -1,0 +1,36 @@
+.row.mb-20
+  .col-sm-3
+    %h3.general-subtitle= t 'checkout.address.shipping_address'
+    = render '/orders/address_summary', address: @shipping,
+      render_edit_link: render_links
+  .col-sm-3
+    %h3.general-subtitle= t 'checkout.address.billing_address'
+    = render '/orders/address_summary', address: @billing,
+      render_edit_link: render_links
+  .col-sm-3
+    %h3.general-subtitle= t 'checkout.shipments'
+    %p.general-address
+      = @order.shipment.method
+      -if render_links
+        %span.general-edit
+          = link_to t('checkout.edit'), checkout_delivery_path
+      %br
+      from #{@order.shipment.days_min} to #{@order.shipment.days_max} days
+  .col-sm-3
+    %h3.general-subtitle= t 'checkout.payment_info'
+    %p.general-address
+      = @order.credit_card.starred_number
+      - if render_links
+        %span.general-edit
+          = link_to t('checkout.edit'), checkout_payment_path
+      %br
+      = @order.credit_card.month_full_year
+.general-cart-item.divider-lg.visible-xs
+.visible-xs
+  = render '/cart/xs_cart_items', render_inputs: false
+.hidden-xs.divider-lg.pt-20
+  = render '/cart/cart_items', render_inputs: false
+.text-center.general-text-right
+  %p.in-gold-500.font-18= t 'cart.index.order_summary'
+  %table.general-summary-table.general-summary-table-right.general-text-right
+    = render '/orders/delivery_totals'
