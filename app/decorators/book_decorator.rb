@@ -1,10 +1,6 @@
 class BookDecorator < Draper::Decorator
   delegate_all
 
-  def self.collection_decorator_class
-    PaginatingDecorator
-  end
-
   def authors_short
     model.authors
          .sort_by(&:last_name)
