@@ -11,8 +11,6 @@ class Book < ApplicationRecord
 
   accepts_nested_attributes_for :authors
 
-  paginates_per 12
-
   mount_uploader :main_image, ImageUploader
   mount_uploaders :images, ImageUploader
 
