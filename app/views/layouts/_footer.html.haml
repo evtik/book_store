@@ -7,8 +7,7 @@
             = link_to t('layouts.header.home'), root_path, class: 'nav-link'
           %li
             = link_to t('layouts.header.shop'),
-              catalog_index_path('sort_by' => 'created_at', 'order' => 'desc', 'limit' => '12'),
-              class: 'nav-link'
+              catalog_index_path, class: 'nav-link'
           - if user_signed_in?
             %li
               = link_to t('layouts.header.orders'),
