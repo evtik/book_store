@@ -1,0 +1,6 @@
+%h1 Order #{@order.number} has been added for processing
+= render 'cart/cart_items', render_inputs: false
+= render 'orders/delivery_totals'
+%br
+You can view your order processing progress
+= link_to 'here', user_order_url(@user, @order)

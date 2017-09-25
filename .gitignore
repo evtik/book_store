@@ -10,6 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
+/public/uploads/*
 # /public/*
 /**/*.swp
 # !/log/.keep
@@ -17,3 +18,7 @@
 
 # Ignore Byebug command history file.
 .byebug_history
+.rubocop.yml
+
+# config/database.yml
+# config/secrets.yml

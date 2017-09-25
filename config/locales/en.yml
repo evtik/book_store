@@ -1,23 +1,224 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t 'hello'
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t('hello') %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
-
 en:
-  hello: "Hello world"
+  layouts:
+    header:
+      home: 'Home'
+      shop: 'Shop'
+      account: 'My account'
+    my_account:
+      admin_panel: 'Admin panel'
+      orders: 'Orders'
+      settings: 'Settings'
+      logout: 'Log out'
+    login:
+      signup: 'Sign up'
+      login: 'Log in'
+  home:
+    index:
+      welcome: 'Welcome to our amazing Bookstore!'
+      description: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+      get_started: 'Get started'
+      best_sellers: 'Best sellers'
+    carousel_book:
+      buy_now: 'Buy Now'
+
+  catalog:
+    index:
+      caption: 'Catalog'
+      sort_by: 'Sort by'
+      view_more: 'View more'
+    xs_catalog_filters:
+      filter_by_category: 'Filter by category'
+    catalog_sorters:
+      newest: 'Newest first'
+      popular: 'Popular first'
+      price_low: 'Price: Low to high'
+      price_high: 'Price: High to low'
+      title_az: 'Title: A-Z'
+      title_za: 'Title: Z-A'
+
+  books:
+    book_details:
+      back_to_results: 'Back to results'
+      add_to_cart: 'Add to Cart'
+      description: 'Description'
+      year: 'Year of publication'
+      dimensions: 'Dimensions'
+      materials: 'Materials'
+      read_more: 'Read more'
+      read_less: 'Read less'
+    book_reviews:
+      reviews: 'Reviews'
+      verified_reviewer: 'Verified reviewer'
+      write_review: 'Write review'
+
+  reviews:
+    form:
+      write_review: 'Write a review'
+      score: 'Score'
+      title: 'Title'
+      review: 'Review'
+      post: 'Post'
+      success_message: "Review posted! It will be visible upon admin's approval."
+
+  cart:
+    product: 'Product'
+    price: 'Price'
+    quantity: 'Quantity'
+    subtotal: 'SubTotal'
+    index:
+      caption: 'Cart'
+      cart_empty_html: 'Currently you do not have any books in your cart. You could visit the %{href} to add some.'
+      enter_coupon: 'Enter Your Coupon Code'
+      update_cart: 'Update cart'
+      order_summary: 'Order Summary'
+      subtotal: 'Subtotal:'
+      coupon: 'Coupon:'
+      order_total: 'Order Total:'
+      checkout: 'Checkout'
+
+  coupon:
+    taken: 'This coupon is already used!'
+    expired: 'This coupon has expired!'
+    non_existent: 'This coupon does not exist!'
+
+  checkout:
+    caption: 'Checkout'
+    steps:
+      address: 'Address'
+      delivery: 'Delivery'
+      payment: 'Payment'
+      confirm: 'Confirm'
+      complete: 'Complete'
+    order_subtotal: 'Order Subtotal:'
+    shipping: 'Shipping:'
+    edit: 'edit'
+    shipments: 'Shipments'
+    payment_info: 'Payment Information'
+    save_continue: 'Save and continue'
+    address:
+      billing: 'billing'
+      billing_address: 'Billing Address'
+      shipping: 'shipping'
+      shipping_address: 'Shipping Address'
+      fields_required: 'all fields required'
+      use_billing: 'Use Billing Address'
+      item_total: 'Item total:'
+      first_name: 'First name'
+      last_name: 'Last name'
+      street_address: 'Street address'
+      city: 'City'
+      zip: 'Zip'
+      country: 'Country'
+      select_country: 'Select a country'
+      phone: 'Phone'
+      phone_example: 'Example +123456789101112'
+    delivery:
+      shipping_method: 'Shipping method'
+      method: 'Method'
+      days: 'Days'
+      price: 'Price'
+    payment:
+      credit_card: 'Credit Card'
+      card_number: 'Card Number'
+      cardholder: 'Name on Card'
+      month_year: 'MM / YY'
+      cvv: 'CVV'
+    confirm:
+      place_order: 'Place order'
+    complete:
+      thanks: 'Thank You for your Order!'
+      email_sent: 'An order confirmation has been sent to'
+      order: 'Order'
+      back_to_store: 'Back to Store'
+
+  orders:
+    index:
+      my_orders: 'My Orders'
+      no_orders: 'No orders in current selection'
+      number: 'Number'
+      completed_at: 'Completed at'
+      status: 'Status'
+      total: 'Total'
+    orders_filters:
+      all: 'All'
+      in_progress: 'In progress'
+      in_queue: 'In queue'
+      in_delivery: 'In delivery'
+      delivered: 'Delivered'
+      canceled: 'Canceled'
+
+  user_settings:
+    show:
+      caption: 'Settings'
+      address: 'Address'
+      privacy: 'Privacy'
+      save: 'Save'
+      address_saved: 'Your %{address_type} address has been successfully saved!'
+    change_email:
+      caption: 'Email'
+      enter_email: 'Enter Email'
+      placeholder: 'Enter your email'
+      email_updated: 'Your email has been successfully updated!'
+    change_password:
+      caption: 'Password'
+      old_password: 'Old Password'
+      new_password: 'New Password'
+      confirm: 'Confirm Password'
+      change: 'Change'
+      changed_message: 'Your password has been successfully changed!'
+    remove_account:
+      caption: 'Remove Account'
+      label: 'Please Remove My Account'
+      understood: 'I understand that all data will be lost'
+      removed_message: 'Your account has been successfully deleted!'
+
+  number:
+    currency:
+      format:
+        unit: '€'
+
+  time:
+    formats:
+      long_date: "%B %d, %Y"
+
+  errors:
+    attributes:
+      first_name:
+        blank: 'Please enter your first name'
+      last_name:
+        blank: 'Please enter your last name'
+      street_address:
+        blank: 'Please enter your street address'
+      city:
+        blank: 'Please enter your city'
+      zip:
+        blank: 'Please enter zip'
+      country:
+        blank: 'Please choose a country'
+      phone:
+        blank: 'Please enter phone number in format +123456789101112'
+        invalid: 'Please enter a valid phone'
+
+      number:
+        blank: 'Please enter a valid credit card number'
+        invalid: 'Should consist of 16 digits exactly'
+        luhn_invalid: 'Invalid card number'
+      cardholder:
+        blank: "Please enter the cardholder's name"
+        invalid: 'Invalid name format'
+      month_year:
+        blank: "Please enter the card's expiry date"
+        invalid: 'Invalid expiry date format'
+        past_date: 'Should be this month or later'
+      cvv:
+        blank: "Please enter the card's cvv"
+        invalid: 'Invalid cvv format'
+
+  # cannot access like this
+  # activerecord:
+    # errors:
+      # models:
+        # address:
+          # attributes:
+            # first_name:
+              # blank: ...
