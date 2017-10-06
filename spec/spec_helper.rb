@@ -19,9 +19,10 @@ Capybara.register_driver :poltergeist do |app|
                                     js_errors: false)
 end
 Capybara.configure do |config|
-  config.default_driver = :selenium
   # config.default_driver = :selenium
+  config.default_driver = :selenium
   # config.javascript_driver = :poltergeist
+  # config.current_driver = :poltergeist
 end
 
 RSpec.configure do |config|
