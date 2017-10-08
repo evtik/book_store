@@ -18,7 +18,10 @@
 
 # Ignore Byebug command history file.
 .byebug_history
-.rubocop.yml
+
+coverage
+
+# .rubocop.yml
 
 # config/database.yml
 # config/secrets.yml

@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'rails_helper'
 require 'capybara/rspec'
 require 'capybara/dsl'
@@ -5,6 +8,8 @@ require 'capybara/poltergeist'
 require 'factory_girl_rails'
 require 'rack_session_access/capybara'
 require 'carrierwave/test/matchers'
+require 'rectify/rspec'
+# require 'wisper/rspec/matchers'
 require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
@@ -19,7 +24,6 @@ Capybara.register_driver :poltergeist do |app|
                                     js_errors: false)
 end
 Capybara.configure do |config|
-  # config.default_driver = :selenium
   config.default_driver = :selenium
   # config.javascript_driver = :poltergeist
   # config.current_driver = :poltergeist
@@ -37,4 +41,5 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Warden::Test::Helpers
   config.include CarrierWave::Test::Matchers
+  config.include Rectify::RSpec::Helpers
 end
