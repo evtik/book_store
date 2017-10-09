@@ -9,7 +9,7 @@ require 'factory_girl_rails'
 require 'rack_session_access/capybara'
 require 'carrierwave/test/matchers'
 require 'rectify/rspec'
-# require 'wisper/rspec/matchers'
+require 'wisper/rspec/matchers'
 require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
@@ -42,4 +42,5 @@ RSpec.configure do |config|
   config.include Warden::Test::Helpers
   config.include CarrierWave::Test::Matchers
   config.include Rectify::RSpec::Helpers
+  config.include Wisper::RSpec::BroadcastMatcher
 end

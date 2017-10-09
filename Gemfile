@@ -75,6 +75,7 @@ group :test do
       git: 'https://github.com/thoughtbot/shoulda-matchers.git',
       branch: 'rails-5'
   gem 'simplecov', require: false
+  gem 'wisper-rspec', require: false
 end
 
 group :development do

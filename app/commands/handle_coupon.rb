@@ -8,9 +8,9 @@ class HandleCoupon < Rectify::Command
     @coupon_states = [coupon.nil?, coupon&.order.present?]
     @coupon_states << (@coupon_states.any? ? nil : coupon.expires < Date.today)
     if @coupon_states.any?
-      broadcast(:invalid, coupon_message)
+      publish(:invalid, coupon_message)
     else
-      broadcast(:valid, coupon)
+      publish(:valid, coupon)
     end
   end
 
