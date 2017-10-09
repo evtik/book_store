@@ -38,12 +38,12 @@ class CartController < ApplicationController
 
   def handle_coupon
     HandleCoupon.call(params[:coupon]) do
-      on(:invalid) do |error_message|
+      on(:error) do |error_message|
         flash[:alert] = error_message
         flash.keep
       end
 
-      on(:valid) do |coupon|
+      on(:ok) do |coupon|
         session[:coupon_id] = coupon.id
         session[:discount] = coupon.discount
       end
