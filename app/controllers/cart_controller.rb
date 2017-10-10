@@ -2,9 +2,8 @@ class CartController < ApplicationController
   before_action { session[:cart] ||= Hash.new(0) }
 
   def index
-    # @order_items = Cart::CreateOrderItemsFromCart.call(session[:cart])
     @order_items = CreateOrderItemsFromCart.call(session[:cart])
-    @items_total, @discount, @order_subtotal = Cart::CalculateCartTotals.call(
+    @items_total, @discount, @order_subtotal = CalculateCartTotals.call(
       session[:cart], session[:discount]
     )
     session[:items_total] = @items_total
