@@ -14,9 +14,9 @@ class HandleCoupon < Rectify::Command
 
   def message
     coupon_messages = {
+      [true, false] => I18n.t('coupon.non_existent'),
       [false, true] => I18n.t('coupon.taken'),
-      [false, false, true] => I18n.t('coupon.expired'),
-      [true, false] => I18n.t('coupon.non_existent')
+      [false, false, true] => I18n.t('coupon.expired')
     }
     coupon_messages[@coupon_states]
   end
