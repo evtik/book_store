@@ -34,18 +34,14 @@ Rails.application.routes.draw do
     resources :reviews, only: [:new, :create]
   end
 
-  scope 'cart' do
-    get '/', to: 'cart#index', as: :cart_index
-    post 'add', to: 'cart#add', as: :cart_add
-    post 'update', to: 'cart#update', as: :cart_update
-    delete 'remove/:id', to: 'cart#remove', as: :cart_remove
-  end
+  resource :cart, only: [:show, :update]
+  resources :cart_items, only: [:create, :destroy]
 
   scope 'checkout' do
     %w(address delivery payment confirm).each do |action|
-      get "#{action}", to: "checkout##{action}", as: "checkout_#{action}"
-      post "#{action}", to: "checkout#submit_#{action}",
-                        as: "checkout_submit_#{action}"
+      get action, to: "checkout##{action}", as: "checkout_#{action}"
+      post action, to: "checkout#submit_#{action}",
+                   as: "checkout_submit_#{action}"
     end
     get 'complete', to: 'checkout#complete', as: :checkout_complete
   end

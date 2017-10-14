@@ -21,7 +21,7 @@
       .row
         .col-xs-12.col-md-4
           %p.h1.in-gold-500.mt-10= number_to_currency @book.price
-        = form_tag(cart_add_path, class: 'form-inline') do
+        = form_tag(cart_items_path, class: 'form-inline') do
           .col-xs-5.col-md-3
             .input-group.general-position
               %a.input-link.quantity-decrement{data: {target: "quantities-#{@book.id}"}, href: "#"}

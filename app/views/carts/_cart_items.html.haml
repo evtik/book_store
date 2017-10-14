@@ -44,7 +44,7 @@
         %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
       - if render_inputs
         %td
-          = link_to(cart_remove_path(order_item.book.id),
+          = link_to(cart_item_path(order_item.book.id),
             data: { confirm: 'Are you sure?' },
             class: "close general-cart-close", method: :delete) do
             %span{'aria-hidden': "true"} &times;

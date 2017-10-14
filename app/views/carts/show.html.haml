@@ -4,7 +4,7 @@
     .container.text-center.mt-50
       %h2= t('.cart_empty_html', href: link_to(t('catalog.index.caption'), catalog_index_path))
   - else
-    = form_tag(cart_update_path) do
+    = form_tag(cart_path, method: :put) do
       .visible-xs
         = render 'xs_cart_items', render_inputs: true
       .hidden-xs

@@ -1,9 +1,9 @@
 feature 'Cart page' do
   context 'empty cart' do
     it 'has cart empty message' do
-      visit cart_index_path
+      visit cart_path
       expect(page).to have_content(
-        t('cart.index.cart_empty_html', href: (t 'catalog.index.caption'))
+        t('carts.show.cart_empty_html', href: (t 'catalog.index.caption'))
       )
     end
   end
@@ -12,7 +12,7 @@ feature 'Cart page' do
     around do |example|
       @books = create_list(:book_with_authors_and_materials, 3)
       page.set_rack_session(cart: { 1 => 1, 2 => 2, 3 => 3 })
-      visit cart_index_path
+      visit cart_path
       example.run
       page.set_rack_session(cart: nil)
     end
@@ -75,28 +75,28 @@ feature 'Cart page' do
     context 'filling in coupon code' do
       scenario 'with non-existent code' do
         fill_in('coupon', with: 'aslkd')
-        click_on(t('cart.index.update_cart'))
+        click_on(t('carts.show.update_cart'))
         expect(page).to have_content(t('coupon.non_existent'))
       end
 
       scenario 'with expired coupon' do
         create(:coupon, expires: Date.today - 1.day)
         fill_in('coupon', with: '123456')
-        click_on(t('cart.index.update_cart'))
+        click_on(t('carts.show.update_cart'))
         expect(page).to have_content(t('coupon.expired'))
       end
 
       scenario 'with coupon been already taken' do
         create(:coupon_with_order)
         fill_in('coupon', with: '123456')
-        click_on(t('cart.index.update_cart'))
+        click_on(t('carts.show.update_cart'))
         expect(page).to have_content(t('coupon.taken'))
       end
 
       scenario 'with valid coupon' do
         create(:coupon)
         fill_in('coupon', with: '123456')
-        click_on(t('cart.index.update_cart'))
+        click_on(t('carts.show.update_cart'))
         expect(page).to have_css('p.font-16', text: '6.00')
         expect(page).to have_css('p.font-16', text: '0.60')
         expect(page).to have_css('strong.font-18', text: '5.40')
@@ -113,16 +113,16 @@ feature 'Cart page' do
     end
 
     scenario 'with guest user redirects to login page' do
-      visit cart_index_path
-      click_on(t('cart.index.checkout'))
+      visit cart_path
+      click_on(t('carts.show.checkout'))
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
 
     scenario 'with logged in user redirets to checkout address' do
       user = create(:user)
       login_as(user, scope: :user)
-      visit cart_index_path
-      click_on(t('cart.index.checkout'))
+      visit cart_path
+      click_on(t('carts.show.checkout'))
       expect(page).to have_css('h1', text: t('checkout.caption'))
     end
   end

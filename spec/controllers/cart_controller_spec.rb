@@ -32,7 +32,7 @@ describe CartController do
 
   shared_examples 'both update and remove' do
     it 'redirect back to cart' do
-      expect(response).to redirect_to(cart_index_path)
+      expect(response).to redirect_to(cart_path)
     end
   end
 
@@ -67,7 +67,7 @@ describe CartController do
         }
         expect(session[:coupon_id]).to eq(1)
         expect(session[:discount]).to eq(10)
-        expect(response).to redirect_to(cart_index_path)
+        expect(response).to redirect_to(cart_path)
       end
 
       it 'with invalid coupon code' do
@@ -78,7 +78,7 @@ describe CartController do
         }
         expect(session[:coupon_id]).to be_nil
         expect(session[:discount]).to be_nil
-        expect(response).to redirect_to(cart_index_path)
+        expect(response).to redirect_to(cart_path)
       end
     end
   end

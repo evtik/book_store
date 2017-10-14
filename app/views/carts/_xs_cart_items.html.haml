@@ -1,6 +1,6 @@
 - @order_items.each do |order_item|
   - if render_inputs
-    = link_to(cart_remove_path(order_item.book.id),
+    = link_to(cart_item_path(order_item.book.id),
       data: { confirm: 'Are you sure?' }, class: "close general-cart-close",
       method: :delete) do
       %span{'aria-hidden': "true"} &times;

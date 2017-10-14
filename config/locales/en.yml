@@ -60,12 +60,12 @@ en:
       post: 'Post'
       success_message: "Review posted! It will be visible upon admin's approval."
 
-  cart:
+  carts:
     product: 'Product'
     price: 'Price'
     quantity: 'Quantity'
     subtotal: 'SubTotal'
-    index:
+    show:
       caption: 'Cart'
       cart_empty_html: 'Currently you do not have any books in your cart. You could visit the %{href} to add some.'
       enter_coupon: 'Enter Your Coupon Code'

@@ -2,7 +2,7 @@ class CheckoutController < ApplicationController
   before_action :authenticate_user!
 
   def address
-    return redirect_to cart_index_path if session[:cart].nil? || session[:cart].empty?
+    return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?
     order_from_session
     initialize_order unless @order
     @countries = COUNTRIES
@@ -59,7 +59,7 @@ class CheckoutController < ApplicationController
 
   def complete
     flash.keep
-    return redirect_to cart_index_path unless flash[:order_confirmed]
+    return redirect_to cart_path unless flash[:order_confirmed]
     @order = UserLastOrder.new(current_user.id).first.decorate
     @order_items = @order.order_items
   end

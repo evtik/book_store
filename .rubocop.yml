@@ -4,5 +4,14 @@ AllCops:
 Style/FrozenStringLiteralComment:
   EnforcedStyle: 'never'
 
+Style/SymbolArray:
+  EnforcedStyle: 'brackets'
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '()'
+    '%i': '()'
+    '%w': '()'
+
 Documentation:
   Enabled: false
