@@ -23,7 +23,7 @@ class CartsController < ApplicationController
   private
 
   def handle_coupon
-    HandleCoupon.call(params[:coupon]) do
+    Cart::HandleCoupon.call(params[:coupon]) do
       on(:error) do |error_message|
         flash[:alert] = error_message
         flash.keep
