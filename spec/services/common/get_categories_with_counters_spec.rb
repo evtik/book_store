@@ -1,5 +1,5 @@
-describe CategoriesCounter do
-  context '#query' do
+describe Common::GetCategoriesWithCounters do
+  context '#call' do
     it 'returns array of categeroies with their ids and books count' do
       ['mobile development',
        'photo',
@@ -11,7 +11,7 @@ describe CategoriesCounter do
         category.save
       end
 
-      expect(CategoriesCounter.new.query).to match_array(
+      expect(described_class.call).to eq(
         [
           [['all'], 10],
           [['mobile development', 1], 1],

@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   COUNTRIES = Country.all.map { |c| [c.name, c.country_code] }
 
   protect_from_forgery with: :exception
-  before_action :fetch_categories
+  before_action { @categories = Common::GetCategoriesWithCounters.call }
   before_action :store_current_location, unless: :devise_controller?
 
   rescue_from CanCan::AccessDenied do
@@ -35,10 +35,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def fetch_categories
-    @categories = CategoriesCounter.new.to_a
-  end
 
   def store_current_location
     store_location_for(:user, request.url)
