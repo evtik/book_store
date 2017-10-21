@@ -10,6 +10,6 @@
     %p#shipment-label.font-16= number_to_currency @order.shipment.price
 %tr
   %td
-    %strong.font-18= t 'cart.index.order_total'
+    %strong.font-18= t 'carts.show.order_total'
   %td
     %strong#order-total-label.font-18{'data-subtotal': @order.subtotal}= number_to_currency(@order.subtotal + @order.shipment.price)

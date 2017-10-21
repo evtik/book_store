@@ -14,7 +14,7 @@ feature 'Checkout address page' do
         login_as(create(:user), scope: :user)
         visit checkout_address_path
         expect(page).to have_content(
-          t('cart.index.cart_empty_html', href: (t 'catalog.index.caption'))
+          t('carts.show.cart_empty_html', href: (t 'catalog.index.caption'))
         )
       end
     end

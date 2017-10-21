@@ -16,15 +16,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  def order_items_from_cart
-    session[:cart].map do |book_id, quantity|
-      OrderItem.new do |order_item|
-        order_item.book_id = book_id
-        order_item.quantity = quantity.to_i
-      end
-    end
-  end
-
   def fetch_or_create_address(type)
     address = UserAddress.new(current_user.id, type).first
     if address

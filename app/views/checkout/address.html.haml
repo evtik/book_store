@@ -29,7 +29,7 @@
               %i.fa.fa-check
             %span.checkbox-text= t '.use_billing'
     .general-text-align.mb-60
-      %p.in-gold-500.font-18= t 'cart.index.order_summary'
+      %p.in-gold-500.font-18= t 'carts.show.order_summary'
       %table.general-summary-table
         %tr
           %td
@@ -38,7 +38,7 @@
             %p.font-16= number_to_currency @order.items_total
         %tr
           %td
-            %p.font-16= t 'cart.index.order_total'
+            %p.font-16= t 'carts.show.order_total'
           %td
             %p.font-16= number_to_currency @order.subtotal
       = f.submit t('checkout.save_continue'), class: "btn btn-default center-block mb-20"

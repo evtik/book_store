@@ -8,7 +8,7 @@
     .hidden-xs.mb-res-50
       = render 'deliveries_radio'
     .general-text-align
-      %p.in-gold-500.font-18= t 'cart.index.order_summary'
+      %p.in-gold-500.font-18= t 'carts.show.order_summary'
       %table.general-summary-table
         = render '/orders/delivery_totals'
     = fields_for :shipment, @order.shipment do |fields|

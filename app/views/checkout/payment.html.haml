@@ -32,7 +32,7 @@
               data: {toggle: 'tooltip', placement: 'top'}}
             %span.help-block= @order.card.errors[:cvv].first
     .general-text-align
-      %p.in-gold-500.font-18= t 'cart.index.order_summary'
+      %p.in-gold-500.font-18= t 'carts.show.order_summary'
       %table.general-summary-table
         = render '/orders/delivery_totals'
     = f.submit t('checkout.save_continue'), class: "btn btn-default center-block mb-20"
