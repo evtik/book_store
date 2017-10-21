@@ -16,15 +16,6 @@ class ApplicationController < ActionController::Base
     redirect_to root_path
   end
 
-  def fetch_or_create_address(type)
-    address = UserAddress.new(current_user.id, type).first
-    if address
-      AddressForm.from_model(address)
-    else
-      AddressForm.new(address_type: type)
-    end
-  end
-
   private
 
   def store_current_location

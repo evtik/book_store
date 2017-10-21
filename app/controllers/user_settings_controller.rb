@@ -4,8 +4,8 @@ class UserSettingsController < ApplicationController
   before_action :authenticate_user!, :populate_countries
 
   def show
-    @billing = fetch_or_create_address('billing')
-    @shipping = fetch_or_create_address('shipping')
+    @billing = Common::GetOrCreateAddress.call(current_user.id, 'billing')
+    @shipping = Common::GetOrCreateAddress.call(current_user.id, 'shipping')
   end
 
   def update_address

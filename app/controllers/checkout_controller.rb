@@ -81,8 +81,9 @@ class CheckoutController < ApplicationController
 
   def initialize_order
     @order = OrderForm.new
-    @order.billing = fetch_or_create_address('billing')
-    @order.shipping = fetch_or_create_address('shipping')
+    @order.billing = Common::GetOrCreateAddress.call(current_user.id, 'billing')
+    @order.shipping = Common::GetOrCreateAddress.call(current_user.id,
+                                                      'shipping')
     @order.items_total = session[:items_total]
     @order.subtotal = session[:order_subtotal]
     session[:order] = @order
