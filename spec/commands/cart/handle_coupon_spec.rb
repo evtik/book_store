@@ -1,5 +1,5 @@
 describe Cart::HandleCoupon do
-  describe '.call' do
+  describe '#call' do
     error_message = 'Some weird error!'
     let(:error) { error_message }
     let(:command) do
@@ -8,7 +8,7 @@ describe Cart::HandleCoupon do
 
     context 'with invalid inputs' do
       shared_examples 'returns error message' do
-        it 'it returns error message' do
+        example 'it returns error message' do
           expect { command.call('123456') }.to publish(:error, error)
         end
       end
