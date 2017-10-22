@@ -1,9 +1,11 @@
 class CheckoutController < ApplicationController
   before_action :authenticate_user!
+  before_action -> { @order = Checkout::BuildOrder.call(session[:order]) },
+                only: [:address, :delivery, :payment, :confirm],
+                if: -> { session[:order] }
 
   def address
     return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?
-    order_from_session
     initialize_order unless @order
     @countries = COUNTRIES
   end
@@ -14,7 +16,6 @@ class CheckoutController < ApplicationController
   end
 
   def delivery
-    order_from_session
     return redirect_to action: 'address' unless @order
     @shipments = Shipment.all
     initialize_shipment unless @order.shipment
@@ -26,7 +27,6 @@ class CheckoutController < ApplicationController
   end
 
   def payment
-    order_from_session
     return redirect_to action: 'delivery' unless @order&.shipment
     @order.card ||= CreditCardForm.new
   end
@@ -37,7 +37,6 @@ class CheckoutController < ApplicationController
   end
 
   def confirm
-    order_from_session
     return redirect_to action: 'payment' unless @order&.card
     @shipping = @order.use_billing ? @order.billing : @order.shipping
     @billing = @order.billing
@@ -65,12 +64,6 @@ class CheckoutController < ApplicationController
   end
 
   private
-
-  def order_from_session
-    return unless session[:order]
-    @order = OrderForm.from_params(session[:order])
-    @order.valid?
-  end
 
   def order_from_params(order_params)
     @order = OrderForm.from_params(session[:order]
