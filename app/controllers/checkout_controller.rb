@@ -11,7 +11,8 @@ class CheckoutController < ApplicationController
   end
 
   def submit_address
-    order_from_params(params.require(:order))
+    @order = Checkout::UpdateOrder.call(session,
+                                        params.require(:order).permit!.to_h)
     redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
   end
 
@@ -22,7 +23,7 @@ class CheckoutController < ApplicationController
   end
 
   def submit_delivery
-    order_from_params(params)
+    @order = Checkout::UpdateOrder.call(session, params.permit!.to_h)
     redirect_to action: @order&.shipment ? 'payment' : 'delivery'
   end
 
@@ -32,7 +33,8 @@ class CheckoutController < ApplicationController
   end
 
   def submit_payment
-    order_from_params(params.require(:order))
+    @order = Checkout::UpdateOrder.call(session,
+                                        params.require(:order).permit!.to_h)
     redirect_to action: @order.card.valid? ? 'confirm' : 'payment'
   end
 
@@ -64,13 +66,6 @@ class CheckoutController < ApplicationController
   end
 
   private
-
-  def order_from_params(order_params)
-    @order = OrderForm.from_params(session[:order]
-      .merge(order_params.permit!.to_h))
-    @order.card.number.delete!('-') if @order.card.present?
-    session[:order] = @order
-  end
 
   def initialize_order
     @order = OrderForm.new
