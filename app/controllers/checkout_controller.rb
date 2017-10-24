@@ -6,7 +6,7 @@ class CheckoutController < ApplicationController
 
   def address
     return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?
-    initialize_order unless @order
+    @order ||= Checkout::InitializeOrder.call(session)
     @countries = COUNTRIES
   end
 
@@ -66,16 +66,6 @@ class CheckoutController < ApplicationController
   end
 
   private
-
-  def initialize_order
-    @order = OrderForm.new
-    @order.billing = Common::GetOrCreateAddress.call(current_user.id, 'billing')
-    @order.shipping = Common::GetOrCreateAddress.call(current_user.id,
-                                                      'shipping')
-    @order.items_total = session[:items_total]
-    @order.subtotal = session[:order_subtotal]
-    session[:order] = @order
-  end
 
   def initialize_shipment
     @order.shipment_id = @shipments.first.id
