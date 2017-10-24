@@ -49,15 +49,17 @@ class CheckoutController < ApplicationController
   end
 
   def submit_confirm
-    order = session[:order]
-    @order = Order.new(
-      user_id: current_user.id, coupon_id: session[:coupon_id],
-      shipment_id: order['shipment_id'], subtotal: order['subtotal']
-    )
-    populate_addresses(order)
-    @order.credit_card = CreditCard.new(order['card'])
-    @order.order_items << Common::CreateOrderItemsFromCart.call(session[:cart])
-    submit_order
+    Checkout::SubmitOrder.call(session) do
+      on(:ok) do
+        flash[:order_confirmed] = true
+        redirect_to action: 'complete'
+      end
+
+      on(:error) do |error_message|
+        flash[:error] = error_message
+        redirect_to action: 'confirm'
+      end
+    end
   end
 
   def complete
@@ -65,28 +67,5 @@ class CheckoutController < ApplicationController
     return redirect_to cart_path unless flash[:order_confirmed]
     @order = UserLastOrder.new(current_user.id).first.decorate
     @order_items = @order.order_items
-  end
-
-  private
-
-  def populate_addresses(order)
-    @order.addresses << Address.new(order['billing'].except!('id'))
-    return if order['use_billing']
-    @order.addresses << Address.new(order['shipping'].except!('id'))
-  end
-
-  def submit_order
-    if @order.save
-      begin
-        %i[cart order discount coupon_id].each { |key| session.delete(key) }
-        flash[:order_confirmed] = true
-        NotifierMailer.order_email(@order).deliver
-      ensure
-        redirect_to action: 'complete'
-      end
-    else
-      flash[:alert] = 'Something went wrong...'
-      redirect_to action: 'confirm'
-    end
   end
 end

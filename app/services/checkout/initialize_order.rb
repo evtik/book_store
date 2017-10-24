@@ -1,15 +1,15 @@
 module Checkout
   class InitializeOrder < BaseService
     def self.build
-      new(Common::GetOrCreateAddress.build)
+      new(Common::GetUserIdFromSession.build, Common::GetOrCreateAddress.build)
     end
 
-    def initialize(get_or_create_address)
-      @get_or_create_address = get_or_create_address
+    def initialize(*args)
+      @get_user_id, @get_or_create_address = args
     end
 
     def call(session)
-      user_id = session['warden.user.user.key'][1][0]
+      user_id = @get_user_id.call(session)
       OrderForm.new(
         billing: @get_or_create_address.call(user_id, 'billing'),
         shipping: @get_or_create_address.call(user_id, 'shipping'),
