@@ -19,7 +19,9 @@ class CheckoutController < ApplicationController
   def delivery
     return redirect_to action: 'address' unless @order
     @shipments = Shipment.all
-    initialize_shipment unless @order.shipment
+    return if @order.shipment
+    @order.shipment_id = @shipments.first.id
+    @order.shipment = ShipmentForm.from_model(@shipments.first)
   end
 
   def submit_delivery
@@ -66,11 +68,6 @@ class CheckoutController < ApplicationController
   end
 
   private
-
-  def initialize_shipment
-    @order.shipment_id = @shipments.first.id
-    @order.shipment = ShipmentForm.from_model(@shipments.first)
-  end
 
   def populate_addresses(order)
     @order.addresses << Address.new(order['billing'].except!('id'))
