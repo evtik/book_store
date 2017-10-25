@@ -1,19 +1,19 @@
 module Checkout
   class SubmitOrder < BaseCommand
     def self.build
-      new(Checkout::BuildCompletedOrder.build)
+      new(Checkout::BuildCompletedOrder.build, NotifierMailer)
     end
 
-    def initialize(build_completed_order)
-      @build_completed_order = build_completed_order
+    def initialize(*args)
+      @build_order, @mailer = args
     end
 
     def call(session)
-      order = @build_completed_order.call(session)
+      order = @build_order.call(session)
       if order.save
         begin
           %i(cart order discount coupon_id).each { |key| session.delete(key) }
-          NotifierMailer.order_email(order).deliver
+          @mailer.order_email(order).deliver
         ensure
           publish(:ok)
         end
