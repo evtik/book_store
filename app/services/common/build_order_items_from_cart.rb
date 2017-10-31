@@ -1,5 +1,5 @@
 module Common
-  class CreateOrderItemsFromCart < BaseService
+  class BuildOrderItemsFromCart < BaseService
     def call(cart)
       cart.map do |book_id, quantity|
         OrderItem.new do |order_item|

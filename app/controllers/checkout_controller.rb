@@ -44,7 +44,7 @@ class CheckoutController < ApplicationController
     return redirect_to action: 'payment' unless @order&.card
     @shipping = @order.use_billing ? @order.billing : @order.shipping
     @billing = @order.billing
-    @order_items = Common::CreateOrderItemsFromCart.call(session[:cart])
+    @order_items = Common::BuildOrderItemsFromCart.call(session[:cart])
     @order.credit_card = CreditCard.new(@order.card.to_h).decorate
   end
 

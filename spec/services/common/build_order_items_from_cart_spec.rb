@@ -1,4 +1,4 @@
-describe Common::CreateOrderItemsFromCart do
+describe Common::BuildOrderItemsFromCart do
   describe '#call' do
     it 'returns array of OrderItems corresponding to cart items' do
       create_list(:book_with_authors_and_materials, 3)

@@ -2,7 +2,7 @@ class CartsController < ApplicationController
   before_action { session[:cart] ||= Hash.new(0) }
 
   def show
-    @order_items = Common::CreateOrderItemsFromCart.call(session[:cart])
+    @order_items = Common::BuildOrderItemsFromCart.call(session[:cart])
     @items_total, @discount, @order_subtotal = Cart::CalculateCartTotals.call(
       session[:cart], session[:discount]
     )
