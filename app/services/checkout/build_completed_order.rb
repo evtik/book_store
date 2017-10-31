@@ -3,13 +3,13 @@ module Checkout
     def self.build
       new(
         Common::GetUserIdFromSession.build,
-        Checkout::PopulateOrderAddresses.build,
+        Checkout::BuildOrderAddresses.build,
         Common::CreateOrderItemsFromCart.build
       )
     end
 
     def initialize(*args)
-      @get_user_id, @populate_addresses, @create_order_items = args
+      @get_user_id, @build_addresses, @create_order_items = args
     end
 
     def call(session)
@@ -18,9 +18,9 @@ module Checkout
                 coupon_id: session[:coupon_id],
                 shipment_id: order_hash['shipment_id'],
                 subtotal: order_hash['subtotal']).tap do |order|
-        @populate_addresses.call(order, order_hash)
+        order.addresses = @build_addresses.call(order_hash)
         order.credit_card = CreditCard.new(order_hash['card'])
-        order.order_items << @create_order_items.call(session[:cart])
+        order.order_items = @create_order_items.call(session[:cart])
       end
     end
   end
