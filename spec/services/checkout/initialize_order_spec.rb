@@ -2,8 +2,8 @@ describe Checkout::InitializeOrder do
   describe '#call' do
     let(:service) do
       described_class.new(
-        double('Common::GetUserIdFromSession', call: 1),
-        double('Common::GetOrCreateAddress', call: attributes_for(:address))
+        double('GetUserIdFromSession', call: 1),
+        double('GetOrCreateAddress', call: attributes_for(:address))
       )
     end
 
