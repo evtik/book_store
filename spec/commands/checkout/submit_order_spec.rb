@@ -39,9 +39,9 @@ describe Checkout::SubmitOrder do
 
     context 'with invalid order' do
       it 'publishes :error event with error message' do
-        allow_any_instance_of(Order).to receive(:save).and_return(false)
+        allow(order).to receive(:save).and_return(false)
         error_message = 'some error'
-        allow_any_instance_of(Order).to receive_message_chain(
+        allow(order).to receive_message_chain(
           :errors, full_messages: [error_message]
         )
         expect { command.call(session) }.to publish(:error, error_message)
