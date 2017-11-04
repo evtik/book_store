@@ -10,7 +10,8 @@ class OrdersController < ApplicationController
   end
 
   def show
-    initialize_order
+    @order = Orders::GetOrderById.call(order_params[:order_id])
+    authorize! :show, @order
     initialize_addresses
     @order_items = @order.order_items
     @order.credit_card = @order.credit_card.decorate
@@ -19,16 +20,8 @@ class OrdersController < ApplicationController
   private
 
   def order_params
+    # do i need id here?
     params.permit(:id, :order_id, :filter)
-  end
-
-  def initialize_order
-    @order = Order.includes(:addresses, :credit_card, :shipment,
-                            :coupon, order_items: [:book])
-                  .where(id: order_params[:order_id])
-                  .first
-                  .decorate
-    authorize! :show, @order
   end
 
   def initialize_addresses
