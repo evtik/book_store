@@ -21,7 +21,9 @@ Capybara.register_driver :poltergeist do |app|
   Capybara::Poltergeist::Driver.new(app,
                                     browser: :phantomjs,
                                     window_size: [1280, 1024],
-                                    js_errors: false)
+                                    js_errors: true,
+                                    debug: true
+                                   )
 end
 Capybara.configure do |config|
   config.default_driver = :selenium
