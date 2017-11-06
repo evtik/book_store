@@ -2,8 +2,7 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!
 
   def new
-    @book = BookWithAssociated.new(params[:book_id], load_reviews: false)
-                              .first.decorate
+    @book = BookWithAssociated.new(params[:book_id]).first.decorate
     @review = Review.new(book_id: @book.id, score: 0)
   end
 
@@ -14,8 +13,7 @@ class ReviewsController < ApplicationController
       flash[:notice] = t 'reviews.form.success_message'
       redirect_to book_path(params[:book_id])
     else
-      @book = BookWithAssociated
-              .new(params[:book_id], load_reviews: false).first.decorate
+      @book = BookWithAssociated.new(params[:book_id]).first.decorate
       render 'new'
     end
   end
