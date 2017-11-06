@@ -12,7 +12,8 @@ class OrdersController < ApplicationController
   def show
     @order = Orders::GetOrderById.call(order_params[:order_id])
     authorize! :show, @order
-    @billing, @shipping = Orders::GetOrderAddresses.call(@order)
+    @billing = @order.billing_address
+    @shipping = @order.shipping_address
     @order_items = @order.order_items
     @order.credit_card = @order.credit_card.decorate
   end

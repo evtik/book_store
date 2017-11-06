@@ -6,8 +6,7 @@ class Book < ApplicationRecord
   has_and_belongs_to_many :materials
   has_many :order_items, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_many :approved_reviews, -> { where(state: 'approved') },
-           class_name: 'Review'
+  has_many :approved_reviews, -> { approved }, class_name: 'Review'
 
   accepts_nested_attributes_for :authors
 

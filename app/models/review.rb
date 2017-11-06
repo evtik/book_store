@@ -6,6 +6,8 @@ class Review < ApplicationRecord
   belongs_to :book
   belongs_to :user
 
+  scope :approved, -> { where(state: 'approved') }
+
   validates :title,
             presence: true,
             format: { with: REGEXP, message: 'Invalid review title format' },

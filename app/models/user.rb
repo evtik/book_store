@@ -2,8 +2,7 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :addresses, dependent: :destroy
   has_many :orders, dependent: :destroy, autosave: false
-  has_many :billing_addresses, -> { where(address_type: 'billing') },
-           class_name: 'Address'
+  has_one :billing_address, -> { billing }, class_name: 'Address'
 
   after_create :send_welcome_user
 
