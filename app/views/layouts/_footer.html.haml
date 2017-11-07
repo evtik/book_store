@@ -10,11 +10,11 @@
               catalog_index_path, class: 'nav-link'
           - if user_signed_in?
             %li
-              = link_to t('layouts.header.orders'),
+              = link_to t('layouts.my_account.orders'),
                 user_orders_path(current_user),
                 class: 'nav-link'
             %li
-              = link_to t('layouts.header.settings'),
+              = link_to t('layouts.my_account.settings'),
                 user_settings_path(current_user),
                 class: 'nav-link'
       .col-sm-3

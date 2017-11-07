@@ -46,14 +46,11 @@ Rails.application.routes.draw do
     get 'complete', to: 'checkout#complete', as: :checkout_complete
   end
 
-  scope 'user' do
-    get ':id/orders', to: 'orders#index', as: :user_orders
-    get ':id/orders/:order_id', to: 'orders#show', as: :user_order
-
-    get ':id/settings', to: 'user_settings#show', as: :user_settings
-    post ':id/settings', to: 'user_settings#update_address',
-                         as: :user_settings_update_address
-    patch ':id/settings/email', to: 'user_settings#update_email',
-                                as: :user_settings_update_email
+  resources :user, only: [] do
+    resources :orders, only: [:index, :show]
+    resource :settings, only: :show do
+      resource :address, only: :update
+      resource :email, only: :update
+    end
   end
 end

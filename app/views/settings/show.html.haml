@@ -7,7 +7,7 @@
       %a{href: "#privacy", 'aria-controls': "privacy", role: "tab", 'data-toggle': "tab"}= t '.privacy'
   .tab-content
     #address.tab-pane.general-main-wrap{class: ('active fade in' unless flash[:show_privacy]), role: "tabpanel"}
-      = form_for @billing, url: user_settings_update_address_path, method: :post do |f|
+      = form_for @billing, url: user_settings_address_path, method: :put do |f|
         .hidden-xs.hidden-sm
           .row
             .col-md-5
@@ -25,7 +25,7 @@
           .col-md-5.col-md-offset-1.mb-25
             .visible-xs.visible-sm
               %h3.general-subtitle.mt-0= t 'checkout.address.shipping_address'
-            = form_for @shipping, url: user_settings_update_address_path, method: :post do |f|
+            = form_for @shipping, url: user_settings_address_path, method: :put do |f|
               = render '/checkout/address_fields', f: f, address: @shipping,
                 type: 'shipping', entity: 'address'
             .text-center.general-text-align

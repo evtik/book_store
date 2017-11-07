@@ -2,7 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   include AbstractController::Translation
   def update
     if resource.update_with_password(permitted)
-      flash[:notice] = t('user_settings.change_password.changed_message')
+      flash[:notice] = t('settings.change_password.changed_message')
       bypass_sign_in resource
     else
       clean_up_passwords(resource)
@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def destroy
     super
-    flash[:notice] = t('user_settings.remove_account.removed_message')
+    flash[:notice] = t('settings.remove_account.removed_message')
   end
 
   private

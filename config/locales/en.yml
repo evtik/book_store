@@ -147,7 +147,7 @@ en:
       delivered: 'Delivered'
       canceled: 'Canceled'
 
-  user_settings:
+  settings:
     show:
       caption: 'Settings'
       address: 'Address'
