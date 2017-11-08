@@ -10,6 +10,6 @@ class EmailsController < ApplicationController
     else
       flash[:alert] = user.errors.full_messages.first
     end
-    redirect_to user_settings_path(current_user)
+    redirect_to settings_path
   end
 end

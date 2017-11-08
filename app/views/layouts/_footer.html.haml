@@ -10,12 +10,10 @@
               catalog_index_path, class: 'nav-link'
           - if user_signed_in?
             %li
-              = link_to t('layouts.my_account.orders'),
-                user_orders_path(current_user),
+              = link_to t('layouts.my_account.orders'), orders_path,
                 class: 'nav-link'
             %li
-              = link_to t('layouts.my_account.settings'),
-                user_settings_path(current_user),
+              = link_to t('layouts.my_account.settings'), settings_path,
                 class: 'nav-link'
       .col-sm-3
         %p.general-nav-mail support@bookstore.com

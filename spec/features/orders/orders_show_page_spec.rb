@@ -1,7 +1,7 @@
 feature 'Orders show page' do
   context 'with guest user' do
     scenario 'redirects to login page' do
-      visit user_order_path(id: 1, order_id: 1)
+      visit order_path(id: 1)
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
   end
@@ -28,7 +28,7 @@ feature 'Orders show page' do
 
     context 'order details' do
       background do
-        visit user_order_path(user, order)
+        visit order_path(order)
       end
 
       scenario 'has order number' do
@@ -43,7 +43,7 @@ feature 'Orders show page' do
       given!(:another_order) { create(:order, user: create(:user)) }
 
       scenario "redirects to 'not authorized' page" do
-        visit user_order_path(user, another_order)
+        visit order_path(another_order)
         expect(page).to have_content(
           'You are not authorized to access this resource (403)'
         )

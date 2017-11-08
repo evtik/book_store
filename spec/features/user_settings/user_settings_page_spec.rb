@@ -4,7 +4,7 @@ require_relative '../../support/forms/new_password_form'
 feature 'User settings page' do
   context 'with guest user' do
     scenario 'redirects to login page' do
-      visit user_settings_path(1)
+      visit settings_path
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
   end
@@ -18,7 +18,7 @@ feature 'User settings page' do
 
       before do
         login_as(user, scope: :user)
-        visit user_settings_path(user)
+        visit settings_path
       end
 
       context 'filling in billing address' do
@@ -27,7 +27,7 @@ feature 'User settings page' do
                                                    country: 'Portugal'))
           first("input[type='submit']").click
           expect(page).to have_content(
-            t('user_settings.show.address_saved', address_type: 'billing')
+            t('settings.show.address_saved', address_type: 'billing')
           )
         end
 
@@ -44,7 +44,7 @@ feature 'User settings page' do
                                                     country: 'Belgium'))
           all("input[type='submit']")[1].click
           expect(page).to have_content(
-            t('user_settings.show.address_saved', address_type: 'shipping')
+            t('settings.show.address_saved', address_type: 'shipping')
           )
         end
 
@@ -61,23 +61,23 @@ feature 'User settings page' do
     context 'privacy' do
       before do
         login_as(user, scope: :user)
-        visit user_settings_path(user)
-        click_on(t('user_settings.show.privacy'))
+        visit settings_path
+        click_on(t('settings.show.privacy'))
       end
 
       context 'update email' do
         scenario 'with vaild email' do
           fill_in('user[email]', with: 'user2@example.com')
-          click_on(t('user_settings.show.save'))
+          click_on(t('settings.show.save'))
           expect(page).to have_content(
-            t('user_settings.change_email.email_updated')
+            t('settings.change_email.email_updated')
           )
         end
 
         scenario 'with email taken by another user' do
           another_user = create(:user)
           fill_in('user[email]', with: another_user.email)
-          click_on(t('user_settings.show.save'))
+          click_on(t('settings.show.save'))
           expect(page).to have_content(t('errors.messages.taken'))
         end
       end
@@ -92,7 +92,7 @@ feature 'User settings page' do
             password_confirmation: '22222222'
           ).submit
           expect(page).to have_content(
-            t('user_settings.change_password.changed_message')
+            t('settings.change_password.changed_message')
           )
         end
 
@@ -143,10 +143,10 @@ feature 'User settings page' do
       scenario 'remove account' do
         create_list(:book_with_authors_and_materials, 4)
         find('i.fa-check').click
-        click_on(t('user_settings.remove_account.label'))
+        click_on(t('settings.remove_account.label'))
         accept_alert
         expect(page).to have_content(
-          t('user_settings.remove_account.removed_message')
+          t('settings.remove_account.removed_message')
         )
       end
     end

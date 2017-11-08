@@ -46,11 +46,9 @@ Rails.application.routes.draw do
     get 'complete', to: 'checkout#complete', as: :checkout_complete
   end
 
-  resources :user, only: [] do
-    resources :orders, only: [:index, :show]
-    resource :settings, only: :show do
-      resource :address, only: :update
-      resource :email, only: :update
-    end
+  resources :orders, only: [:index, :show]
+  resource :settings, only: :show do
+    resource :address, only: :update
+    resource :email, only: :update
   end
 end

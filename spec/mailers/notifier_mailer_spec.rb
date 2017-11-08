@@ -15,7 +15,7 @@ describe NotifierMailer, type: :mailer do
     end
 
     it 'has link to user settings in body' do
-      expect(user_email.body.to_s).to include(user_settings_path(user))
+      expect(user_email.body.to_s).to include(settings_path)
     end
   end
 
@@ -43,7 +43,7 @@ describe NotifierMailer, type: :mailer do
     end
 
     it 'has link to order path in body' do
-      expect(order_email.body.to_s).to include(user_order_path(user, order))
+      expect(order_email.body.to_s).to include(order_path(order))
     end
   end
 end

@@ -1,4 +1,4 @@
-describe Orders::GetOrderById do
+describe Orders::GetOrderWithAssociated do
   describe '#call' do
     subject do
       create_list(:book_with_authors_and_materials, 3)
@@ -17,7 +17,8 @@ describe Orders::GetOrderById do
     end
 
     it 'ensures to have preloaded order`s associated entities' do
-      %i(addresses credit_card shipment coupon order_items).each do |associated|
+      %i(billing_address shipping_address credit_card shipment
+         coupon order_items).each do |associated|
         expect(subject.association_cached?(associated)).to be true
       end
     end

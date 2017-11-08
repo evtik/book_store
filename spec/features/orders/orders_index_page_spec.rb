@@ -1,7 +1,7 @@
 feature 'Orders index page' do
   context 'with guest user' do
     scenario 'redirects to login page' do
-      visit user_orders_path(id: 1)
+      visit orders_path
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
   end
@@ -15,12 +15,12 @@ feature 'Orders index page' do
     background { login_as(user, scope: :user) }
 
     scenario 'has orders caption' do
-      visit user_orders_path(user)
+      visit orders_path
       expect(page).to have_css('h1', text: t('orders.index.my_orders'))
     end
 
     scenario 'has orders filter select' do
-      visit user_orders_path(user)
+      visit orders_path
       states.each do |state|
         expect(page).to have_css(
           'ul.dropdown-menu li a',
@@ -30,7 +30,7 @@ feature 'Orders index page' do
     end
 
     scenario "has order filter 'All' option selected by default" do
-      visit user_orders_path(user)
+      visit orders_path
       expect(page).to have_css(
         'a.dropdown-toggle.dropdown-btn', text: t('orders.orders_filters.all')
       )
@@ -53,17 +53,17 @@ feature 'Orders index page' do
       end
 
       scenario 'has 5 order items on page' do
-        visit user_orders_path(user)
+        visit orders_path
         expect(page).to have_css('tr.order-row', count: 5)
       end
 
       scenario 'has the latest order as the first in list' do
-        visit user_orders_path(user)
+        visit orders_path
         expect(first('span.general-order-number').text).to eq('R00000005')
       end
 
       scenario 'click on filter option only leaves selected orders on page' do
-        visit user_orders_path(user)
+        visit orders_path
         find('a.dropdown-toggle.dropdown-btn').click
         click_on(t('orders.orders_filters.in_delivery'))
         expect(page).to have_css('tr.order-row', count: 1)
@@ -81,12 +81,12 @@ feature 'Orders index page' do
         order.user = another_user
         order.save
 
-        visit user_orders_path(user)
+        visit orders_path
         expect(page).not_to have_content('R00000006')
       end
 
       scenario 'click on order item redirects to order page' do
-        visit user_orders_path(user)
+        visit orders_path
         first('tr.order-row').click
         expect(page).to have_current_path(/user\/1\/orders\/5/)
       end

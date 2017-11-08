@@ -5,8 +5,8 @@ describe UserSettingsController do
     let(:user) { create(:user) }
 
     shared_examples_for 'redirects back' do
-      scenario 'to user_settings#show' do
-        expect(response).to redirect_to(user_settings_path(user))
+      scenario 'to settings#show' do
+        expect(response).to redirect_to(settings_path)
       end
     end
 
@@ -37,7 +37,7 @@ describe UserSettingsController do
                   .merge(id: address.id),
                 shipping: attributes_for(:address, address_type: 'shipping')
               },
-              billing: t('user_settings.show.save'),
+              billing: t('settings.show.save'),
               id: user.id
             }
           end
@@ -59,7 +59,7 @@ describe UserSettingsController do
                   .merge(id: address.id),
                 shipping: attributes_for(:address, address_type: 'shipping')
               },
-              billing: t('user_settings.show.save'),
+              billing: t('settings.show.save'),
               id: user.id
             }
           end
@@ -83,7 +83,7 @@ describe UserSettingsController do
                 billing: attributes_for(:address),
                 shipping: attributes_for(:address, address_type: 'shipping')
               },
-              shipping: t('user_settings.show.save'),
+              shipping: t('settings.show.save'),
               id: user.id
             }
           }
@@ -94,9 +94,9 @@ describe UserSettingsController do
             }.to change(Address, :count).by(1)
           end
 
-          scenario 'redirects back to user_settings#show' do
+          scenario 'redirects back to settings#show' do
             post :update_address, params: valid_data
-            expect(response).to redirect_to(user_settings_path(user))
+            expect(response).to redirect_to settings_path
           end
         end
 
@@ -108,7 +108,7 @@ describe UserSettingsController do
                 shipping: attributes_for(:address, address_type: 'shipping',
                                                    phone: 'myphone')
               },
-              shipping: t('user_settings.show.save'),
+              shipping: t('settings.show.save'),
               id: user.id
             }
           }

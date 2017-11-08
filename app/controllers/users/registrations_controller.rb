@@ -20,7 +20,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   private
 
   def after_update_path_for(resource)
-    user_settings_path(resource)
+    settings_path
   end
 
   def permitted

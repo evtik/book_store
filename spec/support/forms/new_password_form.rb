@@ -10,6 +10,6 @@ class NewPasswordForm
   end
 
   def submit
-    click_on(t('user_settings.change_password.change'))
+    click_on(t('settings.change_password.change'))
   end
 end

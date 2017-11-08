@@ -10,10 +10,10 @@ class OrdersController < ApplicationController
   end
 
   def show
-    @order = Orders::GetOrderById.call(order_params[:order_id])
+    @order = Orders::GetOrderWithAssociated.call(order_params[:id])
     authorize! :show, @order
     @billing = @order.billing_address
-    @shipping = @order.shipping_address
+    @shipping = @order.shipping_address || @billing
     @order_items = @order.order_items
     @order.credit_card = @order.credit_card.decorate
   end
@@ -21,7 +21,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    # do i need id here?
-    params.permit(:id, :order_id, :filter)
+    params.permit(:id, :filter)
   end
 end
