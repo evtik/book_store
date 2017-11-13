@@ -9,6 +9,12 @@ feature 'User address settings page' do
   end
 
   context 'with logged in user' do
+    def find_error_span(address_type, field)
+      xpath = "//input[@name='address[#{address_type}][#{field}]']/"\
+              "../following-sibling::span[@class='help-block'][1]"
+      find(:xpath, xpath)
+    end
+
     given!(:user) { create(:user) }
 
     given(:billing_form) { NewAddressForm.new('address', 'billing') }
@@ -29,10 +35,18 @@ feature 'User address settings page' do
         )
       end
 
-      scenario 'with invalid data shows address errors' do
+      scenario "with empty field shows 'can`t be blank' errors" do
         billing_form.fill_in_form(attributes_for(:address, city: ''))
         first("input[type='submit']").click
-        expect(page).to have_content(t('errors.attributes.city.blank'))
+        error_span = find_error_span('billing', 'city')
+        expect(error_span).to have_content(t('errors.attributes.city.blank'))
+      end
+
+      scenario "with invalid field shows 'invalid' errors" do
+        billing_form.fill_in_form(attributes_for(:address, zip: 'xyz'))
+        first("input[type='submit']").click
+        error_span = find_error_span('billing', 'zip')
+        expect(error_span).to have_content(t('errors.messages.invalid'))
       end
     end
 
@@ -46,12 +60,22 @@ feature 'User address settings page' do
         )
       end
 
-      scenario 'with invalid data shows address errors' do
+      scenario "with empty field shows 'can`t be blank' errors" do
+        shipping_form.fill_in_form(attributes_for(:address, first_name: ''))
+        all("input[type='submit']")[1].click
+        error_span = find_error_span('shipping', 'first_name')
+        expect(error_span).to have_content(
+          t('errors.attributes.first_name.blank')
+        )
+      end
+
+      scenario "with invalid field shows 'invalid' errors" do
         shipping_form.fill_in_form(
           attributes_for(:address, last_name: 'name#*&@')
         )
         all("input[type='submit']")[1].click
-        expect(page).to have_content(t('errors.messages.invalid'))
+        error_span = find_error_span('shipping', 'last_name')
+        expect(error_span).to have_content(t('errors.messages.invalid'))
       end
     end
   end
