@@ -6,7 +6,7 @@ describe AddressesController do
       let(:user) { create(:user) }
 
       shared_examples 'redirects back' do
-        scenario 'redirects back to settings#show' do
+        example 'redirects back to settings#show' do
           expect(response).to redirect_to(settings_path)
         end
       end
@@ -29,7 +29,7 @@ describe AddressesController do
             }
           end
 
-          scenario 'updates address in database' do
+          it 'updates address in database' do
             address.reload
             expect(address.city).to eq('Updated')
           end
@@ -51,7 +51,7 @@ describe AddressesController do
             }
           end
 
-          scenario 'does not update address in database' do
+          it 'does not update address in database' do
             address.reload
             expect(address.city).not_to eq('Updated')
           end
@@ -73,13 +73,13 @@ describe AddressesController do
             }
           }
 
-          scenario 'creates new address to database' do
+          it 'creates new address to database' do
             expect {
               put :update, params: valid_data
             }.to change(Address, :count).by(1)
           end
 
-          scenario 'redirects back to settings#show' do
+          it 'redirects back to settings#show' do
             put :update, params: valid_data
             expect(response).to redirect_to settings_path
           end
@@ -98,13 +98,13 @@ describe AddressesController do
             }
           }
 
-          scenario 'does not create new address in database' do
+          it 'does not create new address in database' do
             expect {
               put :update, params: invalid_data
             }.not_to change(Address, :count)
           end
 
-          scenario 'redirects back to settings#show' do
+          it 'redirects back to settings#show' do
             put :update, params: invalid_data
             expect(response).to redirect_to settings_path
           end
