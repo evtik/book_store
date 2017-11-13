@@ -21,7 +21,7 @@ describe Settings::FindOrInitializeAddress do
         is_expected.to be_persisted
       end
 
-      it 'updates exising address' do
+      it 'updates existing address' do
         expect(subject.zip).to eq('11111')
       end
     end
