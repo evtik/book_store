@@ -15,7 +15,7 @@
       = render @books
   .text-center
     %span
-      -if more_books?
+      -if presenter.more_books?
         =link_to t('.view_more'),
-          catalog_params.merge('limit' => current_limit + 12),
+          catalog_params.merge('limit' => presenter.current_limit + 12),
           class: 'btn btn-primary mb-60'

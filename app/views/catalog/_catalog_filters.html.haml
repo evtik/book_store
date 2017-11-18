@@ -4,7 +4,7 @@
       = link_to catalog_params.merge('category' => category.first.second,
         'limit' => 12, 'sort_by' => 'created_at', 'order' => 'desc'),
         class: "filter-link" do
-        -if current_category?(category.first.second)
+        -if presenter.current_category?(category.first.second)
           %b= capitalize_category(category.first.first)
         -else
           = capitalize_category(category.first.first)

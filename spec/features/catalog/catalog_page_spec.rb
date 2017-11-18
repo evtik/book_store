@@ -44,7 +44,7 @@ feature 'Catalog page' do
     context 'click on category menu item in xs layout' do
       scenario 'makes it current menu item' do
         find('.visible-xs ul.dropdown-menu li a',
-             visible: false, text: 'Web Development').trigger('click')
+             visible: false, text: 'Web Development').click
         expect(page).to have_css(
           '.visible-xs a.dropdown-toggle',
           visible: false, text: 'Web Development'

@@ -1,4 +1,8 @@
+require 'carrierwave/test/matchers'
+
 describe ImageUploader do
+  include CarrierWave::Test::Matchers
+
   let(:book) { create(:book_with_authors_and_materials) }
   let(:uploader) { ImageUploader.new(book, :main_image) }
 
@@ -21,12 +25,12 @@ describe ImageUploader do
   end
 
   context 'small version' do
-    it 'scales down image to fit within 70x70 pixels' do
-      expect(uploader.thumb).to be_no_larger_than(120, 120)
+    it 'scales down image to fit within 120x120 pixels' do
+      expect(uploader.small).to be_no_larger_than(120, 120)
     end
   end
 
-  it 'has the correct format' do
+  it 'has correct format' do
     expect(uploader).to be_format('png')
   end
 end

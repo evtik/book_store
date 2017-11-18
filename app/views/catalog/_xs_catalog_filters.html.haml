@@ -2,7 +2,7 @@
 .dropdown.mb-20
   %a.dropdown-toggle.dropdown-btn{href: "#", 'data-toggle': "dropdown",
     role: "button", 'aria-haspopup': "true", 'aria-expanded': "false"}
-    =capitalize_category(find_category(params[:category].to_i).first.first)
+    =capitalize_category(presenter.find_category(params[:category].to_i)[0][0])
     %i.fa.fa-angle-down.dropdown-icon
   %ul.dropdown-menu
     -@categories.each do |category|
