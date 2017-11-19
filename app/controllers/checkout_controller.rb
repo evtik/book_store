@@ -1,8 +1,12 @@
 class CheckoutController < ApplicationController
+  include Rectify::ControllerHelpers
+
   before_action :authenticate_user!
   before_action -> { @order = Checkout::BuildOrder.call(session[:order]) },
                 only: [:address, :delivery, :payment, :confirm],
                 if: -> { session[:order] }
+  before_action -> { present CheckoutPresenter.new },
+                only: [:address, :delivery, :payment, :confirm, :complete]
 
   def address
     return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?

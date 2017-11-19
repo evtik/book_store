@@ -123,6 +123,10 @@ en:
       cardholder: 'Name on Card'
       month_year: 'MM / YY'
       cvv: 'CVV'
+      cvv_hint: |
+       3-digit security code usually found on the back of your
+       card. American Express cards have a 4-digit code located on
+       the front.
     confirm:
       place_order: 'Place order'
     complete:

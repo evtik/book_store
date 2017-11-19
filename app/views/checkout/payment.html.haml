@@ -28,7 +28,7 @@
           .form-group.relative{ class: ('has-error' if @order.card.errors[:cvv].any?)}
             %label.control-label.font-weight-light{for: "cvv"}= t '.cvv'
             = fields.password_field :cvv, class: 'form-control', placeholder: t('.cvv')
-            %i.fa.fa-question-circle.general-form-help.font-18{ title: CheckoutHelper::CVV_HINT,
+            %i.fa.fa-question-circle.general-form-help.font-18{ title: t('.cvv_hint'),
               data: {toggle: 'tooltip', placement: 'top'}}
             %span.help-block= @order.card.errors[:cvv].first
     .general-text-align

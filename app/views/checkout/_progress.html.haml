@@ -1,13 +1,13 @@
 %ul.steps.list-inline
-  - CheckoutHelper::STEPS.each_with_index do |step, index|
-    - if previous?(step)
+  - presenter.steps.each_with_index do |step, index|
+    - if presenter.previous?(step, action_name)
       %li.step.done
         %span.step-number
           %i.fa.fa-check.step-icon
         %span.step-text.hidden-xs= t "checkout.steps.#{step}"
     - else
-      %li.step{class: ('active' if current?(step))}
+      %li.step{class: ('active' if presenter.current?(step, action_name))}
         %span.step-number= index + 1
         %span.step-text.hidden-xs= t "checkout.steps.#{step}"
-    - if index < CheckoutHelper::STEPS.length - 1
+    - if index < presenter.steps.length - 1
       %li.step-divider
