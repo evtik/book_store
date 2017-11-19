@@ -1,8 +1,11 @@
 class OrdersController < ApplicationController
+  include Rectify::ControllerHelpers
+
   before_action :authenticate_user!
   load_and_authorize_resource only: :index
 
   def index
+    present OrdersPresenter.new(params: order_params)
     filter = order_params[:filter]
     @orders = @orders.order('id desc')
     @orders = @orders.where(state: filter) if filter

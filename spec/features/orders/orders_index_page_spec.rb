@@ -88,7 +88,7 @@ feature 'Orders index page' do
       scenario 'click on order item redirects to order page' do
         visit orders_path
         first('tr.order-row').click
-        expect(page).to have_current_path(/user\/1\/orders\/5/)
+        expect(page).to have_current_path(/orders\/5/)
       end
     end
   end
