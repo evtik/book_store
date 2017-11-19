@@ -4,10 +4,6 @@ module ApplicationHelper
     0
   end
 
-  def catalog_params
-    params.permit(:category, :sort_by, :order, :limit)
-  end
-
   def capitalize_category(name)
     name.split.map(&:capitalize).join(' ')
   end

@@ -140,13 +140,21 @@ feature 'Book page' do
       expect(page).to have_css('em', text: 'italic text')
       expect(page).to have_css('strong', text: 'bold text')
     end
+
+    scenario 'has no verified reviewer mark' do
+      visit book_path(book)
+      expect(page).not_to have_css(
+        '.general-message-verified',
+        text: t('books.book_reviews.verified_reviewer')
+      )
+    end
   end
 
-  context 'with review verified by user' do
+  context 'with review made by user who also bought this book' do
     given!(:book) do
       book = create(:book_with_reviews, reviews_count: 1)
-      order_item = create(:order_item, book_id: 1)
-      order = create(:order)
+      order_item = build(:order_item, book: book)
+      order = build(:order)
       order.order_items << order_item
       user = User.first
       user.orders << order
@@ -154,7 +162,7 @@ feature 'Book page' do
       book
     end
 
-    scenario 'it has verified reviewer mark' do
+    scenario 'has verified reviewer mark' do
       visit book_path(book)
       expect(page).to have_css(
         '.general-message-verified',

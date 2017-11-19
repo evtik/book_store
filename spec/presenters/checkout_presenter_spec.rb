@@ -1,6 +1,4 @@
 describe CheckoutPresenter do
-  subject { described_class.new }
-
   context '#previous?' do
     it 'returns true for any previous step' do
       expect(subject.previous?('address', 'confirm')).to be true
