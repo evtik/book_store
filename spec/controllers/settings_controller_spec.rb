@@ -3,9 +3,10 @@ describe SettingsController do
     context 'with logged in user' do
       let(:user) { create(:user) }
 
-      before { sign_in(user) }
-
-      before { get :show, params: { id: user } }
+      before do
+        sign_in(user)
+        get :show
+      end
 
       it 'renders :show template' do
         expect(response).to render_template(:show)
@@ -19,7 +20,7 @@ describe SettingsController do
 
     context 'with guest user' do
       it 'redirects to login page' do
-        get :show, params: { id: 1 }
+        get :show
         expect(response).to redirect_to(new_user_session_path)
       end
     end
