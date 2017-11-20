@@ -42,7 +42,9 @@ feature 'Catalog page' do
     end
 
     context 'click on category menu item in xs layout' do
-      scenario 'makes it current menu item' do
+      scenario 'makes it current menu item', resize_to_xs: true do
+        find('.visible-xs a.dropdown-toggle.dropdown-btn',
+             visible: false, text: 'All').click
         find('.visible-xs ul.dropdown-menu li a',
              visible: false, text: 'Web Development').click
         expect(page).to have_css(
@@ -51,9 +53,11 @@ feature 'Catalog page' do
         )
       end
 
-      scenario 'only leaves books of that category on page' do
+      scenario 'only leaves books of that category on page', resize_to_xs: true do
+        find('.visible-xs a.dropdown-toggle.dropdown-btn',
+             visible: false, text: 'All').click
         find('.visible-xs ul.dropdown-menu li a',
-             visible: false, text: 'Web Design').trigger('click')
+             visible: false, text: 'Web Design').click
         expect(page).to have_css('.general-thumb-wrap', count: 1)
       end
     end
