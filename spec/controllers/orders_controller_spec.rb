@@ -6,7 +6,7 @@ describe OrdersController do
 
     context 'GET index' do
       it 'renders :index template' do
-        get :index, params: { id: user }
+        get :index
         expect(response).to render_template(:index)
       end
 
@@ -19,7 +19,7 @@ describe OrdersController do
           order.save
         end
 
-        get :index, params: { id: user }
+        get :index
         expect(assigns(:orders).length).to eq(2)
       end
     end
@@ -36,19 +36,19 @@ describe OrdersController do
       end
 
       it 'renders :show template' do
-        get :show, params: { id: user, order_id: 1 }
+        get :show, params: { id: 1 }
         expect(response).to render_template(:show)
       end
 
       it 'assigns value to @order' do
-        get :show, params: { id: user, order_id: 1 }
+        get :show, params: { id: 1 }
         expect(assigns(:order)).to be_truthy
       end
 
       it "renders 'not authorized' page with non-authorized user" do
         another_user = create(:user)
         another_order = create(:order, user: another_user)
-        get :show, params: { id: user, order_id: another_order }
+        get :show, params: { id: another_order }
         expect(response).to render_template(file: '403.html')
       end
     end
@@ -57,14 +57,14 @@ describe OrdersController do
   context 'with guest user' do
     describe 'GET index' do
       it 'redirects to login page' do
-        get :index, params: { id: 1 }
+        get :index
         expect(response).to redirect_to(new_user_session_path)
       end
     end
 
     describe 'GET show' do
       it 'redirects to login page' do
-        get :show, params: { id: 1, order_id: 1 }
+        get :show, params: { id: 1 }
         expect(response).to redirect_to(new_user_session_path)
       end
     end

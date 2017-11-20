@@ -3,6 +3,6 @@ describe User do
     it { is_expected.to have_many(:reviews).dependent(:destroy) }
     it { is_expected.to have_many(:orders).dependent(:destroy) }
     it { is_expected.to have_many(:addresses).dependent(:destroy) }
-    it { is_expected.to have_many(:billing_addresses) }
+    it { is_expected.to have_one(:billing_address) }
   end
 end
