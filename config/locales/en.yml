@@ -4,6 +4,16 @@ en:
       batch_action:
         deleted_message: 'Selected books have been successfully deleted!'
   active_admin:
+    page:
+      index:
+        recent_orders: 'Recent Orders'
+        recent_reviews: 'Recent Reviews'
+        order: 'Order'
+        date: 'Date'
+        customer: 'Customer'
+        total: 'Total'
+        book: 'Book'
+        user: 'User'
     resource:
       index:
         book:
