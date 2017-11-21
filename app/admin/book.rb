@@ -4,15 +4,13 @@ ActiveAdmin.register Book do
                 author_ids: [], material_ids: [], images: []
 
   batch_action :destroy do |ids|
-    batch_action_collection.find(ids).each do |book|
-      book.destroy
-    end
-    redirect_to collection_path, notice: 'Deleted!'
+    batch_action_collection.where(id: ids).destroy_all
+    redirect_to collection_path, notice: t('.deleted_message')
   end
 
   index do
     selectable_column
-    column 'Image' do |book|
+    column(t('.book.image')) do |book|
       image_tag(book.main_image.url(:thumb))
     end
     column(:category) { |book| book.category.name.capitalize }
@@ -31,8 +29,8 @@ ActiveAdmin.register Book do
       row(:main_image) do |book|
         image_tag(book.main_image.url(:small))
       end
-      row('Images') do |book|
-        unless book.images.empty?
+      row(t('.book.images')) do |book|
+        if book.images.present?
           ul class: 'images-row' do
             book.images.each do |image|
               li image_tag(image.url(:small))
@@ -41,20 +39,20 @@ ActiveAdmin.register Book do
         end
       end
       row :description
-      row('Dimensions') { |book| book.decorate.dimensions }
+      row(t('.book.dimensions')) { |book| book.decorate.dimensions }
       row(:price) { |book| number_to_currency book.price }
     end
   end
 
   form do |f|
     f.semantic_errors
-    f.inputs 'Book details' do
+    f.inputs t('.book.book_details') do
       image_hint = if f.object.main_image.present?
                      image_tag(f.object.main_image.url(:thumb))
                    end
       f.input :main_image, as: :file, hint: image_hint
 
-      images_hint = unless f.object.images.empty?
+      images_hint = if f.object.images.present?
                       f.object.images.map { |image|
                         '<span class="row-thumb">' <<
                           image_tag(image.url(:thumb)) <<
@@ -64,17 +62,17 @@ ActiveAdmin.register Book do
       f.input :images, as: :file, input_html: { multiple: true },
                        hint: images_hint
 
-      f.input :category_id, label: 'Category', as: :select,
+      f.input :category_id, label: t('.book.category'), as: :select,
                             collection: Category.all.map { |category|
                               [category.name.capitalize, category.id]
                             }.sort
       f.input :title
-      f.input :author_ids, label: 'Authors', as: :check_boxes,
+      f.input :author_ids, label: t('.book.authors'), as: :check_boxes,
               collection: Author.all.map { |author|
                 [[author.last_name, author.first_name].join(', '), author.id]
               }.sort
       f.input :description, input_html: { rows: 5 }
-      f.input :material_ids, label: 'Materials', as: :check_boxes,
+      f.input :material_ids, label: t('.book.materials'), as: :check_boxes,
                              collection: Material.all.map { |material|
                                [material.name.capitalize, material.id]
                              }.sort

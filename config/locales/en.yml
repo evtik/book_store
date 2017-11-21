@@ -1,4 +1,25 @@
 en:
+  admin:
+    books:
+      batch_action:
+        deleted_message: 'Selected books have been successfully deleted!'
+  active_admin:
+    resource:
+      index:
+        book:
+          image: 'Image'
+      show:
+        book:
+          images: 'Images'
+          dimensions: 'Dimensions'
+      new: &book_form_labels
+        book:
+          book_details: 'Book details'
+          category: 'Category'
+          authors: 'Authors'
+          materials: 'Materials'
+      edit: *book_form_labels
+
   layouts:
     header:
       home: 'Home'
@@ -15,7 +36,9 @@ en:
   home:
     index:
       welcome: 'Welcome to our amazing Bookstore!'
-      description: 'We pore through hundreds of new books each month and select the five best we can find to share with our members.'
+      description: |
+        We pore through hundreds of new books each month and select the five 
+        best we can find to share with our members.
       get_started: 'Get started'
       best_sellers: 'Best sellers'
     carousel_book:
@@ -58,7 +81,8 @@ en:
       title: 'Title'
       review: 'Review'
       post: 'Post'
-      success_message: "Review posted! It will be visible upon admin's approval."
+      success_message: |
+        Review posted! It will be visible upon admin's approval.
 
   carts:
     product: 'Product'
@@ -67,7 +91,9 @@ en:
     subtotal: 'SubTotal'
     show:
       caption: 'Cart'
-      cart_empty_html: 'Currently you do not have any books in your cart. You could visit the %{href} to add some.'
+      cart_empty_html: |
+        Currently you do not have any books in your cart. You could visit the
+        %{href} to add some.
       enter_coupon: 'Enter Your Coupon Code'
       update_cart: 'Update cart'
       order_summary: 'Order Summary'
