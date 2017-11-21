@@ -1,24 +1,26 @@
 ActiveAdmin.register Review do
+  actions :index
+
   config.batch_actions = true
   config.filters = false
 
-  scope :all, default: true
-  scope :unprocessed
-  scope :approved
-  scope :rejected
+  scope I18n.t('.active_admin.resource.index.all'), :all, default: true
+  scope I18n.t('.active_admin.resource.index.review.unprocessed'), :unprocessed
+  scope I18n.t('.active_admin.resource.index.review.approved'), :approved
+  scope I18n.t('.active_admin.resource.index.review.rejected'), :rejected
 
   index do
     selectable_column
     column :id
-    column('Book') { |review| review.book.title }
-    column 'Date', :created_at
-    column('User') { |review| review.user.email }
-    state_column :state
-    column 'Actions' do |review|
+    column(t('.review.book')) { |review| review.book.title }
+    column t('.review.date'), :created_at
+    column(t('.review.user')) { |review| review.user.email }
+    state_column t('.review.state'), :state
+    column(t('.actions')) do |review|
       actions = %w(approve reject).map do |action|
         next unless review.send("may_#{action}?")
         link_to(
-          action.humanize, send("review_#{action}_path", review.id),
+          t(".review.#{action}"), send("review_#{action}_path", review.id),
           method: :put, class: "button #{action}_button"
         )
       end

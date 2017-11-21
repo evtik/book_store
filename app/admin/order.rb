@@ -1,28 +1,30 @@
 ActiveAdmin.register Order do
+  actions :index, :destroy
+
   config.batch_actions = true
   config.filters = false
 
-  scope :all, default: true
-  scope('In progress') do |scope|
+  scope I18n.t('.active_admin.resource.index.all'), :all, default: true
+  scope I18n.t('.active_admin.resource.index.order.in_progress') do |scope|
     scope.where(state: %w(in_progress in_queue in_delivery))
   end
-  scope :delivered
-  scope :canceled
+  scope I18n.t('.active_admin.resource.index.order.delivered'), :delivered
+  scope I18n.t('.active_admin.resource.index.order.canceled'), :canceled
 
   index do
     selectable_column
-    column('Order') { |order| order.decorate.number }
-    state_column :state
-    column 'Date', :created_at
-    column 'Customer', :user, sortable: :user_id
-    column('Total') do |order|
+    column(t('.order.order')) { |order| order.decorate.number }
+    state_column t('.order.state'), :state
+    column t('.order.date'), :created_at
+    column t('.order.customer'), :user, sortable: :user_id
+    column(t('.order.total')) do |order|
       number_to_currency order.subtotal + order.shipment.price
     end
-    column 'Actions' do |order|
+    column(t('.actions')) do |order|
       actions = %w(queue deliver complete cancel).map do |action|
         next unless order.send("may_#{action}?")
         link_to(
-          action.humanize, send("order_#{action}_path", order.id),
+          t(".order.#{action}"), send("order_#{action}_path", order.id),
           method: :put, class: "button #{action}_button"
         )
       end

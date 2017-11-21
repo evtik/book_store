@@ -8,16 +8,40 @@ en:
       index:
         recent_orders: 'Recent Orders'
         recent_reviews: 'Recent Reviews'
-        order: 'Order'
-        date: 'Date'
-        customer: 'Customer'
-        total: 'Total'
-        book: 'Book'
-        user: 'User'
+        <<: &common_index_labels
+          state: 'State'
+          date: 'Date'
+        <<: &order_index_labels
+          order: 'Order'
+          customer: 'Customer'
+          total: 'Total'
+        <<: &review_index_labels
+          book: 'Book'
+          user: 'User'
     resource:
       index:
+        actions: 'Actions'
+        all: 'All'
         book:
           image: 'Image'
+        order:
+          <<: *common_index_labels
+          <<: *order_index_labels
+          in_progress: 'In progress'
+          delivered: 'Delivered'
+          canceled: 'Canceled'
+          queue: 'Queue'
+          deliver: 'Deliver'
+          complete: 'Complete'
+          cancel: 'Cancel'
+        review:
+          <<: *common_index_labels
+          <<: *review_index_labels
+          unprocessed: 'Unprocessed'
+          approved: 'Approved'
+          rejected: 'Rejected'
+          approve: 'Approve'
+          reject: 'Reject'
       show:
         book:
           images: 'Images'

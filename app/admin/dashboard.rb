@@ -7,7 +7,7 @@ ActiveAdmin.register_page 'Dashboard' do
         panel t('.recent_orders') do
           table_for Order.order('id desc').limit(10) do
             column(t('.order')) { |order| order.decorate.number }
-            state_column :state
+            state_column t('.state'), :state
             column t('.date'), :created_at
             column t('.customer'), :user, sortable: :user_id
             column t('.total') do |order|
@@ -25,7 +25,7 @@ ActiveAdmin.register_page 'Dashboard' do
             column(t('.book')) { |review| review.book.title }
             column t('.date'), :created_at
             column(t('.user')) { |review| review.user.email }
-            state_column :state
+            state_column t('.state'), :state
           end
         end
       end
