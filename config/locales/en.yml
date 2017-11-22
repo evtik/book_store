@@ -1,4 +1,8 @@
 en:
+  activerecord:
+    attributes:
+      author:
+        first_name: 'ім`я'
   admin:
     books:
       batch_action:
@@ -46,13 +50,17 @@ en:
         book:
           images: 'Images'
           dimensions: 'Dimensions'
-      new: &book_form_labels
-        book:
+      new:
+        book: &book_form_labels
           book_details: 'Book details'
           category: 'Category'
           authors: 'Authors'
           materials: 'Materials'
-      edit: *book_form_labels
+        user: &user_form_labels
+          user_details: 'User details'
+      edit:
+        book: *book_form_labels
+        user: *user_form_labels
 
   layouts:
     header:
