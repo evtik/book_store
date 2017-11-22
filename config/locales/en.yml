@@ -1,8 +1,55 @@
 en:
   activerecord:
     attributes:
+      address:
+        <<: &first_last_name
+          first_name: 'First name'
+          last_name: 'Last name'
+        street_address: 'Street address'
+        city: 'City'
+        zip: 'Zip'
+        country: 'Country'
+        phone: 'Phone'
       author:
-        first_name: 'ім`я'
+        <<: *first_last_name
+        <<: &description
+          description: 'Description'
+      book:
+        <<: &title
+          title: 'Title'
+        <<: &price
+          price: 'Price'
+        <<: *description
+        year: 'Year'
+        width: 'Width'
+        height: 'Height'
+        thickness: 'Thickness'
+        main_image: 'Main image'
+        images: 'Images'
+      category:
+        <<: &name
+          name: 'Name'
+      coupon:
+        code: 'Code'
+        expires: 'Expires'
+        discount: 'Discount'
+      credit_card:
+        number: 'Number'
+        cardholder: 'Cardholder'
+        month_year: 'Month / year'
+        cvv: 'CVV'
+      material:
+        <<: *name
+      review:
+        <<: *title
+        score: 'Score'
+        body: 'Body'
+      shipment:
+        <<: *price
+        method: 'Method'
+        days_min: 'Days min'
+        days_max: 'Days max'
+
   admin:
     books:
       batch_action:
