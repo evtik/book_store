@@ -49,6 +49,10 @@ en:
         method: 'Method'
         days_min: 'Days min'
         days_max: 'Days max'
+    errors:
+      models:
+        book:
+          empty_category: 'Must have a category'
 
   admin:
     books:

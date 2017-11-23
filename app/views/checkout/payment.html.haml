@@ -6,7 +6,7 @@
     class: 'max-600 mb-80' do |f|
     = f.fields_for :card, @order.card do |fields|
       .form-group{ class: ('has-error' if @order.card.errors[:number].any?)}
-        %label.control-label.font-weight-light{for: "number"}= t '.card_nmber'
+        %label.control-label.font-weight-light{for: "number"}= t '.card_number'
         = fields.text_field :number, class: 'form-control',
           data: {mask: "9999-9999-9999-9999", placeholder: "X"},
           placeholder: t('.card_number')

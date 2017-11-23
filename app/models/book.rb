@@ -46,7 +46,10 @@ class Book < ApplicationRecord
   }
 
   def must_have_category
-    errors.add(:base, 'Must have a category') if category.nil?
+    # errors.add(:base, 'Must have a category') if category.nil?
+    # errors.add(:base, t('.activerecord.error.models.empty_category')) if category.nil?
+    # errors.add(:base, I18n.t('.empty_category')) if category.nil?
+    errors.add(:base, translate('.empty_category')) if category.nil?
   end
 
   def must_have_authors
@@ -55,5 +58,11 @@ class Book < ApplicationRecord
 
   def must_have_materials
     errors.add(:base, 'Must be at least one material') if materials.empty?
+  end
+
+  private
+
+  def translate(arg)
+    I18n.t('.activerecord.errors.models.book' + arg)
   end
 end
