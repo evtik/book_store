@@ -1,4 +1,16 @@
 CarrierWave.configure do |config|
+  if Rails.env.test?
+    CarrierWave.configure do |config|
+      config.storage = :file
+      config.enable_processing = false
+      config.store_dir = "#{Rails.root}/tmp/uploads"
+    end
+  end
+
+  if Rails.env.production? || Rails.env.development?
+    config.storage = :fog
+  end
+
   config.cache_dir = "#{Rails.root}/tmp/uploads"
   config.fog_provider = 'fog/aws'
   config.fog_credentials = {
@@ -9,12 +21,4 @@ CarrierWave.configure do |config|
     endpoint: 'https://s3.eu-central-1.amazonaws.com'
   }
   config.fog_directory = 'sybookstore'
-end
-
-if Rails.env.test?
-  CarrierWave.configure do |config|
-    config.storage = :file
-    config.enable_processing = false
-    config.store_dir = "#{Rails.root}/tmp/uploads"
-  end
 end
