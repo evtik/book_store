@@ -46,13 +46,13 @@ ActiveAdmin.register Book do
 
   form do |f|
     f.semantic_errors
-    f.inputs t('.book.book_details') do
-      image_hint = if f.object.main_image.present?
+    f.inputs t('.book.book_details'), multipart: true do
+      image_hint = if f.object.persisted? && f.object.main_image.present?
                      image_tag(f.object.main_image.url(:thumb))
                    end
       f.input :main_image, as: :file, hint: image_hint
 
-      images_hint = if f.object.images.present?
+      images_hint = if f.object.persisted? && f.object.images.present?
                       f.object.images.map { |image|
                         '<span class="row-thumb">' <<
                           image_tag(image.url(:thumb)) <<
@@ -71,7 +71,7 @@ ActiveAdmin.register Book do
               collection: Author.all.map { |author|
                 [[author.last_name, author.first_name].join(', '), author.id]
               }.sort
-      f.input :description, input_html: { rows: 5 }
+      f.input :description, as: :text, input_html: { rows: 5 }
       f.input :material_ids, label: t('.book.materials'), as: :check_boxes,
                              collection: Material.all.map { |material|
                                [material.name.capitalize, material.id]
@@ -83,5 +83,40 @@ ActiveAdmin.register Book do
       f.input :price
     end
     f.actions
+  end
+
+  controller do
+    def new
+      @book = BookForm.new
+    end
+
+    def create
+      @book = BookForm.from_params(params)
+      return render 'new' if @book.invalid?
+      book = Book.new(@book.attributes)
+      if book.save
+        flash[:notice] = t('.created_message')
+      else
+        flash[:alert] = book.error.full_messages.first
+      end
+      redirect_to collection_path
+    end
+
+    def edit
+      @book = BookForm.from_model(Book.find(params[:id]))
+    end
+
+    def update
+      @book = BookForm.from_params(params)
+      return render 'edit' if @book.invalid?
+      book = Book.find(params[:id])
+      book.attributes = @book.attributes
+      if book.save
+        flash[:notice] = t('.updated_message')
+      else
+        flash[:alert] = book.error.full_messages.first
+      end
+      redirect_to resource_path
+    end
   end
 end

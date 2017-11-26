@@ -52,12 +52,18 @@ en:
     errors:
       models:
         book:
-          empty_category: 'Must have a category'
+          empty_category: 'A book must have a category'
+          empty_authors: 'There should be one author at least'
+          empty_materials: 'Pick one material at least'
 
   admin:
     books:
       batch_action:
         deleted_message: 'Selected books have been successfully deleted!'
+      create:
+        created_message: 'The book has been successfully created!'
+      update:
+        updated_message: 'The book has been successfully updated!'
   active_admin:
     page:
       index:

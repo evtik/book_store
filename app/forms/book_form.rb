@@ -1,13 +1,16 @@
 class BookForm < Rectify::Form
   attribute :title, String
+  attribute :category_id, Integer
+  attribute :main_image, String
+  attribute :images, String
   attribute :description, String
   attribute :year, Integer
   attribute :height, Integer
   attribute :width, Integer
   attribute :thickness, Integer
   attribute :price, Decimal
-  attribute :authors, Array[AuthorForm]
-  attribute :materials, Array[MaterialForm]
+  attribute :author_ids, Array[Integer]
+  attribute :material_ids, Array[Integer]
 
   REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
@@ -44,18 +47,15 @@ class BookForm < Rectify::Form
   }
 
   def must_have_category
-    # errors.add(:base, 'Must have a category') if category.nil?
-    # errors.add(:base, t('.activerecord.error.models.empty_category')) if category.nil?
-    # errors.add(:base, I18n.t('.empty_category')) if category.nil?
-    errors.add(:base, translate('.empty_category')) if category.nil?
+    errors.add(:base, translate('.empty_category')) if category_id.blank?
   end
 
   def must_have_authors
-    errors.add(:base, 'Must be at least one author') if authors.empty?
+    errors.add(:base, translate('.empty_authors')) if author_ids.all?(&:blank?)
   end
 
   def must_have_materials
-    errors.add(:base, 'Must be at least one material') if materials.empty?
+    errors.add(:base, translate('.empty_materials')) if material_ids.all?(&:blank?)
   end
 
   private
