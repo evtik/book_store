@@ -18,11 +18,11 @@ class BookForm < Rectify::Form
 
   validates :title,
             presence: true,
-            format: { with: REGEXP, message: 'Invalid book title format' },
+            format: { with: REGEXP },
             length: { maximum: 80 }
   validates :description,
             presence: true,
-            format: { with: REGEXP, message: 'Invalid book description format' },
+            format: { with: REGEXP },
             length: { maximum: 1000 }
   validates :year, numericality: {
     only_integer: true,
@@ -47,20 +47,20 @@ class BookForm < Rectify::Form
   }
 
   def must_have_category
-    errors.add(:base, translate('.empty_category')) if category_id.blank?
+    errors.add(:base, tr('.empty_category')) if category_id.blank?
   end
 
   def must_have_authors
-    errors.add(:base, translate('.empty_authors')) if author_ids.all?(&:blank?)
+    errors.add(:base, tr('.empty_authors')) if author_ids.all?(&:blank?)
   end
 
   def must_have_materials
-    errors.add(:base, translate('.empty_materials')) if material_ids.all?(&:blank?)
+    errors.add(:base, tr('.empty_materials')) if material_ids.all?(&:blank?)
   end
 
   private
 
-  def translate(arg)
+  def tr(arg)
     I18n.t('.activerecord.errors.models.book' + arg)
   end
 end
