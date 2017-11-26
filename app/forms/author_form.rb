@@ -7,15 +7,14 @@ class AuthorForm < Rectify::Form
   DESCRIPTION_REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   %i(first_name last_name).each do |field|
-    humanized = field.to_s.humanize(capitalize: false)
     validates field,
               presence: true,
-              format: { with: NAME_REGEXP,
-                        message: "Invalid #{humanized} format" }
+              format: { with: NAME_REGEXP },
+              length: { maximum: 30 }
   end
 
   validates :description,
             presence: true,
-            format: { with: DESCRIPTION_REGEXP,
-                      message: 'Invalid description format' }
+            format: { with: DESCRIPTION_REGEXP },
+            length: { maximum: 1000 }
 end

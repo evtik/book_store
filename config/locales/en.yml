@@ -57,6 +57,13 @@ en:
           empty_materials: 'Pick one material at least'
 
   admin:
+    authors:
+      batch_action:
+        deleted_message: 'Selected authors have been successfully deleted!'
+      create:
+        created_message: 'The new author has been successfully added!'
+      update:
+        updated_message: 'The author`s details have been updated!'
     books:
       batch_action:
         deleted_message: 'Selected books have been successfully deleted!'
@@ -108,6 +115,8 @@ en:
           images: 'Images'
           dimensions: 'Dimensions'
       new:
+        author: &author_form_labels
+          author_details: 'Author details'
         book: &book_form_labels
           book_details: 'Book details'
           category: 'Category'
@@ -116,6 +125,7 @@ en:
         user: &user_form_labels
           user_details: 'User details'
       edit:
+        author: *author_form_labels
         book: *book_form_labels
         user: *user_form_labels
 
