@@ -1,26 +1,23 @@
 class ReviewsController < ApplicationController
+  include Rectify::ControllerHelpers
+
   before_action :authenticate_user!
 
   def new
     @book = BookWithAssociated.new(params[:book_id]).first.decorate
-    @review = Review.new(book_id: @book.id, score: 0)
+    @review = ReviewForm.new(book_id: @book.id, score: 0)
   end
 
   def create
-    @review = Review.new(review_params)
-    @review.user = current_user
-    if @review.save
-      flash[:notice] = t 'reviews.form.success_message'
-      redirect_to book_path(params[:book_id])
-    else
-      @book = BookWithAssociated.new(params[:book_id]).first.decorate
-      render 'new'
+    Reviews::CreateReview.call(params, current_user) do
+      on(:invalid) do |review, book|
+        expose(review: review, book: book)
+        render 'new'
+      end
+
+      on(:error) { |note| redirect_to book_path(params[:book_id]), alert: note }
+
+      on(:ok) { |note| redirect_to book_path(params[:book_id]), notice: note }
     end
-  end
-
-  private
-
-  def review_params
-    params.require(:review).permit(:book_id, :score, :title, :body)
   end
 end
