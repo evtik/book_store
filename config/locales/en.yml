@@ -71,6 +71,13 @@ en:
         created_message: 'The book has been successfully created!'
       update:
         updated_message: 'The book has been successfully updated!'
+    book_categories:
+      batch_action:
+        deleted_message: 'Selected categories have been successfully deleted!'
+      create:
+        created_message: 'The new category has been successfully added!'
+      update:
+        updated_message: 'The category has been successfully updated!'
   active_admin:
     page:
       index:
@@ -122,11 +129,14 @@ en:
           category: 'Category'
           authors: 'Authors'
           materials: 'Materials'
+        book_category: &category_form_labels
+          category_details: 'Category details'
         user: &user_form_labels
           user_details: 'User details'
       edit:
         author: *author_form_labels
         book: *book_form_labels
+        book_category: *category_form_labels
         user: *user_form_labels
 
   layouts:
