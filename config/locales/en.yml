@@ -40,10 +40,21 @@ en:
         cvv: 'CVV'
       material:
         <<: *name
+      order:
+        state:
+          in_progress: 'In progress'
+          in_queue: 'In queue'
+          in_delivery: 'In delivery'
+          delivered: 'Delivered'
+          canceled: 'Canceled'
       review:
         <<: *title
         score: 'Score'
         body: 'Body'
+        state:
+          unprocessed: 'Unprocessed'
+          approved: 'Approved'
+          rejected: 'Rejected'
       shipment:
         <<: *price
         method: 'Method'
