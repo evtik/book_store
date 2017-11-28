@@ -3,4 +3,29 @@ describe Address do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:order) }
   end
+
+  context 'scopes' do
+    let(:billing) { create(:address) }
+    let(:shipping) { create(:address, address_type: 'shipping') }
+
+    context 'billing' do
+      it "only contains addresses with address type 'billing'" do
+        expect(described_class.billing).to include(billing)
+      end
+
+      it " does not contain addresses with address type 'shipping'" do
+        expect(described_class.billing).not_to include(shipping)
+      end
+    end
+
+    context 'shipping' do
+      it "only contains addresses with address type 'shipping'" do
+        expect(described_class.shipping).to include(shipping)
+      end
+
+      it " does not contain addresses with address type 'billing'" do
+        expect(described_class.shipping).not_to include(billing)
+      end
+    end
+  end
 end
