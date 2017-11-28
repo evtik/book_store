@@ -5,25 +5,25 @@ describe Address do
   end
 
   context 'scopes' do
-    let(:billing) { create(:address) }
-    let(:shipping) { create(:address, address_type: 'shipping') }
+    let!(:billing) { create(:address) }
+    let!(:shipping) { create(:address, address_type: 'shipping') }
 
     context 'billing' do
-      it "only contains addresses with address type 'billing'" do
+      it "only returns addresses with address type 'billing'" do
         expect(described_class.billing).to include(billing)
       end
 
-      it " does not contain addresses with address type 'shipping'" do
+      it " does not return addresses with address type 'shipping'" do
         expect(described_class.billing).not_to include(shipping)
       end
     end
 
     context 'shipping' do
-      it "only contains addresses with address type 'shipping'" do
+      it "only returns addresses with address type 'shipping'" do
         expect(described_class.shipping).to include(shipping)
       end
 
-      it " does not contain addresses with address type 'billing'" do
+      it " does not return addresses with address type 'billing'" do
         expect(described_class.shipping).not_to include(billing)
       end
     end
