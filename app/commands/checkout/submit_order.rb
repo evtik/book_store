@@ -10,15 +10,12 @@ module Checkout
 
     def call(session)
       order = @build_order.call(session)
-      if order.save
-        begin
-          %i(cart order discount coupon_id).each { |key| session.delete(key) }
-          @mailer.order_email(order).deliver
-        ensure
-          publish(:ok)
-        end
-      else
-        publish(:error, order.errors.full_messages.first)
+      return publish(:error, order.errors.full_messages.first) unless order.save
+      begin
+        %i(cart order discount coupon_id).each { |key| session.delete(key) }
+        @mailer.order_email(order).deliver
+      ensure
+        publish(:ok)
       end
     end
   end
