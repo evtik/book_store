@@ -3,7 +3,7 @@ class AuthorForm < Rectify::Form
   attribute :last_name, String
   attribute :description, String
 
-  NAME_REGEXP = /\A[\p{Alpha} '-]+\z/
+  NAME_REGEXP = /\A[\p{Alpha} `-]+\z/
   DESCRIPTION_REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   %i(first_name last_name).each do |field|

@@ -13,6 +13,7 @@ describe AddressForm, type: :form do
     it { is_expected.to allow_value('Героїв Крут 11').for(:street_address) }
     it { is_expected.to allow_value('7, Bayparkway 20').for(:street_address) }
     it { is_expected.not_to allow_value('7, |nvalid St').for(:street_address) }
+    it { is_expected.not_to allow_value('7' * 31).for(:street_address) }
   end
 
   context 'city' do
@@ -22,6 +23,7 @@ describe AddressForm, type: :form do
     it { is_expected.to allow_value('Los Angeles').for(:city) }
     it { is_expected.not_to allow_value('City 20').for(:city) }
     it { is_expected.not_to allow_value('C|ty').for(:city) }
+    it { is_expected.not_to allow_value('a' * 31).for(:city) }
   end
 
   context 'zip' do
