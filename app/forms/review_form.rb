@@ -14,5 +14,5 @@ class ReviewForm < Rectify::Form
   validates :body,
             presence: true,
             format: { with: REGEXP },
-            length: { maximum: 500 }
+            length: { maximum: 1000 }
 end
