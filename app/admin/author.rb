@@ -26,12 +26,8 @@ ActiveAdmin.register Author do
     def create
       @author = AuthorForm.from_params(params)
       return render 'new' if @author.invalid?
-      author = Author.new(@author.attributes)
-      if author.save
-        flash[:notice] = t('.created_message')
-      else
-        flash[:alert] = author.errors.full_messages.first
-      end
+      Author.create(@author.attributes)
+      flash[:notice] = t('.created_message')
       redirect_to collection_path
     end
 
@@ -42,13 +38,8 @@ ActiveAdmin.register Author do
     def update
       @author = AuthorForm.from_params(params)
       return render 'edit' if @author.invalid?
-      author = Author.find(params[:id])
-      author.attributes = @author.attributes
-      if author.save
-        flash[:notice] = t('.updated_message')
-      else
-        flash[:alert] = author.errors.full_messages.first
-      end
+      Author.find(params[:id]).update_attributes(@author.attributes)
+      flash[:notice] = t('.updated_message')
       redirect_to resource_path
     end
   end
