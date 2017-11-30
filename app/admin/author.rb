@@ -1,11 +1,6 @@
 ActiveAdmin.register Author do
   permit_params :first_name, :last_name, :description
 
-  batch_action :destroy do |ids|
-    batch_action_collection.where(id: ids).destroy_all
-    redirect_to collection_path, notice: t('.deleted_message')
-  end
-
   index do
     selectable_column
     column :first_name
@@ -35,7 +30,7 @@ ActiveAdmin.register Author do
       if author.save
         flash[:notice] = t('.created_message')
       else
-        flash[:alert] = author.error.full_messages.first
+        flash[:alert] = author.errors.full_messages.first
       end
       redirect_to collection_path
     end
@@ -52,7 +47,7 @@ ActiveAdmin.register Author do
       if author.save
         flash[:notice] = t('.updated_message')
       else
-        flash[:alert] = author.error.full_messages.first
+        flash[:alert] = author.errors.full_messages.first
       end
       redirect_to resource_path
     end

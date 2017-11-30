@@ -6,13 +6,13 @@ class ApplicationController < ActionController::Base
   before_action :store_current_location, unless: :devise_controller?
 
   rescue_from CanCan::AccessDenied do
-    render file: "#{Rails.root}/public/403.html", staus: 403, layout: false
+    render file: "#{Rails.root}/public/403.html", status: 403, layout: false
   end
 
   def authenticate_active_admin_user!
     authenticate_user!
     return if current_user.admin?
-    flash[:alert] = 'You are not authorized to access this resource'
+    flash[:alert] = t('admin.not_authorized')
     redirect_to root_path
   end
 
