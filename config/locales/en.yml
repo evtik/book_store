@@ -320,6 +320,9 @@ en:
        the front.
     confirm:
       place_order: 'Place order'
+    submit_confirm:
+      order_placement_error: |
+        The order has not been placed! Please, try again later.
     complete:
       thanks: 'Thank You for your Order!'
       email_sent: 'An order confirmation has been sent to'

@@ -13,7 +13,7 @@ describe Checkout::SubmitOrder do
       described_class.new(double('BuildCompletedOrder', call: order), mailer)
     end
 
-    context 'with valid order' do
+    context 'with successful order placement' do
       before do |example|
         command.call(session) unless example.metadata[:skip_before]
       end
@@ -37,14 +37,10 @@ describe Checkout::SubmitOrder do
       end
     end
 
-    context 'with invalid order' do
-      it 'publishes :error event with error message' do
+    context 'with failed order placement' do
+      it 'publishes :error event' do
         allow(order).to receive(:save).and_return(false)
-        error_message = 'some error'
-        allow(order).to receive_message_chain(
-          :errors, full_messages: [error_message]
-        )
-        expect { command.call(session) }.to publish(:error, error_message)
+        expect { command.call(session) }.to publish(:error)
       end
     end
   end

@@ -15,8 +15,6 @@ class ReviewsController < ApplicationController
         render 'new'
       end
 
-      on(:error) { |note| redirect_to book_path(params[:book_id]), alert: note }
-
       on(:ok) { |note| redirect_to book_path(params[:book_id]), notice: note }
     end
   end

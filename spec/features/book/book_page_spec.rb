@@ -181,12 +181,12 @@ feature 'Book page' do
       visit book_path(book)
     end
 
-    scenario 'with valid review data' do
+    scenario 'with valid review data redirects to book page' do
       new_review_form.visit_page.fill_in_with(attributes_for(:review)).submit
       expect(page).to have_content(t('reviews.form.success_message'))
     end
 
-    scenario 'with invalid review data' do
+    scenario 'with invalid review data rerender review form' do
       new_review_form.visit_page.fill_in_with(
         attributes_for(:review, body: nil)
       ).submit

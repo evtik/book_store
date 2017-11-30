@@ -66,12 +66,23 @@ feature 'Checkout confirm page' do
         expect(page).to have_link('edit', href: checkout_payment_path)
       end
 
-      scenario 'click on place order redirects to order complete page' do
-        click_on(t('checkout.confirm.place_order'))
-        expect(page).to have_css(
-          'h3.general-subtitle',
-          text: t('checkout.complete.thanks')
-        )
+      context 'click on place order' do
+        scenario 'with no order errors redirects to order complete page' do
+          click_on(t('checkout.confirm.place_order'))
+          expect(page).to have_css(
+            'h3.general-subtitle',
+            text: t('checkout.complete.thanks')
+          )
+        end
+
+        scenario 'with order errors redirects back to confirm page' do
+          allow_any_instance_of(Order).to receive(:save).and_return(false)
+          click_on(t('checkout.confirm.place_order'))
+          expect(page).to have_content(
+            t('checkout.submit_confirm.order_placement_error')
+          )
+          expect(page).to have_button(t('checkout.confirm.place_order'))
+        end
       end
     end
   end

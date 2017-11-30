@@ -59,8 +59,8 @@ class CheckoutController < ApplicationController
         redirect_to action: 'complete'
       end
 
-      on(:error) do |error_message|
-        flash[:error] = error_message
+      on(:error) do
+        flash[:alert] = t('.order_placement_error')
         redirect_to action: 'confirm'
       end
     end
