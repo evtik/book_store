@@ -1,11 +1,6 @@
 ActiveAdmin.register Category, as: 'book-category' do
   permit_params :name
 
-  batch_action :destroy do |ids|
-    batch_action_collection.where(id: ids).destroy_all
-    redirect_to collection_path, notice: t('.deleted_message')
-  end
-
   index do
     selectable_column
     column :name
@@ -27,12 +22,8 @@ ActiveAdmin.register Category, as: 'book-category' do
     def create
       @book_category = CategoryForm.from_params(params)
       return render 'new' if @book_category.invalid?
-      book_category = Category.new(@book_category.attributes)
-      if book_category.save
-        flash[:notice] = t('.created_message')
-      else
-        flash[:alert] = book_category.error.full_messages.first
-      end
+      Category.create(@book_category.attributes)
+      flash[:notice] = t('.created_message')
       redirect_to collection_path
     end
 
@@ -43,13 +34,8 @@ ActiveAdmin.register Category, as: 'book-category' do
     def update
       @book_category = CategoryForm.from_params(params)
       return render 'edit' if @book_category.invalid?
-      book_category = Category.find(params[:id])
-      book_category.attributes = @book_category.attributes
-      if book_category.save
-        flash[:notice] = t('.updated_message')
-      else
-        flash[:alert] = book_category.error.full_messages.first
-      end
+      Category.find(params[:id]).update_attributes(@book_category.attributes)
+      flash[:notice] = t('.updated_message')
       redirect_to resource_path
     end
   end
