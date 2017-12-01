@@ -3,11 +3,6 @@ ActiveAdmin.register Book do
                 :width, :thickness, :price, :main_image,
                 author_ids: [], material_ids: [], images: []
 
-  batch_action :destroy do |ids|
-    batch_action_collection.where(id: ids).destroy_all
-    redirect_to collection_path, notice: t('.deleted_message')
-  end
-
   index do
     selectable_column
     column(t('.book.image')) do |book|
@@ -93,12 +88,8 @@ ActiveAdmin.register Book do
     def create
       @book = BookForm.from_params(params)
       return render 'new' if @book.invalid?
-      book = Book.new(@book.attributes)
-      if book.save
-        flash[:notice] = t('.created_message')
-      else
-        flash[:alert] = book.error.full_messages.first
-      end
+      Book.create(@book.attributes)
+      flash[:notice] = t('.created_message')
       redirect_to collection_path
     end
 
@@ -109,13 +100,8 @@ ActiveAdmin.register Book do
     def update
       @book = BookForm.from_params(params)
       return render 'edit' if @book.invalid?
-      book = Book.find(params[:id])
-      book.attributes = @book.attributes
-      if book.save
-        flash[:notice] = t('.updated_message')
-      else
-        flash[:alert] = book.error.full_messages.first
-      end
+      Book.find(params[:id]).update_attributes(@book.attributes)
+      flash[:notice] = t('.updated_message')
       redirect_to resource_path
     end
   end

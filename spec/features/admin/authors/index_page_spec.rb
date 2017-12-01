@@ -10,7 +10,7 @@ feature 'Admin Authors index page' do
       login_as(admin_user, scope: :user)
     end
 
-    scenario 'shows admin index' do
+    scenario 'shows admin authors index' do
       visit admin_authors_path
       expect(page).to have_content(authors_label)
       expect(page).to have_link(t('active_admin.new_model',
