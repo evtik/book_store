@@ -124,6 +124,13 @@ en:
         created_message: 'The new category has been successfully added!'
       update:
         updated_message: 'The category has been successfully updated!'
+    materials:
+      batch_action:
+        deleted_message: 'Selected materials have been successfully deleted!'
+      create:
+        created_message: 'The new material has been successfully added!'
+      update:
+        updated_message: 'The material has been successfully updated!'
   active_admin:
     page:
       index:

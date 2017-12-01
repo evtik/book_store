@@ -2,6 +2,7 @@ require_relative '../../../support/forms/admin_book_form'
 
 feature 'Admin new Book page' do
   include_examples 'not authorized', :new_admin_book_path
+
   context 'with admin' do
     before { login_as(create(:admin_user), scope: :user) }
 

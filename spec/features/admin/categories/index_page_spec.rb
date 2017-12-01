@@ -38,7 +38,6 @@ feature 'Admin Categories index page' do
       category = create(:category)
       visit admin_book_categories_path
       click_link(t('active_admin.view'))
-      sleep 15
       expect(page).to have_content(category.name)
       expect(page).to have_link(t('active_admin.edit_model',
                                   model: category_label))

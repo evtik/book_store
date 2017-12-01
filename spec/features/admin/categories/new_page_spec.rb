@@ -1,5 +1,6 @@
 feature 'Admin new Category page' do
   include_examples 'not authorized', :new_admin_book_category_path
+
   context 'with admin' do
     before { login_as(create(:admin_user), scope: :user) }
 
@@ -17,7 +18,7 @@ feature 'Admin new Category page' do
       )
     end
 
-    scenario 'with invalid category name shows errors' do
+    scenario 'with empty category name shows errors' do
       click_on('Create Category')
       expect(page).to have_content(t('errors.messages.blank'))
     end

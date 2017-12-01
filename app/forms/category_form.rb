@@ -3,6 +3,6 @@ class CategoryForm < Rectify::Form
 
   validates :name,
             presence: true,
-            format: { with: /\A[A-z\-\/\s]+\z/ },
+            format: { with: /\A[\p{Alpha} \/-]*\z/ },
             length: { maximum: 30 }
 end
