@@ -1,4 +1,8 @@
+require_relative '../../../support/admin/batch_actions'
+
 feature 'Admin Materials index page' do
+  include BatchActionsHelpers
+
   include_examples 'not authorized', :admin_materials_path
 
   context 'with admin' do
@@ -67,15 +71,10 @@ feature 'Admin Materials index page' do
       scenario 'delete all' do
         create_list(:material, 4)
         visit admin_materials_path
-        check('collection_selection_toggle_all')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_all
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 4,
-            plural_model: materials_label.downcase)
+          batch_destroyed_label(4, materials_label.downcase)
         )
         expect(page).to have_content(
           t('active_admin.blank_slate.content', resource_name: materials_label)
@@ -85,16 +84,10 @@ feature 'Admin Materials index page' do
       scenario 'delete selected' do
         create_list(:material, 6, name: 'Lace')
         visit admin_materials_path
-        check('batch_action_item_1')
-        check('batch_action_item_5')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_items(1, 5)
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 2,
-            plural_model: materials_label.downcase)
+          batch_destroyed_label(2, materials_label.downcase)
         )
         expect(page).to have_content('Lace', count: 4)
       end

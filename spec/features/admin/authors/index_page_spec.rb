@@ -1,4 +1,8 @@
+require_relative '../../../support/admin/batch_actions'
+
 feature 'Admin Authors index page' do
+  include BatchActionsHelpers
+
   include_examples 'not authorized', :admin_authors_path
 
   context 'with admin' do
@@ -67,15 +71,10 @@ feature 'Admin Authors index page' do
       scenario 'delete all' do
         create_list(:author, 7)
         visit admin_authors_path
-        check('collection_selection_toggle_all')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_all
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 7,
-            plural_model: authors_label.downcase)
+          batch_destroyed_label(7, authors_label.downcase)
         )
         expect(page).to have_content(
           t('active_admin.blank_slate.content', resource_name: authors_label)
@@ -85,16 +84,10 @@ feature 'Admin Authors index page' do
       scenario 'delete selected' do
         create_list(:author, 5, last_name: 'Swail')
         visit admin_authors_path
-        check('batch_action_item_2')
-        check('batch_action_item_4')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_items(2, 4)
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 2,
-            plural_model: authors_label.downcase)
+          batch_destroyed_label(2, authors_label.downcase)
         )
         expect(page).to have_content('Swail', count: 3)
       end

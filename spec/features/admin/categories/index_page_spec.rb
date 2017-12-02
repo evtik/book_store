@@ -1,4 +1,8 @@
+require_relative '../../../support/admin/batch_actions'
+
 feature 'Admin Categories index page' do
+  include BatchActionsHelpers
+
   include_examples 'not authorized', :admin_book_categories_path
 
   context 'with admin' do
@@ -69,15 +73,10 @@ feature 'Admin Categories index page' do
       scenario 'delete all' do
         create_list(:category, 5)
         visit admin_book_categories_path
-        check('collection_selection_toggle_all')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_all
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 5,
-            plural_model: categories_label.downcase)
+          batch_destroyed_label(5, categories_label.downcase)
         )
         expect(page).to have_content(
           t('active_admin.blank_slate.content', resource_name: categories_label)
@@ -87,16 +86,10 @@ feature 'Admin Categories index page' do
       scenario 'delete selected' do
         create_list(:category, 4, name: 'Sports')
         visit admin_book_categories_path
-        check('batch_action_item_1')
-        check('batch_action_item_3')
-        click_link(t('active_admin.batch_actions.button_label'))
-        click_link(t('active_admin.batch_actions.action_label',
-                     title: t('active_admin.batch_actions.labels.destroy')))
-        click_button('OK')
+        check_batch_items(1, 3)
+        click_batch_delete
         expect(page).to have_content(
-          t('active_admin.batch_actions.succesfully_destroyed.other',
-            count: 2,
-            plural_model: categories_label.downcase)
+          batch_destroyed_label(2, categories_label.downcase)
         )
         expect(page).to have_content('Sports', count: 2)
       end

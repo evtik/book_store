@@ -23,7 +23,7 @@ feature 'Admin User index page' do
     scenario 'shows list of available users' do
       create_list(:user, 3)
       visit admin_users_path
-      # there are always +2 user labels: admin and his label in aa header
+      # there always are +2 user labels: admin and his label in aa header
       expect(page).to have_content('@example.com', count: 5)
     end
 
