@@ -1,7 +1,7 @@
 ActiveAdmin.register Review do
   actions :index
 
-  config.batch_actions = true
+  # config.batch_actions = true
   config.filters = false
 
   scope I18n.t('.active_admin.resource.index.all'), :all, default: true
@@ -10,7 +10,7 @@ ActiveAdmin.register Review do
   scope I18n.t('.active_admin.resource.index.review.rejected'), :rejected
 
   index do
-    selectable_column
+    # selectable_column
     column :id
     column(t('.review.book')) { |review| review.book.title }
     column t('.review.date'), :created_at

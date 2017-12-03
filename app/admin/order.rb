@@ -1,7 +1,6 @@
 ActiveAdmin.register Order do
-  actions :index, :destroy
+  actions :index
 
-  config.batch_actions = true
   config.filters = false
 
   scope I18n.t('.active_admin.resource.index.all'), :all, default: true
@@ -12,7 +11,6 @@ ActiveAdmin.register Order do
   scope I18n.t('.active_admin.resource.index.order.canceled'), :canceled
 
   index do
-    selectable_column
     column(t('.order.order')) { |order| order.decorate.number }
     state_column t('.order.state'), :state
     column t('.order.date'), :created_at
