@@ -18,18 +18,16 @@ Dir[Rails.root.join('spec/**/shared_examples/*.rb')].each do |file|
 end
 
 Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app,
-                                    browser: :phantomjs,
-                                    window_size: [1280, 1024],
-                                    js_errors: true,
-                                    debug: true
-                                   )
+  Capybara::Poltergeist::Driver.new(
+    app,
+    browser: :phantomjs,
+    window_size: [1280, 1024],
+    js_errors: true,
+    debug: false
+  )
 end
-Capybara.configure do |config|
-  config.default_driver = :selenium
-  # config.javascript_driver = :poltergeist
-  # config.current_driver = :poltergeist
-end
+
+Capybara.current_driver = :poltergeist
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -40,12 +38,15 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 
-  config.before :each, type: :feature do |example|
-    if example.metadata[:resize_to_xs]
-      page.current_window.resize_to(400, 600)
-    else
-      page.current_window.maximize
+  config.around :each, type: :feature do |example|
+    if example.metadata[:use_selenium]
+      saved_driver = Capybara.current_driver
+      Capybara.current_driver = :selenium
     end
+
+    example.run
+
+    Capybara.current_driver = saved_driver if example.metadata[:use_selenium]
   end
 
   config.shared_context_metadata_behavior = :apply_to_host_groups

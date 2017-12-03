@@ -57,7 +57,7 @@ feature 'Admin Authors index page' do
       expect(page).to have_field('author_last_name')
     end
 
-    scenario "click on 'delete' removes author from list" do
+    scenario "click on 'delete' removes author from list", use_selenium: true do
       create(:author)
       visit admin_authors_path
       click_link(t('active_admin.delete'))
@@ -67,7 +67,7 @@ feature 'Admin Authors index page' do
       )
     end
 
-    context 'batch actions' do
+    context 'batch actions', use_selenium: true do
       scenario 'delete all' do
         create_list(:author, 7)
         visit admin_authors_path
