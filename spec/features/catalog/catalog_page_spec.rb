@@ -42,7 +42,7 @@ feature 'Catalog page' do
     end
 
     context 'click on category menu item in xs layout' do
-      scenario 'makes it current menu item', resize_to_xs: true do
+      scenario 'makes it current menu item' do
         find('.visible-xs a.dropdown-toggle.dropdown-btn',
              visible: false, text: 'All').click
         find('.visible-xs ul.dropdown-menu li a',
@@ -53,7 +53,7 @@ feature 'Catalog page' do
         )
       end
 
-      scenario 'only leaves books of that category on page', resize_to_xs: true do
+      scenario 'only leaves books of that category on page' do
         find('.visible-xs a.dropdown-toggle.dropdown-btn',
              visible: false, text: 'All').click
         find('.visible-xs ul.dropdown-menu li a',
