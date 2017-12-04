@@ -32,13 +32,14 @@ feature 'Book page' do
         expect(find_field("quantities-#{book.id}").value).to eq('1')
       end
 
-      scenario 'clicked plus button adds 1 to quantity' do
+      scenario 'clicked plus button adds 1 to quantity', use_selenium: true do
         find("a.quantity-increment[data-target='quantities-#{book.id}']").click
         expect(find_field("quantities-#{book.id}").value).to eq('2')
       end
 
       context 'clicked minus button' do
-        scenario 'subtract 1 from quantity if it is greater than 1' do
+        scenario 'subtract 1 from quantity if it is greater than 1',
+                 use_selenium: true do
           3.times do
             find("a.quantity-increment[data-target='quantities-#{book.id}']")
               .click
@@ -88,11 +89,12 @@ feature 'Book page' do
         )
       end
 
-      scenario 'has read more button' do
+      scenario 'has read more button', use_selenium: true do
         expect(page).to have_link(t('books.book_details.read_more'))
       end
 
-      scenario 'when clicked read more link it shows read less' do
+      scenario 'when clicked read more link it shows read less',
+               use_selenium: true do
         click_link(t('books.book_details.read_more'))
         expect(page).to have_link(t('books.book_details.read_less'))
       end
@@ -125,12 +127,12 @@ feature 'Book page' do
       )
     end
 
-    scenario "has user's first name's first letter in circle image" do
+    scenario 'has user`s first name`s first letter in circle image' do
       first_name = book.reviews.first.user.addresses.first.first_name
       expect(page).to have_css('.img-circle', text: first_name.first)
     end
 
-    scenario "has users's name in review header" do
+    scenario 'has users`s name in review header', use_selenium: true do
       name = book.reviews.first.user.addresses.first.first_name + ' ' +
              book.reviews.first.user.addresses.first.last_name
       expect(page).to have_css('h4.media-heading', text: name)

@@ -25,7 +25,7 @@ feature 'Cart page' do
       expect(page).to have_css('.hidden-xs .shop-quantity', text: '3')
     end
 
-    scenario 'has books in cart' do
+    scenario 'has books in cart', use_selenium: true do
       expect(page).to have_css('p.general-title', count: 3)
       expect(first('p.general-title').text).to eq(@books.first.title)
     end
@@ -36,7 +36,8 @@ feature 'Cart page' do
     end
 
     context 'input controls' do
-      scenario 'click plus button adds 1 to book quantity' do
+      scenario 'click plus button adds 1 to book quantity',
+               use_selenium: true do
         first('a.quantity-increment').click
         expect(find_field("quantities-#{@books.first.id}").value).to eq('2')
         expect(find_field("xs-quantities-#{@books.first.id}",
@@ -51,7 +52,8 @@ feature 'Cart page' do
                             visible: false).value).to eq('1')
         end
 
-        scenario 'subtract 1 from quantity if it is greater than 1' do
+        scenario 'subtract 1 from quantity if it is greater than 1',
+                 use_selenium: true do
           all('a.quantity-decrement')[1].click
           expect(find_field("quantities-#{@books.second.id}").value).to eq('1')
           expect(find_field("xs-quantities-#{@books.second.id}",
@@ -59,7 +61,8 @@ feature 'Cart page' do
         end
       end
 
-      scenario 'click on close button removes book from cart' do
+      scenario 'click on close button removes book from cart',
+               use_selenium: true do
         all('a.close.general-cart-close').last.click
         accept_alert
         expect(page).to have_css('p.general-title', count: 2)
@@ -112,13 +115,14 @@ feature 'Cart page' do
       page.set_rack_session(cart: nil)
     end
 
-    scenario 'with guest user redirects to login page' do
+    scenario 'with guest user redirects to login page', use_selenium: true do
       visit cart_path
       click_on(t('carts.show.checkout'))
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
 
-    scenario 'with logged in user redirets to checkout address' do
+    scenario 'with logged in user redirets to checkout address',
+             use_selenium: true do
       user = create(:user)
       login_as(user, scope: :user)
       visit cart_path

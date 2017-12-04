@@ -17,7 +17,7 @@ feature 'User privacy settings page' do
       click_on(t('settings.show.privacy'))
     end
 
-    context 'update email' do
+    context 'update email', use_selenium: true do
       scenario 'with vaild email' do
         fill_in('user[email]', with: 'user2@example.com')
         click_on(t('settings.show.save'))
@@ -92,7 +92,7 @@ feature 'User privacy settings page' do
       end
     end
 
-    scenario 'remove account' do
+    scenario 'remove account', use_selenium: true do
       create_list(:book_with_authors_and_materials, 4)
       find('i.fa-check').click
       click_on(t('settings.remove_account.label'))

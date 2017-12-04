@@ -85,7 +85,8 @@ feature 'Orders index page' do
         expect(page).not_to have_content('R00000006')
       end
 
-      scenario 'click on order item redirects to order page' do
+      scenario 'click on order item redirects to order page',
+               use_selenium: true do
         visit orders_path
         first('tr.order-row').click
         expect(page).to have_current_path(/orders\/5/)

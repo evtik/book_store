@@ -61,7 +61,8 @@ feature 'Checkout delivery page' do
         expect(page).to have_css('strong#order-total-label', text: '10.40')
       end
 
-      scenario 'click on radio button sets its shipment price' do
+      scenario 'click on radio button sets its shipment price',
+               use_selenium: true do
         all('span.radio-text')[1].click
         expect(page).to have_css('p#shipment-label', text: '10.00')
         expect(page).to have_css('strong#order-total-label', text: '15.40')
