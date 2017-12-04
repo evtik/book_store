@@ -17,7 +17,8 @@ feature 'Admin Order index page' do
         visit admin_orders_path
       end
 
-      scenario 'shows list of orders with appropriate states' do
+      scenario 'shows list of orders with appropriate states',
+               use_selenium: true do
         {
           /r0000/i => 15,
           t("#{ar_prefix}canceled").upcase => 5,
@@ -77,7 +78,7 @@ feature 'Admin Order index page' do
       end
     end
 
-    context 'aasm actions' do
+    context 'aasm actions', use_selenium: true do
       let(:shipment) { create(:shipment) }
 
       background { login_as(admin_user, scope: :user) }

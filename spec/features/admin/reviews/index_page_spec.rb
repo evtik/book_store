@@ -18,7 +18,7 @@ feature 'Admin Review index page' do
         visit admin_reviews_path
       end
 
-      scenario 'shows list of reviews with proper states' do
+      scenario 'shows list of reviews with proper states', use_selenium: true do
         {
           book.title => 6,
           t("#{ar_prefix}rejected").upcase => 3,
@@ -74,7 +74,7 @@ feature 'Admin Review index page' do
       end
     end
 
-    context 'aasm actions' do
+    context 'aasm actions', use_selenium: true do
       let(:book) { create(:book_with_authors_and_materials) }
 
       background { login_as(admin_user, scope: :user) }
