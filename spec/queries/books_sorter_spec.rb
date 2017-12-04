@@ -5,7 +5,7 @@ describe BooksSorter do
         books = create_list(:book_with_authors_and_materials, 10)
         sorter = BooksSorter.new('sort_by' => 'created_at', 'order' => 'desc')
         returned_books = sorter.query.to_a.map(&:title)
-        expect(returned_books).to eq(books.reverse.map(&:title)) 
+        expect(returned_books).to eq(books.reverse.map(&:title))
       end
     end
 
