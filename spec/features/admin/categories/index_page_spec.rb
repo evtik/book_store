@@ -59,7 +59,8 @@ feature 'Admin Categories index page' do
       expect(page).to have_field('category_name')
     end
 
-    scenario "click on 'delete' removes category from list" do
+    scenario "click on 'delete' removes category from list",
+             use_selenium: true do
       create(:category)
       visit admin_book_categories_path
       click_link(t('active_admin.delete'))
@@ -69,7 +70,7 @@ feature 'Admin Categories index page' do
       )
     end
 
-    context 'batch actions' do
+    context 'batch actions', use_selenium: true do
       scenario 'delete all' do
         create_list(:category, 5)
         visit admin_book_categories_path

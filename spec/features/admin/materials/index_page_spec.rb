@@ -57,7 +57,9 @@ feature 'Admin Materials index page' do
       expect(page).to have_field('material_name')
     end
 
-    scenario "click on 'delete' removes material from list" do
+    scenario "click on 'delete' removes material from list",
+             use_selenium: true do
+
       create(:material)
       visit admin_materials_path
       click_link(t('active_admin.delete'))
@@ -67,7 +69,7 @@ feature 'Admin Materials index page' do
       )
     end
 
-    context 'batch actions' do
+    context 'batch actions', use_selenium: true do
       scenario 'delete all' do
         create_list(:material, 4)
         visit admin_materials_path

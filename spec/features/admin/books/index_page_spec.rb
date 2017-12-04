@@ -57,7 +57,7 @@ feature 'Admin Books index page' do
       expect(page).to have_field('book_year')
     end
 
-    scenario "click on 'delete' removes book from list" do
+    scenario "click on 'delete' removes book from list", use_selenium: true do
       create(:book_with_authors_and_materials)
       visit admin_books_path
       click_link(t('active_admin.delete'))
@@ -67,7 +67,7 @@ feature 'Admin Books index page' do
       )
     end
 
-    context 'batch actions' do
+    context 'batch actions', use_selenium: true do
       scenario 'delete all' do
         create_list(:book_with_authors_and_materials, 3)
         visit admin_books_path

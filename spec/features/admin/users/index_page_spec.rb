@@ -57,7 +57,7 @@ feature 'Admin User index page' do
       expect(page).to have_field('user_password')
     end
 
-    scenario "click on 'delete' removes user from list" do
+    scenario "click on 'delete' removes user from list", use_selenium: true do
       create(:user)
       visit admin_users_path
       first('a', text: t('active_admin.delete')).click
@@ -65,7 +65,7 @@ feature 'Admin User index page' do
       expect(page).to have_content('@example.com', count: 2)
     end
 
-    context 'batch actions' do
+    context 'batch actions', use_selenium: true do
       scenario 'delete all' do
         create_list(:user, 4)
         visit admin_users_path
