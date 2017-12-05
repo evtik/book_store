@@ -15,9 +15,8 @@ module Settings
       address_type = params.key(t('settings.show.save'))
       address = AddressForm.from_params(params[:address][address_type])
       return publish(:invalid, address) if address.invalid?
-      address = @find_init_address.call(address.to_h, user_id)
-      return publish(:ok, @updated_message.call(address_type)) if address.save
-      publish(:error, address.errors.full_messages.first)
+      @find_init_address.call(address.to_h, user_id).save
+      publish(:ok, @updated_message.call(address_type))
     end
   end
 end
