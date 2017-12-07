@@ -15,7 +15,7 @@ class CartsController < ApplicationController
       session[:cart][book_id] = quantity.present? ? quantity.to_i : 1
     end
 
-    handle_coupon if params[:coupon]
+    handle_coupon if params[:coupon].present?
 
     redirect_to cart_path
   end
