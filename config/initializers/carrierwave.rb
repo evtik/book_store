@@ -19,8 +19,8 @@ CarrierWave.configure do |config|
     config.fog_directory = 'sybookstore'
     config.fog_credentials = {
       provider: 'AWS',
-      aws_access_key_id: 'AKIAJHFZHHFXAN3ECAFQ',
-      aws_secret_access_key: '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',
+      aws_access_key_id: ENV['AWS_ID'],
+      aws_secret_access_key: ENV['AWS_KEY'],
       region: 'eu-central-1',
       endpoint: 'https://s3.eu-central-1.amazonaws.com'
     }
