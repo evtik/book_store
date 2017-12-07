@@ -11,14 +11,12 @@ module Checkout
     def call(session)
       order = @build_order.call(session)
       return publish(:error) unless order.save
-      begin
-        %i(cart order discount coupon_id).each { |key| session.delete(key) }
-        @mailer.order_email(order).deliver
-      rescue StandardError => error
-        Rails.logger.debug(error.inspect)
-      ensure
-        publish(:ok)
-      end
+      %i(cart order discount coupon_id).each { |key| session.delete(key) }
+      @mailer.order_email(order).deliver
+    rescue StandardError => error
+      Rails.logger.debug(error.inspect)
+    ensure
+      publish(:ok)
     end
   end
 end

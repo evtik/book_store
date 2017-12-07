@@ -42,6 +42,15 @@ describe Checkout::SubmitOrder do
         allow(order).to receive(:save).and_return(false)
         expect { command.call(session) }.to publish(:error)
       end
+
+      it 'logs error message when sending order email fails' do
+        allow(mailer).to(
+          receive_message_chain(:order_email, :deliver).and_raise(StandardError,
+                                                                  'email error')
+        )
+        expect(Rails.logger).to receive(:debug).with(/email error/)
+        command.call(session)
+      end
     end
   end
 end
