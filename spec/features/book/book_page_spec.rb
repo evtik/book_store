@@ -33,25 +33,20 @@ feature 'Book page' do
       end
 
       scenario 'clicked plus button adds 1 to quantity', use_selenium: true do
-        find("a.quantity-increment[data-target='quantities-#{book.id}']").click
+        click_plus(book)
         expect(find_field("quantities-#{book.id}").value).to eq('2')
       end
 
       context 'clicked minus button' do
         scenario 'subtract 1 from quantity if it is greater than 1',
                  use_selenium: true do
-          3.times do
-            find("a.quantity-increment[data-target='quantities-#{book.id}']")
-              .click
-          end
-          find("a.quantity-decrement[data-target='quantities-#{book.id}']")
-            .click
+          3.times { click_plus(book) }
+          click_minus(book)
           expect(find_field("quantities-#{book.id}").value).to eq('3')
         end
 
         scenario 'does not subtract 1 from quatity if it is 1' do
-          find("a.quantity-decrement[data-target='quantities-#{book.id}']")
-            .click
+          click_minus(book)
           expect(find_field("quantities-#{book.id}").value).to eq('1')
         end
       end
@@ -133,8 +128,8 @@ feature 'Book page' do
     end
 
     scenario 'has users`s name in review header', use_selenium: true do
-      name = book.reviews.first.user.addresses.first.first_name + ' ' +
-             book.reviews.first.user.addresses.first.last_name
+      address = book.reviews.first.user.addresses.first
+      name = address.first_name + ' ' + address.last_name
       expect(page).to have_css('h4.media-heading', text: name)
     end
 
@@ -194,5 +189,13 @@ feature 'Book page' do
       ).submit
       expect(page).to have_content(t('errors.messages.blank'))
     end
+  end
+
+  def click_plus(book)
+    find("a.quantity-increment[data-target='quantities-#{book.id}']").click
+  end
+
+  def click_minus(book)
+    find("a.quantity-decrement[data-target='quantities-#{book.id}']").click
   end
 end
