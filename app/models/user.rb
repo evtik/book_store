@@ -31,5 +31,7 @@ class User < ApplicationRecord
 
   def send_welcome_user
     NotifierMailer.user_email(self).deliver
+  rescue StandardError => e
+    Rails.logger.debug(e.inspect)
   end
 end
