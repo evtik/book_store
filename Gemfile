@@ -15,6 +15,7 @@ gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
+gem 'sprockets-rails'
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -37,6 +38,7 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'aasm'
 gem 'activeadmin'
 gem 'activeadmin_addons'
+gem 'bootstrap-sass', '~> 3.3.7'
 gem 'cancancan'
 gem 'carrierwave', '~> 1.0'
 gem 'countries', require: 'countries/global'
