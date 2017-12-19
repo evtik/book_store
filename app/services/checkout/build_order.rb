@@ -1,7 +1,8 @@
 module Checkout
   class BuildOrder < BaseService
-    def call(order_hash)
-      OrderForm.from_params(order_hash).tap(&:valid?)
+    def call(session)
+      return unless session[:order]
+      OrderForm.from_params(session[:order]).tap(&:valid?)
     end
   end
 end

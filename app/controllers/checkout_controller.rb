@@ -1,75 +1,27 @@
 class CheckoutController < ApplicationController
   include Rectify::ControllerHelpers
 
+  STEPS = [:address, :delivery, :payment, :confirm, :complete].freeze
+
   before_action :authenticate_user!
-  before_action -> { @order = Checkout::BuildOrder.call(session[:order]) },
-                only: [:address, :delivery, :payment, :confirm],
-                if: -> { session[:order] }
-  before_action -> { present CheckoutPresenter.new },
-                only: [:address, :delivery, :payment, :confirm, :complete]
+  before_action -> { present CheckoutPresenter.new }, only: STEPS
 
-  def address
-    return redirect_to cart_path if session[:cart].nil? || session[:cart].empty?
-    @order ||= Checkout::InitializeOrder.call(session)
-    @countries = COUNTRIES
-  end
-
-  def submit_address
-    @order = Checkout::UpdateOrder.call(session,
-                                        params.require(:order).permit!.to_h)
-    redirect_to action: @order.addresses_valid? ? 'delivery' : 'address'
-  end
-
-  def delivery
-    return redirect_to action: 'address' unless @order
-    @shipments = Shipment.all
-    return if @order.shipment
-    @order.shipment_id = @shipments.first.id
-    @order.shipment = ShipmentForm.from_model(@shipments.first)
-  end
-
-  def submit_delivery
-    @order = Checkout::UpdateOrder.call(session, params.permit!.to_h)
-    redirect_to action: @order&.shipment ? 'payment' : 'delivery'
-  end
-
-  def payment
-    return redirect_to action: 'delivery' unless @order&.shipment
-    @order.card ||= CreditCardForm.new
-  end
-
-  def submit_payment
-    @order = Checkout::UpdateOrder.call(session,
-                                        params.require(:order).permit!.to_h)
-    redirect_to action: @order.card.valid? ? 'confirm' : 'payment'
-  end
-
-  def confirm
-    return redirect_to action: 'payment' unless @order&.card
-    @shipping = @order.use_billing ? @order.billing : @order.shipping
-    @billing = @order.billing
-    @order_items = Common::BuildOrderItemsFromCart.call(session[:cart])
-    @order.credit_card = CreditCard.new(@order.card.to_h).decorate
-  end
-
-  def submit_confirm
-    Checkout::SubmitOrder.call(session) do
-      on(:ok) do
-        flash[:order_confirmed] = true
-        redirect_to action: 'complete'
-      end
-
-      on(:error) do
-        flash[:alert] = t('.order_placement_error')
-        redirect_to action: 'confirm'
+  STEPS.each do |step|
+    define_method step do
+      "Checkout::Show#{step.capitalize}Step".constantize.call(session, flash) do
+        on(:ok) { |step_variables| expose step_variables }
+        on(:denied) { |failure_path| redirect_to failure_path }
       end
     end
-  end
 
-  def complete
-    flash.keep
-    return redirect_to cart_path unless flash[:order_confirmed]
-    @order = UserLastOrder.new(current_user.id).first.decorate
-    @order_items = @order.order_items
+    next if step == :complete
+
+    define_method "submit_#{step}" do
+      command = "Checkout::Submit#{step.capitalize}Step".constantize
+      command.call(session, params, flash) do
+        on(:ok) { |ok_path| redirect_to ok_path }
+        on(:error) { |error_path| redirect_to error_path }
+      end
+    end
   end
 end
