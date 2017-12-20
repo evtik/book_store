@@ -1,11 +1,13 @@
 module Checkout
   class ShowAddressStep < BaseCommand
     def self.build
-      new(Checkout::BuildOrder.build, Checkout::InitializeOrder.build)
+      new(Checkout::BuildOrder.build,
+          Checkout::InitializeOrder.build,
+          Common::GetCountries.build)
     end
 
     def initialize(*args)
-      @builder, @initializer = args
+      @builder, @initializer, @get_countries = args
     end
 
     def call(session, _flash)
@@ -13,7 +15,7 @@ module Checkout
       publish(
         :ok,
         order: @builder.call(session) || @initializer.call(session),
-        countries: (Country.all.map { |c| [c.name, c.country_code] })
+        countries: @get_countries.call
       )
     end
   end
