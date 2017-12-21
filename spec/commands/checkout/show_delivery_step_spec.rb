@@ -4,8 +4,7 @@ describe Checkout::ShowDeliveryStep do
   describe '#call' do
     context 'with no order in session' do
       it 'publishes :denied event and redirects to address step' do
-        builder = double('BuildOrder', call: nil)
-        command = described_class.new(builder)
+        command = described_class.new(double('BuildOrder', call: nil))
         expect { command.call(nil, nil) }.to(
           publish(:denied, checkout_address_path)
         )
