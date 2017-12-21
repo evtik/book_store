@@ -19,16 +19,16 @@ describe Checkout::ShowAddressStep do
     end
 
     context 'with books in cart' do
-      let(:user) { create(:user) }
+      let(:user) { build(:user) }
       let(:session) { { cart: { '2' => 4 } } }
       let(:countries) { ['Mali'] }
       let(:get_countries) { double('GetCountries', call: countries) }
-      let(:initialized_order) { create(:order, user: user) }
+      let(:initialized_order) { build(:order, user: user) }
       let(:initializer) { double('InitializeOrder', call: initialized_order) }
 
       it 'with order existing in session '\
       'publishes :ok event passing session order and countries variables' do
-        session_order = create(:order, user: user)
+        session_order = build(:order, user: user)
         builder = double('BuildOrder', call: session_order)
         command = described_class.new(builder, initializer, get_countries)
         expect { command.call(session, nil) }.to(
