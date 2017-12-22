@@ -32,7 +32,7 @@ describe Checkout::ShowPaymentStep do
 
       let(:build_order) { double('BuildOrder', call: order) }
 
-      it 'assigns credit card to order' do
+      it 'assigns empty CreditCardForm instance to order' do
         described_class.new(build_order).call(nil, nil)
         expect(order.card).to be_truthy
       end
