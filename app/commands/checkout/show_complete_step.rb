@@ -9,8 +9,8 @@ module Checkout
     end
 
     def call(session, flash)
-      flash.keep
       return publish(:denied, cart_path) unless flash[:order_confirmed]
+      flash.keep
       order = @last_order_query.new(@get_user_id.call(session)).first.decorate
       publish(:ok, order: order, order_items: order.order_items)
     end
