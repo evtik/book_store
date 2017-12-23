@@ -14,7 +14,7 @@ class CheckoutController < ApplicationController
       end
     end
 
-    next if step == :complete
+    next if step == STEPS.last
 
     define_method "submit_#{step}" do
       command = "Checkout::Submit#{step.capitalize}Step".constantize

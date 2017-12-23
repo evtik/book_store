@@ -10,12 +10,12 @@ module Checkout
 
     def call(session, _params, flash)
       @order = @build_order.call(session)
-      @order.save ? handle_success(flash) : handle_error(flash)
+      @order.save ? handle_success(session, flash) : handle_error(flash)
     end
 
     private
 
-    def handle_success(flash)
+    def handle_success(session, flash)
       %i(cart order discount coupon_id).each { |key| session.delete(key) }
       @mailer.order_email(@order).deliver
     rescue StandardError => error
@@ -26,7 +26,7 @@ module Checkout
     end
 
     def handle_error(flash)
-      flash[:alert] = t('checkout.submit_confirm.order_placement_error')
+      flash[:alert] = I18n.t('checkout.submit_confirm.order_placement_error')
       publish(:error, checkout_confirm_path)
     end
   end
