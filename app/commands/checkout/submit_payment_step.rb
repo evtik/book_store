@@ -10,7 +10,7 @@ module Checkout
 
     def call(session, params, _flash)
       order = @order_updater.call(session, params.require(:order).permit!.to_h)
-      return publish(:ok, checkout_confirm_path) if order.card.valid?
+      return publish(:ok, checkout_confirm_path) if order&.card&.valid?
       publish(:error, checkout_payment_path)
     end
   end
