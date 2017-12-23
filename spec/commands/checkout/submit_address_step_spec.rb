@@ -2,28 +2,32 @@ include Rails.application.routes.url_helpers
 
 describe Checkout::SubmitAddressStep do
   describe '#call' do
-    it 'with invalid order addresses params publishes :error event '\
-    'and redirects back to show address step' do
+    let(:args) { [nil, spy('params'), nil] }
+
+    it 'with no order in session publishes :error event and redirects to '\
+    'show address step' do
+      command = described_class.new(double('UpdateOrder', call: nil))
+      expect { command.call(*args) }.to publish(:error, checkout_address_path)
+    end
+
+    it 'with invalid order addresses publishes :error event and redirects to '\
+    'show address step' do
       order = OrderForm.from_params(
         use_billing: true,
         billing: attributes_for(:address, country: '')
       )
       command = described_class.new(double('UpdateOrder', call: order))
-      expect { command.call(nil, spy('params'), nil) }.to(
-        publish(:error, checkout_address_path)
-      )
+      expect { command.call(*args) }.to publish(:error, checkout_address_path)
     end
 
-    it 'with valid addresses params publishes :ok event and redirects '\
-    'to show delivery step' do
+    it 'with valid order addresses publishes :ok event and redirects to '\
+    'show delivery step' do
       order = OrderForm.from_params(
         use_billing: true,
         billing: attributes_for(:address)
       )
       command = described_class.new(double('UpdateOrder', call: order))
-      expect { command.call(nil, spy('params'), nil) }.to(
-        publish(:ok, checkout_delivery_path)
-      )
+      expect { command.call(*args) }.to publish(:ok, checkout_delivery_path)
     end
   end
 end

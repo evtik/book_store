@@ -22,7 +22,7 @@ describe Checkout::SubmitDeliveryStep do
         shipment: ShipmentForm.from_model(build(:shipment))
       )
       command = described_class.new(double('UpdateOrder', call: order))
-      expect { command.call(*args) }.to publish :ok, checkout_payment_path
+      expect { command.call(*args) }.to publish(:ok, checkout_payment_path)
     end
   end
 end
