@@ -2,7 +2,7 @@ describe CartItemsController do
   describe 'POST create' do
     before do
       create(:book_with_authors_and_materials)
-      request.env['HTTP_REFERER'] = root_url
+      request.env['HTTP_REFERER'] = root_url(only_path: true)
       post :create, params: { id: 1, quantity: 5 }
     end
 
@@ -11,7 +11,7 @@ describe CartItemsController do
     end
 
     it 'redirects back to where the book was added to cart' do
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(root_url(only_path: true))
     end
   end
 

@@ -57,5 +57,4 @@ RSpec.configure do |config|
   config.include Rectify::RSpec::Helpers
   config.include Wisper::RSpec::BroadcastMatcher
   config.include Rails.application.routes.url_helpers
-  # config.include Rails.application.routes.url_helpers, :use_route_helpers
 end
