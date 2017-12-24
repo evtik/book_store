@@ -1,5 +1,3 @@
-include Rails.application.routes.url_helpers
-
 describe Checkout::ShowCompleteStep do
   describe '#call' do
     it "with visiting 'complete' step page without placing an order "\

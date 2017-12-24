@@ -1,5 +1,3 @@
-include Rails.application.routes.url_helpers
-
 describe Checkout::ShowPaymentStep do
   describe '#call' do
     it 'with no order in session publishes :denied event and '\

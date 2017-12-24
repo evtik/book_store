@@ -1,5 +1,3 @@
-include Rails.application.routes.url_helpers
-
 describe Checkout::SubmitDeliveryStep do
   describe '#call' do
     let(:args) { [nil, spy('params'), nil] }

@@ -1,5 +1,6 @@
 class BaseCommand
   include Wisper::Publisher
+  include Rails.application.routes.url_helpers
 
   class << self
     def call(*args, &block)

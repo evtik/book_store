@@ -1,6 +1,3 @@
-include Rails.application.routes.url_helpers
-Rails.application.routes.default_url_options = { host: 'example.com' }
-
 describe Checkout::SubmitConfirmStep do
   describe '#call' do
     let(:order) { build(:order, user: build(:user)) }
@@ -41,15 +38,18 @@ describe Checkout::SubmitConfirmStep do
       end
 
       it 'logs error message if sending order email fails', skip_before: true do
+        saved_url_options = Rails.application.routes.default_url_options
+        Rails.application.routes.default_url_options = { host: 'localhost:3000' }
         allow(mailer).to(
           receive_message_chain(:order_email, :deliver).and_raise(StandardError,
                                                                   'email error')
         )
         expect(Rails.logger).to receive(:debug).with(/email error/)
         command.call(*args)
+        Rails.application.routes.default_url_options = saved_url_options
       end
 
-      it('publishes :ok event and redirects to complete step',
+      it('publishes :ok event and redirects to show complete step',
          skip_before: true) do
         expect { command.call(*args) }.to publish(:ok, checkout_complete_path)
       end

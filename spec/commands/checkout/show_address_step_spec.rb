@@ -1,5 +1,3 @@
-include Rails.application.routes.url_helpers
-
 describe Checkout::ShowAddressStep do
   describe '#call' do
     context 'with cart blank or empty' do

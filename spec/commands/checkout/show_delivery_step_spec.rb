@@ -1,5 +1,3 @@
-include Rails.application.routes.url_helpers
-
 describe Checkout::ShowDeliveryStep do
   describe '#call' do
     context 'with no order in session' do
