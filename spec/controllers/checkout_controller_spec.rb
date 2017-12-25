@@ -18,8 +18,7 @@ describe CheckoutController do
       it 'assigns values to instance variables' do
         get :address, session: {
           cart: { 1 => 1, 2 => 2, 3 => 3 },
-          items_total: 6.0,
-          order_subtotal: 5.4
+          discount: 10
         }
         expect(assigns(:countries).length).to be > 0
         order = assigns(:order)
