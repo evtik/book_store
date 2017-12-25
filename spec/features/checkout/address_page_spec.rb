@@ -25,8 +25,7 @@ feature 'Checkout address page' do
         create_list(:book_with_authors_and_materials, 3)
         page.set_rack_session(
           cart: { 1 => 1, 2 => 2, 3 => 3 },
-          items_total: 6.00,
-          order_subtotal: 5.40
+          discount: 10
         )
         visit checkout_address_path
         example.run
