@@ -16,7 +16,7 @@
               %label.font-weight-light= t '.enter_coupon'
               %input.form-control.mb-30{type: 'text', name: 'coupon', placeholder: t('.enter_coupon')}
               %div
-                = submit_tag t('.update_cart'), class: "btn btn-primary mb-15 res-block"
+                = submit_tag t('.update_cart'), class: 'btn btn-primary mb-15 res-block'
           .col-sm-8
             .res-mr-200.text-center.general-text-right
               %p.in-gold-500.font-18= t '.order_summary'
@@ -36,11 +36,6 @@
                     %strong.font-18= t '.order_total'
                   %td
                     %strong.font-18= number_to_currency @order_subtotal
-            .text-center
-              %span
-                = link_to t('.checkout'), checkout_address_path,
-                  class: 'btn btn-default mb-20 visible-xs-inline-block'
-    .text-center
-      %span
-        = link_to t('.checkout'), checkout_address_path,
-          class: 'btn btn-default mb-20 hidden-xs'
+        .text-center
+          = submit_tag t('.checkout'), class: 'btn btn-default mb-20',
+            name: :to_checkout
