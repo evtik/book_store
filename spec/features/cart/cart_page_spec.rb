@@ -121,13 +121,27 @@ feature 'Cart page' do
       expect(page).to have_content(t('devise.failure.unauthenticated'))
     end
 
-    scenario 'with logged in user redirets to checkout address',
-             use_selenium: true do
-      user = create(:user)
-      login_as(user, scope: :user)
-      visit cart_path
-      click_on(t('carts.show.checkout'))
-      expect(page).to have_css('h1', text: t('checkout.caption'))
+    context 'with logged in user' do
+      background do
+        user = create(:user)
+        login_as(user, scope: :user)
+        visit cart_path
+      end
+
+      scenario 'redirects to checkout address', use_selenium: true do
+        click_on(t('carts.show.checkout'))
+        expect(page).to have_css('h1', text: t('checkout.caption'))
+      end
+
+      scenario 'updates cart quantities before redirecting to checkout',
+               use_selenium: true do
+        create(:coupon)
+        fill_in('coupon', with: '123456')
+        5.times { first('a.quantity-increment').click }
+        click_on(t('carts.show.checkout'))
+        expect(page).to have_css('p.font-16', text: '11.00')
+        expect(page).to have_css('p.font-16', text: '9.90')
+      end
     end
   end
 end

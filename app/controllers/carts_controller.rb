@@ -3,9 +3,8 @@ class CartsController < ApplicationController
 
   def show
     @order_items = Common::BuildOrderItemsFromCart.call(session[:cart])
-    @items_total, @discount, @order_subtotal = Cart::CalculateCartTotals.call(
-      session[:cart], session[:discount]
-    )
+    totals = Cart::CalculateCartTotals.call(session)
+    @items_total, @order_subtotal, @discount = totals
     session[:items_total] = @items_total
     session[:order_subtotal] = @order_subtotal
   end
