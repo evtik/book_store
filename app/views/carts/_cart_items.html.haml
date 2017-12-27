@@ -1,14 +1,14 @@
 %table.table.table-hover
   %tr.no-hover
     %th.col-pic.pl-0
-      %span.in-grey-600.ml-20= t 'cart.product'
+      %span.in-grey-600.ml-20= t 'carts.product'
     %th.col-title
     %th.col-price
-      %span.in-grey-600= t 'cart.price'
+      %span.in-grey-600= t 'carts.price'
     %th.col-quantity
-      %span.in-grey-600= t 'cart.quantity'
+      %span.in-grey-600= t 'carts.quantity'
     %th.col-total
-      %span.in-grey-600= t 'cart.subtotal'
+      %span.in-grey-600= t 'carts.subtotal'
     - if render_inputs
       %th.col-close
   - @order_items.each do |order_item|
