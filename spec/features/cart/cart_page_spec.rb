@@ -133,7 +133,7 @@ feature 'Cart page' do
         expect(page).to have_css('h1', text: t('checkout.caption'))
       end
 
-      scenario 'updates cart quantities before redirecting to checkout',
+      scenario 'updates books quantities before redirecting to checkout',
                use_selenium: true do
         create(:coupon)
         fill_in('coupon', with: '123456')
@@ -141,6 +141,20 @@ feature 'Cart page' do
         click_on(t('carts.show.checkout'))
         expect(page).to have_css('p.font-16', text: '11.00')
         expect(page).to have_css('p.font-16', text: '9.90')
+      end
+
+      scenario 'updates books quantities when redirecting to checkout, '\
+        'then back to cart, changing quantities and again to checkout',
+               use_selenium: true do
+        create(:coupon)
+        fill_in('coupon', with: '123456')
+        5.times { first('a.quantity-increment').click }
+        click_on(t('carts.show.checkout'))
+        find('a.shop-link').click
+        2.times { first('a.quantity-increment').click }
+        click_on(t('carts.show.checkout'))
+        expect(page).to have_css('p.font-16', text: '13.00')
+        expect(page).to have_css('p.font-16', text: '11.70')
       end
     end
   end
