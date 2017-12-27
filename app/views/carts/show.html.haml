@@ -25,17 +25,18 @@
                   %td
                     %p.font-16= t '.subtotal'
                   %td
-                    %p.font-16= number_to_currency @items_total
+                    %p#items-total.font-16{'data-discount': session[:discount]}= |
+                      number_to_currency @items_total |
                 %tr
                   %td
                     %p.font-16= t '.coupon'
                   %td
-                    %p.font-16= number_to_currency @discount
+                    %p#discount.font-16= number_to_currency @discount
                 %tr
                   %td
                     %strong.font-18= t '.order_total'
                   %td
-                    %strong.font-18= number_to_currency @order_subtotal
+                    %strong#order-subtotal.font-18= number_to_currency @order_subtotal
         .text-center
           = submit_tag t('.checkout'), class: 'btn btn-default mb-20',
             name: :to_checkout

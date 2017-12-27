@@ -23,16 +23,18 @@
         - if render_inputs
           .input-group
             %a.input-link.quantity-decrement{href: "#",
-              'data-target': "quantities-#{order_item.book_id}"}
+              'data-target': "xs-quantities-#{order_item.book_id}"}
               %i.fa.fa-minus.line-height-40
             %input.form-control.quantity-input{type: "number", min: "1",
               name: "quantities[#{order_item.book_id}]",
               class: "quantities-#{order_item.book_id}",
               id: "xs-quantities-#{order_item.book_id}",
               'data-bound-input': "quantities-#{order_item.book_id}",
+              'data-bound-subtotal': "subtotal-#{order_item.book.id}",
+              'data-price': order_item.book.price,
               value: order_item.quantity}
             %a.input-link.quantity-increment{href: "#",
-              'data-target': "quantities-#{order_item.book_id}"}
+              'data-target': "xs-quantities-#{order_item.book_id}"}
               %i.fa.fa-plus.line-height-40
         - else
           %span= order_item.quantity
@@ -40,5 +42,6 @@
       %td
         %span.in-grey-600= t 'cart.subtotal'
       %td
-        %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
+        %span.font-16.in-gold-500{class: "subtotal-#{order_item.book.id}"}= |
+          number_to_currency order_item.book.price * order_item.quantity |
   .general-cart-item.divider-lg-bottom.mb-30

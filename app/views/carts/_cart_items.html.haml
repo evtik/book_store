@@ -34,6 +34,8 @@
               class: "quantities-#{order_item.book_id}",
               id: "quantities-#{order_item.book_id}",
               'data-bound-input': "xs-quantities-#{order_item.book_id}",
+              'data-bound-subtotal': "subtotal-#{order_item.book.id}",
+              'data-price': order_item.book.price,
               value: order_item.quantity}
             %a.input-link.quantity-increment{href: "#",
               'data-target': "quantities-#{order_item.book_id}"}
@@ -41,7 +43,8 @@
         - else
           %span.ml-30= order_item.quantity
       %td
-        %span.font-16.in-gold-500= number_to_currency order_item.book.price * order_item.quantity
+        %span.font-16.in-gold-500{class: "subtotal-#{order_item.book.id}"}= |
+          number_to_currency order_item.book.price * order_item.quantity |
       - if render_inputs
         %td
           = link_to(cart_item_path(order_item.book.id),
