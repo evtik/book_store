@@ -9,7 +9,7 @@ module Cart
     end
 
     def call(coupon_code)
-      coupon = Coupon.where(code: coupon_code).first
+      coupon = Coupon.find_by(code: coupon_code)
       coupon_states = [coupon.nil?, coupon&.order.present?]
       coupon_states << (coupon.expires < Date.today) unless coupon_states.any?
       if coupon_states.any?
