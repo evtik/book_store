@@ -76,6 +76,7 @@ en:
         <<: *name
       order:
         state:
+          state: 'State'
           in_progress: 'In progress'
           in_queue: 'In queue'
           in_delivery: 'In delivery'
@@ -148,20 +149,22 @@ en:
           user: 'User'
     resource:
       index:
-        actions: 'Actions'
+        <<: &actions
+          actions: 'Actions'
         all: 'All'
         book:
           image: 'Image'
         order:
           <<: *common_index_labels
           <<: *order_index_labels
-          in_progress: 'In progress'
-          delivered: 'Delivered'
-          canceled: 'Canceled'
-          queue: 'Queue'
-          deliver: 'Deliver'
-          complete: 'Complete'
-          cancel: 'Cancel'
+          <<: &order_actions
+            in_progress: 'In progress'
+            delivered: 'Delivered'
+            canceled: 'Canceled'
+            queue: 'Queue'
+            deliver: 'Deliver'
+            complete: 'Complete'
+            cancel: 'Cancel'
         review:
           <<: *common_index_labels
           <<: *review_index_labels
@@ -171,9 +174,13 @@ en:
           approve: 'Approve'
           reject: 'Reject'
       show:
+        <<: *actions
         book:
           images: 'Images'
           dimensions: 'Dimensions'
+        order:
+          items_total: 'Items total'
+          <<: *order_actions
       new:
         author: &author_form_labels
           author_details: 'Author details'

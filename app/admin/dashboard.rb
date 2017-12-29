@@ -6,7 +6,9 @@ ActiveAdmin.register_page 'Dashboard' do
       column do
         panel t('.recent_orders') do
           table_for Order.order('id desc').limit(10) do
-            column(t('.order')) { |order| order.decorate.number }
+            column(t('.order')) do |order|
+              link_to order.decorate.number, admin_order_path(order)
+            end
             state_column t('.state'), :state
             column t('.date'), :created_at
             column t('.customer'), :user, sortable: :user_id
