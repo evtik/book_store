@@ -1,11 +1,26 @@
 feature 'Admin Order index page' do
   include_examples 'not authorized', :admin_orders_path
 
-  let(:admin_user) { create(:admin_user) }
-  let(:ar_prefix) { 'activerecord.attributes.order.state.' }
-  let(:aa_prefix) { 'active_admin.resource.index.order.' }
+  given(:admin_user) { create(:admin_user) }
+  given(:ar_prefix) { 'activerecord.attributes.order.state.' }
+  given(:aa_prefix) { 'active_admin.resource.index.order.' }
 
   context 'with admin' do
+    context 'redirecting to order show page' do
+      scenario 'click order link forwards to show page', use_selenium: true do
+        create(:order, shipment: build(:shipment),
+                       user: admin_user,
+                       addresses: build_list(:address, 1),
+                       credit_card: build(:credit_card),
+                       subtotal: 20.0
+              )
+        login_as(admin_user, scope: :user)
+        visit admin_orders_path
+        click_link('R00000001')
+        expect(page).to have_text("#{t('activerecord.models.order.one')} #1")
+      end
+    end
+
     context 'orders list' do
       background do
         shipment = create(:shipment)
@@ -79,7 +94,7 @@ feature 'Admin Order index page' do
     end
 
     context 'aasm actions', use_selenium: true do
-      let(:shipment) { create(:shipment) }
+      given(:shipment) { create(:shipment) }
 
       background { login_as(admin_user, scope: :user) }
 
