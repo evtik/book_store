@@ -41,73 +41,128 @@ feature 'Admin show Order page' do
     end
 
     context 'aasm actions' do
-      given(:ar_prefix) { 'activerecord.attributes.order.state.' }
-      given(:aa_prefix) { 'active_admin.resource.index.order.' }
-      given(:aasm_states) { Order.aasm.states.map(&:name) }
-      given(:aasm_events) { Order.aasm.events.map(&:name) }
+      include_context 'aasm prefixes'
+      include_context 'aasm order variables'
 
-      shared_examples 'state labels' do |current_state|
-        scenario 'has correct state label' do
-          expect(page).to have_text(t("#{ar_prefix}#{current_state}").upcase)
+      params = AASMHelper.order_config.merge(
+        set: AASMHelper.order_state_events_set,
+        path_helper: :admin_order_path,
+        resource_path: true
+      )
 
-          (aasm_states - [current_state]).each do |state|
-            expect(page).not_to have_text(t("#{ar_prefix}#{state}").upcase)
-          end
-        end
-      end
-
-      shared_examples 'state buttons' do |allowed_actions|
-        scenario 'has correct change state buttons' do
-          allowed_actions ||= []
-
-          allowed_actions.each do |action|
-            expect(page).to have_link(t("#{aa_prefix}#{action}"))
-          end
-
-          (aasm_events - allowed_actions).each do |action|
-            expect(page).not_to have_link(t("#{aa_prefix}#{action}"))
-          end
-        end
-      end
-
-      {
-        in_progress: [:queue, :cancel],
-        in_queue: [:deliver, :cancel],
-        in_delivery: [:complete],
-        delivered: nil,
-        canceled: nil,
-        nil: nil
-      }.each_cons(2) do |curr, nxt|
-        current_state = curr[0]
-        next_state = nxt[0]
-        allowed_actions = curr[1]
-        next_allowed_actions = nxt[1]
-
-        context "order in #{current_state} state", use_selenium: true do
-          before do
-            order.state = current_state
-            order.save
-            visit admin_order_path(order)
-          end
-
-          include_examples 'state labels', current_state
-          include_examples 'state buttons', allowed_actions
-
-          allowed_actions&.each do |action|
-            if action == :cancel
-              next_state = :canceled
-              next_allowed_actions = nil
-            end
-
-            context "click on #{action} changes state to #{next_state}" do
-              before { click_on(t("#{aa_prefix}#{action}")) }
-
-              include_examples 'state labels', next_state
-              include_examples 'state buttons', next_allowed_actions
-            end
-          end
-        end
+      include_examples 'aasm actions', params do
+        let(:entity) { order }
       end
     end
+
+    ###############################################################
+
+    # context 'aasm actions' do
+      # include_context 'aasm prefixes'
+      # include_context 'aasm order variables'
+
+      # AASMHelper.order_state_events_sets.each_cons(2) do |curr, nxt|
+        # current_state = curr[0]
+        # next_state = nxt[0]
+        # allowed_actions = curr[1]
+        # next_allowed_actions = nxt[1]
+
+        # context "order in #{current_state} state", use_selenium: true do
+          # background do
+            # order.state = current_state
+            # order.save
+            # visit admin_order_path(order)
+          # end
+
+          # include_examples 'aasm state events', current_state, allowed_actions
+
+          # allowed_actions&.each do |action|
+            # if action == :cancel
+              # next_state = :canceled
+              # next_allowed_actions = nil
+            # end
+
+            # context "click on #{action} changes state to #{next_state}" do
+              # background { click_on(t("#{aa_prefix}#{action}")) }
+
+              # include_examples 'aasm state events', next_state,
+                               # next_allowed_actions
+            # end
+          # end
+        # end
+      # end
+    # end
+
+    ###############################################################
+
+    # context 'aasm actions' do
+      # given(:ar_prefix) { 'activerecord.attributes.order.state.' }
+      # given(:aa_prefix) { 'active_admin.resource.index.order.' }
+      # given(:aasm_states) { Order.aasm.states.map(&:name) }
+      # given(:aasm_events) { Order.aasm.events.map(&:name) }
+
+      # shared_examples 'state labels' do |current_state|
+        # scenario 'has correct state label' do
+          # expect(page).to have_text(t("#{ar_prefix}#{current_state}").upcase)
+
+          # (aasm_states - [current_state]).each do |state|
+            # expect(page).not_to have_text(t("#{ar_prefix}#{state}").upcase)
+          # end
+        # end
+      # end
+
+      # shared_examples 'state buttons' do |allowed_actions|
+        # scenario 'has correct change state buttons' do
+          # allowed_actions ||= []
+
+          # allowed_actions.each do |action|
+            # expect(page).to have_link(t("#{aa_prefix}#{action}"))
+          # end
+
+          # (aasm_events - allowed_actions).each do |action|
+            # expect(page).not_to have_link(t("#{aa_prefix}#{action}"))
+          # end
+        # end
+      # end
+
+      # {
+        # in_progress: [:queue, :cancel],
+        # in_queue: [:deliver, :cancel],
+        # in_delivery: [:complete],
+        # delivered: nil,
+        # canceled: nil,
+        # nil: nil
+      # }.each_cons(2) do |curr, nxt|
+        # current_state = curr[0]
+        # next_state = nxt[0]
+        # allowed_actions = curr[1]
+        # next_allowed_actions = nxt[1]
+
+        # context "order in #{current_state} state", use_selenium: true do
+          # before do
+            # order.state = current_state
+            # order.save
+            # visit admin_order_path(order)
+          # end
+
+          # include_examples 'state labels', current_state
+          # include_examples 'state buttons', allowed_actions
+
+          # allowed_actions&.each do |action|
+            # if action == :cancel
+              # next_state = :canceled
+              # next_allowed_actions = nil
+            # end
+
+            # context "click on #{action} changes state to #{next_state}" do
+              # before { click_on(t("#{aa_prefix}#{action}")) }
+
+              # include_examples 'state labels', next_state
+              # include_examples 'state buttons', next_allowed_actions
+            # end
+          # end
+        # end
+      # end
+    # end
   end
 end

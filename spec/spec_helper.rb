@@ -13,8 +13,9 @@ require 'wisper/rspec/matchers'
 require_relative 'support/database_cleaner'
 require_relative 'support/factory_girl'
 
-Dir[Rails.root.join('spec/**/shared_examples/*.rb')].each do |file|
-  require file
+['spec/**/shared_examples/*.rb', 'spec/**/shared_contexts/*.rb',
+ 'spec/helpers/*.rb'].each do |glob|
+  Dir[Rails.root.join(glob)].each { |file| require file }
 end
 
 Capybara.register_driver :poltergeist do |app|
