@@ -11,11 +11,11 @@ shared_examples 'aasm state events' do |current_state, allowed_actions|
     allowed_actions ||= []
 
     allowed_actions.each do |action|
-      expect(page).to have_link(t("#{aa_prefix}#{action}"))
+      expect(page).to have_link(t("#{aa_prefix}#{action}"), exact: true)
     end
 
     (aasm_events - allowed_actions).each do |action|
-      expect(page).not_to have_link(t("#{aa_prefix}#{action}"))
+      expect(page).not_to have_link(t("#{aa_prefix}#{action}"), exact: true)
     end
   end
 end

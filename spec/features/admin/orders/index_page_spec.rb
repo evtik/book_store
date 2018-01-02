@@ -1,9 +1,10 @@
 feature 'Admin Order index page' do
+  include_context 'aasm prefixes'
+  include_context 'aasm order variables'
+
   include_examples 'not authorized', :admin_orders_path
 
   given(:admin_user) { create(:admin_user) }
-  given(:ar_prefix) { 'activerecord.attributes.order.state.' }
-  given(:aa_prefix) { 'active_admin.resource.index.order.' }
 
   context 'with admin' do
     context 'redirecting to order show page' do
@@ -12,8 +13,7 @@ feature 'Admin Order index page' do
                        user: admin_user,
                        addresses: build_list(:address, 1),
                        credit_card: build(:credit_card),
-                       subtotal: 20.0
-              )
+                       subtotal: 20.0)
         login_as(admin_user, scope: :user)
         visit admin_orders_path
         click_link('R00000001')
@@ -24,7 +24,7 @@ feature 'Admin Order index page' do
     context 'orders list' do
       background do
         shipment = create(:shipment)
-        Order.aasm.states.map(&:name).each_with_index do |state, index|
+        aasm_states.each_with_index do |state, index|
           create_list(:order, index + 1, shipment: shipment, user: admin_user,
                                          state: state, subtotal: 10.0)
         end
@@ -55,7 +55,7 @@ feature 'Admin Order index page' do
         end
       end
 
-      context 'fiters' do
+      context 'filters' do
         scenario 'shows order list filters' do
           [
             'All (15)',
@@ -93,96 +93,20 @@ feature 'Admin Order index page' do
       end
     end
 
-    context 'aasm actions', use_selenium: true do
-      given(:shipment) { create(:shipment) }
-
+    context 'aasm actions' do
       background { login_as(admin_user, scope: :user) }
 
-      shared_examples 'order action' do |params|
-        scenario "click on '#{params[:action]}' changes order state "\
-          "to '#{params[:next_state]}'" do
-          click_on(t("#{aa_prefix}#{params[:action]}"))
+      params = AASMHelper.order_config.merge(
+        set: AASMHelper.order_state_events_set,
+        path_helper: :admin_orders_path,
+        resource_path: false
+      )
 
-          expect(page).not_to have_text(
-            t("#{ar_prefix}#{params[:state]}").upcase
-          )
-
-          expect(page).not_to have_css(
-            '.button', text: t("#{aa_prefix}#{params[:action]}")
-          )
-
-          expect(page).to have_text(
-            t("#{ar_prefix}#{params[:next_state]}").upcase
-          )
-
-          if params[:next_action]
-            expect(page).to have_css(
-              '.button', text: t("#{aa_prefix}#{params[:next_action]}")
-            )
-          end
+      include_examples 'aasm actions', params do
+        given(:entity) do
+          create(:order, shipment: build(:shipment), user: admin_user,
+                         subtotal: 10.0)
         end
-      end
-
-      shared_examples 'cancel order action' do |params|
-        scenario "click on 'cancel' changes order state to 'canceled'" do
-          click_on(t("#{aa_prefix}cancel"))
-
-          expect(page).not_to have_text(
-            t("#{ar_prefix}#{params[:state]}").upcase
-          )
-
-          expect(page).not_to have_css(
-            '.button', text: t("#{aa_prefix}#{params[:action]}")
-          )
-
-          expect(page).not_to have_css(
-            '.button', text: t("#{aa_prefix}cancel")
-          )
-
-          expect(page).to have_text(
-            t("#{ar_prefix}canceled").upcase
-          )
-        end
-      end
-
-      context "'in progress' order" do
-        before do
-          create(:order, shipment: shipment, user: admin_user, subtotal: 10.0)
-          visit admin_orders_path
-        end
-
-        params = { state: 'in_progress', next_state: 'in_queue',
-                   action: 'queue', next_action: 'deliver' }
-
-        include_examples 'order action', params
-        include_examples 'cancel order action', params
-      end
-
-      context "'in queue' order" do
-        before do
-          create(:order, state: 'in_queue', shipment: shipment,
-                         user: admin_user, subtotal: 10.0)
-          visit admin_orders_path
-        end
-
-        params = { state: 'in_queue', next_state: 'in_delivery',
-                   action: 'deliver', next_action: 'complete' }
-
-        include_examples 'order action', params
-        include_examples 'cancel order action', params
-      end
-
-      context "'in delivery' order" do
-        before do
-          create(:order, state: 'in_delivery', shipment: shipment,
-                         user: admin_user, subtotal: 10.0)
-          visit admin_orders_path
-        end
-
-        params = { state: 'in_delivery', next_state: 'delivered',
-                   action: 'complete' }
-
-        include_examples 'order action', params
       end
     end
   end
