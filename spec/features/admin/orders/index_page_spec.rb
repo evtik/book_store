@@ -1,5 +1,4 @@
 feature 'Admin Order index page' do
-  include_context 'aasm prefixes'
   include_context 'aasm order variables'
 
   include_examples 'not authorized', :admin_orders_path
@@ -97,7 +96,6 @@ feature 'Admin Order index page' do
       background { login_as(admin_user, scope: :user) }
 
       params = AASMHelper.order_config.merge(
-        set: AASMHelper.order_state_events_set,
         path_helper: :admin_orders_path,
         resource_path: false
       )

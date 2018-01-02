@@ -39,11 +39,9 @@ feature 'Admin show Order page' do
     end
 
     context 'aasm actions' do
-      include_context 'aasm prefixes'
       include_context 'aasm order variables'
 
       params = AASMHelper.order_config.merge(
-        set: AASMHelper.order_state_events_set,
         path_helper: :admin_order_path,
         resource_path: true
       )

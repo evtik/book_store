@@ -1,11 +1,9 @@
 module Checkout
   class BuildCompletedOrder < BaseService
     def self.build
-      new(
-        Common::GetUserIdFromSession.build,
-        Checkout::BuildOrderAddresses.build,
-        Common::BuildOrderItemsFromCart.build
-      )
+      new(Common::GetUserIdFromSession.build,
+          Checkout::BuildOrderAddresses.build,
+          Common::BuildOrderItemsFromCart.build)
     end
 
     def initialize(*args)

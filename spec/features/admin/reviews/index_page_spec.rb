@@ -1,16 +1,16 @@
 feature 'Admin Review index page' do
+  include_context 'aasm review variables'
+
   include_examples 'not authorized', :admin_reviews_path
 
   let(:admin_user) { create(:admin_user) }
-  let(:ar_prefix) { 'activerecord.attributes.review.state.' }
-  let(:aa_prefix) { 'active_admin.resource.index.review.' }
 
   context 'with admin' do
     context 'reviews list' do
       let(:book) { create(:book_with_authors_and_materials) }
 
       background do
-        Review.aasm.states.map(&:name).each_with_index do |state, index|
+        aasm_states.each_with_index do |state, index|
           create_list(:review, index + 1, book: book, user: admin_user,
                                           state: state)
         end
@@ -36,7 +36,7 @@ feature 'Admin Review index page' do
         end
       end
 
-      context 'fiters' do
+      context 'filters' do
         scenario 'shows review list filters' do
           [
             'All (6)',
@@ -74,43 +74,18 @@ feature 'Admin Review index page' do
       end
     end
 
-    context 'aasm actions', use_selenium: true do
-      let(:book) { create(:book_with_authors_and_materials) }
-
+    context 'aasm actions' do
       background { login_as(admin_user, scope: :user) }
 
-      context "'unprocessed' review" do
-        before do
-          create(:review, book: book, user: admin_user, state: 'unprocessed')
-          visit admin_reviews_path
-        end
+      params = AASMHelper.review_config.merge(
+        path_helper: :admin_reviews_path,
+        resource_path: false
+      )
 
-        scenario "click on 'approve' changes review state to 'approved'" do
-          click_on(t("#{aa_prefix}approve"))
-          expect(page).not_to have_text(t("#{ar_prefix}unprocessed").upcase)
-          expect(page).not_to have_css('.button', text: t("#{aa_prefix}approve"))
-          expect(page).to have_text(t("#{ar_prefix}approved").upcase)
-        end
-
-        scenario "click on 'reject' changes review state to 'rejected'" do
-          click_on(t("#{aa_prefix}reject"))
-          expect(page).not_to have_text(t("#{ar_prefix}unprocessed").upcase)
-          expect(page).not_to have_css('.button', text: t("#{aa_prefix}reject"))
-          expect(page).to have_text(t("#{ar_prefix}rejected").upcase)
-        end
-      end
-
-      context "'approved' review" do
-        before do
-          create(:review, book: book, user: admin_user)
-          visit admin_reviews_path
-        end
-
-        scenario "click on 'reject' changes review state to 'rejected'" do
-          click_on(t("#{aa_prefix}reject"))
-          expect(page).not_to have_text(t("#{ar_prefix}approved").upcase)
-          expect(page).not_to have_css('.button', text: t("#{aa_prefix}reject"))
-          expect(page).to have_text(t("#{ar_prefix}rejected").upcase)
+      include_examples 'aasm actions', params do
+        given(:entity) do
+          create(:review, book: build(:book_with_authors_and_materials),
+                          user: admin_user)
         end
       end
     end

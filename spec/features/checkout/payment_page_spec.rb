@@ -11,7 +11,7 @@ feature 'Checkout payment page' do
   context 'with logged in user' do
     around do |example|
       login_as(create(:user), scope: :user)
-      page.set_rack_session(order: { subtotal: 12.0 })
+      page.set_rack_session(order: {}, order_subtotal: 12.0)
       example.run
       page.set_rack_session(order: nil)
     end
@@ -30,10 +30,8 @@ feature 'Checkout payment page' do
     context 'with shipment set' do
       background do
         page.set_rack_session(
-          order: {
-            shipment: attributes_for(:shipment, price: 5.0),
-            subtotal: 20.0
-          }
+          order: { shipment: attributes_for(:shipment, price: 5.0) },
+          order_subtotal: 20.0
         )
       end
 

@@ -1,10 +1,8 @@
 module Settings
   class UpdateAddress < BaseCommand
     def self.build
-      new(
-        Settings::FindOrInitializeAddress.build,
-        Settings::GenerateAddressUpdatedMessage.build
-      )
+      new(Settings::FindOrInitializeAddress.build,
+          Settings::GenerateAddressUpdatedMessage.build)
     end
 
     def initialize(*args)

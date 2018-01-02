@@ -18,9 +18,9 @@ feature 'Checkout confirm page' do
         order: {
           billing: attributes_for(:address),
           shipping: attributes_for(:address, address_type: 'shipping'),
-          shipment: attributes_for(:shipment),
-          subtotal: 5.4
-        }
+          shipment: attributes_for(:shipment)
+        },
+        order_subtotal: 5.4
       )
       example.run
       page.set_rack_session(order: nil)
@@ -46,7 +46,8 @@ feature 'Checkout confirm page' do
             shipment_id: 1,
             card: attributes_for(:credit_card),
             subtotal: 5.4
-          }
+          },
+          order_subtotal: 5.4
         )
         visit checkout_confirm_path
       end

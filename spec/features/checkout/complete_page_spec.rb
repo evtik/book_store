@@ -21,7 +21,8 @@ feature 'Checkout complete page' do
           shipment_id: 1,
           card: attributes_for(:credit_card),
           subtotal: 5.4
-        }
+        },
+        order_subtotal: 5.4
       )
       login_as(user, scope: :user)
       visit checkout_confirm_path
