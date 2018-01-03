@@ -48,29 +48,9 @@ feature 'Admin Review index page' do
           end
         end
 
-        scenario "click on 'unprocessed' filters out other reviews" do
-          first('.table_tools_button', text: t("#{aa_prefix}unprocessed")).click
-          [
-            t("#{ar_prefix}rejected").upcase,
-            t("#{ar_prefix}approved").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
-
-        scenario "click on 'approved' filters out other reviews" do
-          first('.table_tools_button', text: t("#{aa_prefix}approved")).click
-          [
-            t("#{ar_prefix}unprocessed").upcase,
-            t("#{ar_prefix}rejected").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
-
-        scenario "click on 'rejected' filters out other reviews" do
-          first('.table_tools_button', text: t("#{aa_prefix}rejected")).click
-          [
-            t("#{ar_prefix}unprocessed").upcase,
-            t("#{ar_prefix}approved").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
+        include_examples 'active admin filters',
+                         filters: %i(unprocessed approved rejected),
+                         entity: :reviews
       end
     end
 

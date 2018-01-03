@@ -66,29 +66,9 @@ feature 'Admin Order index page' do
           end
         end
 
-        scenario "click on 'in progress' filters out other orders" do
-          first('.table_tools_button', text: t("#{aa_prefix}in_progress")).click
-          [
-            t("#{ar_prefix}canceled").upcase,
-            t("#{ar_prefix}delivered").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
-
-        scenario "click on 'delivered' filters out other orders" do
-          first('.table_tools_button', text: t("#{aa_prefix}delivered")).click
-          [
-            t("#{ar_prefix}in_progress").upcase,
-            t("#{ar_prefix}canceled").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
-
-        scenario "click on 'canceled' filters out other orders" do
-          first('.table_tools_button', text: t("#{aa_prefix}canceled")).click
-          [
-            t("#{ar_prefix}in_progress").upcase,
-            t("#{ar_prefix}delivered").upcase
-          ].each { |state| expect(page).not_to have_text(state) }
-        end
+        include_examples 'active admin filters',
+                         filters: %i(in_progress delivered canceled),
+                         entity: :orders
       end
     end
 
