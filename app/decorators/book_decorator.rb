@@ -2,21 +2,13 @@ class BookDecorator < Draper::Decorator
   delegate_all
 
   def authors_short
-    # model.authors
-         # .sort_by(&:last_name)
-         # .map { |author| "#{author.first_name[0]}. #{author.last_name}" }
-         # .join(', ')
-    authors_string do |authors|
+    collect_authors do |authors|
       authors.map { |author| "#{author.first_name[0]}. #{author.last_name}" }
     end
   end
 
   def authors_full
-    # model.authors
-         # .sort_by(&:last_name)
-         # .map { |author| "#{author.first_name} #{author.last_name}" }
-         # .join(', ')
-    authors_string do |authors|
+    collect_authors do |authors|
       authors.map { |author| "#{author.first_name} #{author.last_name}" }
     end
   end
@@ -31,7 +23,7 @@ class BookDecorator < Draper::Decorator
 
   private
 
-  def authors_string
+  def collect_authors
     yield(model.authors.sort_by(&:last_name)).join(', ')
   end
 end
