@@ -87,6 +87,7 @@ en:
         score: 'Score'
         body: 'Body'
         state:
+          state: 'State'
           unprocessed: 'Unprocessed'
           approved: 'Approved'
           rejected: 'Rejected'
@@ -145,6 +146,8 @@ en:
           customer: 'Customer'
           total: 'Total'
         <<: &review_index_labels
+          title: 'Title'
+          body: 'Body'
           book: 'Book'
           user: 'User'
     resource:
@@ -168,11 +171,12 @@ en:
         review:
           <<: *common_index_labels
           <<: *review_index_labels
-          unprocessed: 'Unprocessed'
-          approved: 'Approved'
-          rejected: 'Rejected'
-          approve: 'Approve'
-          reject: 'Reject'
+          <<: &review_actions
+            unprocessed: 'Unprocessed'
+            approved: 'Approved'
+            rejected: 'Rejected'
+            approve: 'Approve'
+            reject: 'Reject'
       show:
         <<: *actions
         book:
@@ -181,6 +185,9 @@ en:
         order:
           items_total: 'Items total'
           <<: *order_actions
+        review:
+          <<: *common_index_labels
+          <<: *review_actions
       new:
         author: &author_form_labels
           author_details: 'Author details'

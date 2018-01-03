@@ -1,4 +1,4 @@
-feature 'Admin Order index page' do
+feature 'Admin Order index page', :include_aasm_helpers do
   include_context 'aasm order variables'
 
   include_examples 'not authorized', :admin_orders_path
@@ -8,15 +8,17 @@ feature 'Admin Order index page' do
   context 'with admin' do
     context 'redirecting to order show page' do
       scenario 'click order link forwards to show page', use_selenium: true do
-        create(:order, shipment: build(:shipment),
-                       user: admin_user,
-                       addresses: build_list(:address, 1),
-                       credit_card: build(:credit_card),
-                       subtotal: 20.0)
+        order = create(:order, shipment: build(:shipment),
+                               user: admin_user,
+                               addresses: build_list(:address, 1),
+                               credit_card: build(:credit_card),
+                               subtotal: 20.0)
         login_as(admin_user, scope: :user)
         visit admin_orders_path
-        click_link('R00000001')
-        expect(page).to have_text("#{t('activerecord.models.order.one')} #1")
+        click_link(order.decorate.number)
+        expect(page).to have_text(
+          "#{t('activerecord.models.order.one')} ##{order.id}"
+        )
       end
     end
 
@@ -35,11 +37,11 @@ feature 'Admin Order index page' do
                use_selenium: true do
         {
           /r0000/i => 15,
-          t("#{ar_prefix}canceled").upcase => 5,
-          t("#{ar_prefix}delivered").upcase => 4,
-          t("#{ar_prefix}in_delivery").upcase => 3,
-          t("#{ar_prefix}in_queue").upcase => 2,
-          t("#{ar_prefix}in_progress").upcase => 1
+          state_label(ar_prefix, :canceled) => 5,
+          state_label(ar_prefix, :delivered) => 4,
+          state_label(ar_prefix, :in_delivery) => 3,
+          state_label(ar_prefix, :in_queue) => 2,
+          state_label(ar_prefix, :in_progress) => 1
         }.each { |key, value| expect(page).to have_text(key, count: value) }
       end
 
@@ -75,7 +77,7 @@ feature 'Admin Order index page' do
     context 'aasm actions' do
       background { login_as(admin_user, scope: :user) }
 
-      params = AASMHelper.order_config.merge(
+      params = order_config.merge(
         path_helper: :admin_orders_path,
         resource_path: false
       )

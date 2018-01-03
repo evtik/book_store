@@ -1,5 +1,5 @@
 ActiveAdmin.setup do |config|
-  config.site_title = "Book Store"
+  config.site_title = 'Book Store'
 
   config.authentication_method = :authenticate_active_admin_user!
   config.current_user_method = :current_user

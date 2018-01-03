@@ -1,4 +1,4 @@
-feature 'Admin show Order page' do
+feature 'Admin Order show page', :include_aasm_helpers do
   include_examples 'not authorized', :admin_order_path, 1
 
   context 'with admin' do
@@ -19,9 +19,7 @@ feature 'Admin show Order page' do
              subtotal: 35.16)
     end
 
-    background do
-      login_as(admin_user, scope: :user)
-    end
+    background { login_as(admin_user, scope: :user) }
 
     context 'order details' do
       scenario 'shows order details' do
@@ -41,7 +39,7 @@ feature 'Admin show Order page' do
     context 'aasm actions' do
       include_context 'aasm order variables'
 
-      params = AASMHelper.order_config.merge(
+      params = order_config.merge(
         path_helper: :admin_order_path,
         resource_path: true
       )

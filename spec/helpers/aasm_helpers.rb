@@ -1,4 +1,14 @@
-module AASMHelper
+module AASMHelpers
+  module ClassMethods
+    def order_config
+      ORDER_CONFIG
+    end
+
+    def review_config
+      REVIEW_CONFIG
+    end
+  end
+
   ORDER_CONFIG = {
     set: {
       in_progress: [:queue, :cancel],
@@ -25,13 +35,11 @@ module AASMHelper
     entity_label: :review
   }.freeze
 
-  class << self
-    def order_config
-      ORDER_CONFIG
-    end
+  def self.included(klass)
+    klass.extend(ClassMethods)
+  end
 
-    def review_config
-      REVIEW_CONFIG
-    end
+  def state_label(prefix, state)
+    t("#{prefix}#{state}").upcase
   end
 end
