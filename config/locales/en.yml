@@ -400,6 +400,18 @@ en:
     formats:
       long_date: "%B %d, %Y"
 
+  notifier_mailer:
+    user_email:
+      subject: "Created account for %{email}"
+      title: "Welcoming %{email} at our awesome book store"
+      body: "Visit your %{href} to change or create some if needed"
+      settings_page: 'settings page'
+    order_email:
+      subject: "Order %{number} has been successfully placed!"
+      title: "Order %{number} has been added for processing"
+      body: "You can view your order processing progress %{href}"
+      here: 'here'
+
   errors:
     attributes:
       first_name:
