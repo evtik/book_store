@@ -34,6 +34,7 @@ ActiveAdmin.register Book do
         end
       end
       row :description
+      row(:materials) { |book| book.decorate.materials_string }
       row(t('.book.dimensions')) { |book| book.decorate.dimensions }
       row(:price) { |book| number_to_currency book.price }
     end
