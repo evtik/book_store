@@ -42,6 +42,8 @@ feature 'Cart page' do
         expect(find_field("quantities-#{@books.first.id}").value).to eq('2')
         expect(find_field("xs-quantities-#{@books.first.id}",
                           visible: false).value).to eq('2')
+        expect(page).to have_css('p.font-16', text: '7.00')
+        expect(page).to have_css('strong.font-18', text: '7.00')
       end
 
       context 'click minus button' do
@@ -58,6 +60,8 @@ feature 'Cart page' do
           expect(find_field("quantities-#{@books.second.id}").value).to eq('1')
           expect(find_field("xs-quantities-#{@books.second.id}",
                             visible: false).value).to eq('1')
+          expect(page).to have_css('p.font-16', text: '5.00')
+          expect(page).to have_css('strong.font-18', text: '5.00')
         end
       end
 
