@@ -1,6 +1,2 @@
 %h2= t('.title', email:  @user.email)
--# %h2 Welcoming #{@user.email} at our awesome book store
-= t('.body', href: link_to(t('.settings_page'), settings_url))
--# Visit your
--# = link_to 'settings page', settings_url
--# to change or create some if needed
+= t('.body_html', href: link_to(t('.settings_page'), settings_url))

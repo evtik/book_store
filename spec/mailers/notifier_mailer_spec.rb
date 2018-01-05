@@ -1,6 +1,4 @@
 describe NotifierMailer, type: :mailer do
-  include Rails.application.routes.url_helpers
-
   let(:user) { create(:user) }
 
   context '#user_email' do
@@ -11,7 +9,9 @@ describe NotifierMailer, type: :mailer do
     end
 
     it 'has correct subject' do
-      expect(user_email.subject).to include('Created account')
+      expect(user_email.subject).to include(
+        t('notifier_mailer.user_email.subject', email: user.email)
+      )
     end
 
     it 'has link to user settings in body' do
@@ -38,7 +38,7 @@ describe NotifierMailer, type: :mailer do
 
     it 'has correct subject' do
       expect(order_email.subject).to include(
-        "Order #{order.decorate.number} has been successfully placed!"
+        t('notifier_mailer.order_email.subject', number: order.decorate.number)
       )
     end
 
