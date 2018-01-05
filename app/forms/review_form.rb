@@ -4,7 +4,7 @@ class ReviewForm < Rectify::Form
   attribute :body, String
   attribute :book_id, Integer
 
-  REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
+  REGEXP = /\A([\p{Alnum}.,!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   validates :title,
             presence: true,

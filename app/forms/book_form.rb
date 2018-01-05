@@ -12,7 +12,7 @@ class BookForm < Rectify::Form
   attribute :author_ids, Array[Integer]
   attribute :material_ids, Array[Integer]
 
-  REGEXP = /\A([\p{Alnum}!#$%&'*+-\/=?^_`{|}~\s])+\z/
+  REGEXP = /\A([\p{Alnum}.,!#$%&'*+-\/=?^_`{|}~\s])+\z/
 
   validate :must_have_category, :must_have_authors, :must_have_materials
 
