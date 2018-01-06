@@ -1,12 +1,17 @@
 class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
+  configure do |config|
+    config.remove_previously_stored_files_after_update = false
+  end
+
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
   def default_url
-    "https://s3.eu-central-1.amazonaws.com/sybookstore/images/" + [version_name, "default.png"].compact.join('_')
+    'https://s3.eu-central-1.amazonaws.com/sybookstore/images/' +
+      [version_name, 'default.png'].compact.join('_')
   end
 
   process resize_to_fit: [700, 700]
