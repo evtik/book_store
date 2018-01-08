@@ -48,6 +48,15 @@ feature 'User privacy settings page' do
         )
       end
 
+      scenario 'with empty new password' do
+        password_form.fill_in_with(
+          current_password: '11111111'
+        ).submit
+        expect(page).to have_content(
+          t('errors.messages.blank')
+        )
+      end
+
       scenario 'with password not matching password confirmation' do
         password_form.fill_in_with(
           current_password: '11111111',
