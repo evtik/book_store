@@ -7,10 +7,6 @@ module ApplicationHelper
     @resource ||= User.new
   end
 
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
-  end
-
   def cart_items_count
     return session[:cart].length if session[:cart]
     0
