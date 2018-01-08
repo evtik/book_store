@@ -9,4 +9,5 @@
       %p.lead.book-description.text-justify= truncate book.description, length: 400
       %p.in-grey-600.small= book.authors_full
       .general-align.pt-20
-        =link_to t('.buy_now'), cart_items_path(id: book.id), method: :post, class: 'btn btn-primary'
+        = link_to t('.buy_now'), cart_items_path(id: book.id), method: :post,
+          class: 'btn btn-primary'

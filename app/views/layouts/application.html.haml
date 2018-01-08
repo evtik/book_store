@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 %html
   %head
-    %meta{charset: "UTF-8"}
-    %meta{name: "viewport", content: "width=device-width"}
+    %meta{charset: 'UTF-8'}
+    %meta{name: 'viewport', content: 'width=device-width'}
     = csrf_meta_tags
     %title Bookstore
-    %link{href: "https://fonts.googleapis.com/css?family=Open+Sans:300,400,600", rel: "stylesheet"}
+    %link{href: 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600', rel: 'stylesheet'}
     = stylesheet_link_tag 'application', media: 'all'
     = javascript_include_tag 'application', params[:controller] unless devise_controller?
     = yield :head
@@ -26,4 +26,4 @@
             = flash[:notice]
       = yield
     = render 'layouts/footer'
-    %script{src: "https://use.fontawesome.com/67602d7308.js"}
+    %script{src: 'https://use.fontawesome.com/67602d7308.js'}

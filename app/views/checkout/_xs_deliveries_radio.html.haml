@@ -8,7 +8,7 @@
           %label.font-16.font-weight-light.pl-0
             = radio_button_tag :shipment_id, shipment.id,
               false,
-              class: "radio-input", hidden: true,
+              class: 'radio-input', hidden: true,
               id: "xs-shipment-#{shipment.id}", 'data-price': shipment.price,
                 'data-days-min': shipment.days_min,
                 'data-days-max': shipment.days_max,

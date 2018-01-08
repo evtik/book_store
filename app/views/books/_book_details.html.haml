@@ -24,12 +24,12 @@
         = form_tag(cart_items_path, class: 'form-inline') do
           .col-xs-5.col-md-3
             .input-group.general-position
-              %a.input-link.quantity-decrement{data: {target: "quantities-#{@book.id}"}, href: "#"}
+              %a.input-link.quantity-decrement{data: {target: "quantities-#{@book.id}"}, href: '#'}
                 %i.fa.fa-minus.line-height-40
               = hidden_field_tag(:id, @book.id)
-              %input.form-control.quantity-input{type: "number", min: "1", value: "1", name: "quantity", id: "quantities-#{@book.id}"}
+              %input.form-control.quantity-input{type: 'number', min: '1', value: '1', name: 'quantity', id: "quantities-#{@book.id}"}
             .input-group.general-position
-              %a.input-link.quantity-increment{data: {target: "quantities-#{@book.id}"}, href: "#"}
+              %a.input-link.quantity-increment{data: {target: "quantities-#{@book.id}"}, href: '#'}
                 %i.fa.fa-plus.line-height-40
           .col-xs-7.col-md-5
             = submit_tag t('.add_to_cart'), class: 'btn btn-default pull-right general-position'

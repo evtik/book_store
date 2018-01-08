@@ -13,7 +13,7 @@
               %h4.media-heading.max-240.general-message-name
                 %p= "#{review.user.billing_address.first_name} #{review.user.billing_address.last_name}"
                 - if presenter.verified_reviewer?(@book, review.user_id)
-                  %span.general-message-verified{style: "margin-left: 50px;"}= t '.verified_reviewer'
+                  %span.general-message-verified{style: 'margin-left: 50px;'}= t '.verified_reviewer'
             .mb-15
               - 5.times do |index|
                 %i.fa.fa-star.rate-star{class: ('rate-empty' if review.score < index + 1)}

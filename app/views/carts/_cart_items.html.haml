@@ -26,10 +26,10 @@
       %td
         - if render_inputs
           .input-group
-            %a.input-link.quantity-decrement{href: "#",
+            %a.input-link.quantity-decrement{href: '#',
               'data-target': "quantities-#{order_item.book_id}"}
               %i.fa.fa-minus.line-height-40
-            %input.form-control.quantity-input{type: "number", min: "1",
+            %input.form-control.quantity-input{type: 'number', min: '1',
               name: "quantities[#{order_item.book_id}]",
               class: "quantities-#{order_item.book_id}",
               id: "quantities-#{order_item.book_id}",
@@ -37,7 +37,7 @@
               'data-bound-subtotal': "subtotal-#{order_item.book.id}",
               'data-price': order_item.book.price,
               value: order_item.quantity}
-            %a.input-link.quantity-increment{href: "#",
+            %a.input-link.quantity-increment{href: '#',
               'data-target': "quantities-#{order_item.book_id}"}
               %i.fa.fa-plus.line-height-40
         - else
@@ -49,5 +49,5 @@
         %td
           = link_to(cart_item_path(order_item.book.id),
             data: { confirm: 'Are you sure?' },
-            class: "close general-cart-close", method: :delete) do
-            %span{'aria-hidden': "true"} &times;
+            class: 'close general-cart-close', method: :delete) do
+            %span{'aria-hidden': 'true'} &times;

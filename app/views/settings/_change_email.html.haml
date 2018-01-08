@@ -2,7 +2,7 @@
 = form_for current_user, url: settings_email_path,
   class: 'general-form-md' do |f|
   .form-group.mb-35
-    %label.control-label.font-weight-light{for: "email"}= t '.enter_email'
+    %label.control-label.font-weight-light{for: 'email'}= t '.enter_email'
     = f.email_field :email, class: 'form-control', placeholder: t('.placeholder')
   .general-text-align
     = f.submit t('settings.show.save'), class: 'btn btn-default mb-35'

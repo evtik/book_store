@@ -4,18 +4,18 @@
     = render 'devise/shared/omniauth_links'
     %p.general-login-text= t('.or')
   = form_for(resource, as: resource_name, url: registration_path(resource_name),
-    html: {class: "general-form"}) do |f|
+    html: {class: 'general-form'}) do |f|
     = devise_error_messages!
     .form-group.mb-30
-      %label.control-label.font-weight-light{for: "email"}= t('.email')
+      %label.control-label.font-weight-light{for: 'email'}= t('.email')
       = f.email_field :email, class: 'form-control',
         placeholder: t('.email'), autofocus: true
     .form-group.mb-30
-      %label.control-label.font-weight-light{for: "password"}= t('.password')
+      %label.control-label.font-weight-light{for: 'password'}= t('.password')
       = f.password_field :password, class: 'form-control',
         placeholder: t('.password')
     .form-group.mb-30
-      %label.control-label.font-weight-light{for: "password_confirmation"}= t('.confirm_password')
+      %label.control-label.font-weight-light{for: 'password_confirmation'}= t('.confirm_password')
       = f.password_field :password_confirmation, class: 'form-control',
         placeholder: t('.confirm_password')
     .text-center

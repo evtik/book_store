@@ -1,7 +1,7 @@
 %main.container
   %h1.general-title-margin= t 'checkout.caption'
-  =render 'progress'
-  = form_for @order, url: checkout_submit_address_path, class: "res-mb-100" do |f|
+  = render 'progress'
+  = form_for @order, url: checkout_submit_address_path, class: 'res-mb-100' do |f|
     .hidden-xs.hidden-sm
       .row
         .col-md-5
@@ -24,7 +24,7 @@
             type: 'shipping', entity: 'order'
         .form-group.checkbox
           %label.font-weight-light.pl-0
-            = f.check_box :use_billing, class: "input checkbox-input", hidden: "true"
+            = f.check_box :use_billing, class: 'input checkbox-input', hidden: 'true'
             %span.checkbox-icon
               %i.fa.fa-check
             %span.checkbox-text= t '.use_billing'
@@ -41,4 +41,4 @@
             %p.font-16= t 'carts.show.order_total'
           %td
             %p.font-16= number_to_currency @order.subtotal
-      = f.submit t('checkout.save_continue'), class: "btn btn-default center-block mb-20"
+      = f.submit t('checkout.save_continue'), class: 'btn btn-default center-block mb-20'
