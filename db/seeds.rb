@@ -1,14 +1,16 @@
 OrderItem.destroy_all
-Shipment.destroy_all
 CreditCard.destroy_all
-Coupon.destroy_all
 Order.destroy_all
+Coupon.destroy_all
+Shipment.destroy_all
 Review.destroy_all
 Book.destroy_all
 Category.destroy_all
 Material.destroy_all
 Author.destroy_all
 User.destroy_all
+
+User.skip_callback(:create, :after, :send_welcome_user)
 
 User.create! do |u|
   u.email = 'admin@bookstore.com'
@@ -22,6 +24,8 @@ end
     user.password = '11111111'
   end
 end
+
+User.set_callback(:create, :after, :send_welcome_user)
 
 ['mobile development', 'photo', 'web design', 'web development'].each do |item|
   Category.create! do |category|
@@ -50,10 +54,18 @@ categories = Category.all
 materials = Material.all
 authors = Author.all
 
+portraits_glob = Dir.glob('/mnt/win/d/install/rails/book_images/*.png')
+portrait_images = portraits_glob.map { |file| File.open(file) }
+
+lands_glob = Dir.glob('/mnt/win/d/install/rails/book_images/landscape/*.{jpg,jpeg}')
+landscape_images = lands_glob.map { |file| File.open(file) }
+
 num_books = 200
 
 num_books.times do |i|
   book = Book.new
+  book.main_image = portrait_images.sample
+  book.images = landscape_images.sample(3)
   book.title = Faker::Book.title.truncate(70)
   book.year = (1997..2016).to_a.sample
   book.description = Faker::Hipster.paragraph(9, false, 17).truncate(990)
