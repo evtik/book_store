@@ -1,15 +1,15 @@
 ActiveAdmin.register Material do
-  permit_params :name
+  permit_params(:name)
 
   index do
     selectable_column
-    column :name
+    column(:name)
     actions
   end
 
   form do |f|
-    f.inputs t('.material.material_details') do
-      f.input :name
+    f.inputs(t('.material.material_details')) do
+      f.input(:name)
     end
     f.actions
   end
@@ -21,10 +21,10 @@ ActiveAdmin.register Material do
 
     def create
       @material = MaterialForm.from_params(params)
-      return render 'new' if @material.invalid?
+      return render('new') if @material.invalid?
       Material.create(@material.attributes)
       flash[:notice] = t('.created_message')
-      redirect_to collection_path
+      redirect_to(collection_path)
     end
 
     def edit
@@ -33,10 +33,10 @@ ActiveAdmin.register Material do
 
     def update
       @material = MaterialForm.from_params(params)
-      return render 'edit' if @material.invalid?
+      return render('edit') if @material.invalid?
       Material.find(params[:id]).update_attributes(@material.attributes)
       flash[:notice] = t('.updated_message')
-      redirect_to resource_path
+      redirect_to(resource_path)
     end
   end
 end

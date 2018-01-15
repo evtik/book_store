@@ -1,15 +1,15 @@
 ActiveAdmin.register Category, as: 'book-category' do
-  permit_params :name
+  permit_params(:name)
 
   index do
     selectable_column
-    column :name
+    column(:name)
     actions
   end
 
   form do |f|
-    f.inputs t('.book_category.category_details') do
-      f.input :name
+    f.inputs(t('.book_category.category_details')) do
+      f.input(:name)
     end
     f.actions
   end
@@ -21,10 +21,10 @@ ActiveAdmin.register Category, as: 'book-category' do
 
     def create
       @book_category = CategoryForm.from_params(params)
-      return render 'new' if @book_category.invalid?
+      return render('new') if @book_category.invalid?
       Category.create(@book_category.attributes)
       flash[:notice] = t('.created_message')
-      redirect_to collection_path
+      redirect_to(collection_path)
     end
 
     def edit
@@ -33,10 +33,10 @@ ActiveAdmin.register Category, as: 'book-category' do
 
     def update
       @book_category = CategoryForm.from_params(params)
-      return render 'edit' if @book_category.invalid?
+      return render('edit') if @book_category.invalid?
       Category.find(params[:id]).update_attributes(@book_category.attributes)
       flash[:notice] = t('.updated_message')
-      redirect_to resource_path
+      redirect_to(resource_path)
     end
   end
 end

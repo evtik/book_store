@@ -1,19 +1,19 @@
 ActiveAdmin.register Author do
-  permit_params :first_name, :last_name, :description
+  permit_params(:first_name, :last_name, :description)
 
   index do
     selectable_column
-    column :first_name
-    column :last_name
+    column(:first_name)
+    column(:last_name)
     column(:description) { |author| markdown_truncate(author.description) }
     actions
   end
 
   form do |f|
     f.inputs t('.author.author_details') do
-      f.input :first_name
-      f.input :last_name
-      f.input :description, as: :text, input_html: { rows: 5 }
+      f.input(:first_name)
+      f.input(:last_name)
+      f.input(:description, as: :text, input_html: { rows: 5 })
     end
     f.actions
   end
@@ -25,10 +25,10 @@ ActiveAdmin.register Author do
 
     def create
       @author = AuthorForm.from_params(params)
-      return render 'new' if @author.invalid?
+      return render('new') if @author.invalid?
       Author.create(@author.attributes)
       flash[:notice] = t('.created_message')
-      redirect_to collection_path
+      redirect_to(collection_path)
     end
 
     def edit
@@ -37,10 +37,10 @@ ActiveAdmin.register Author do
 
     def update
       @author = AuthorForm.from_params(params)
-      return render 'edit' if @author.invalid?
+      return render('edit') if @author.invalid?
       Author.find(params[:id]).update_attributes(@author.attributes)
       flash[:notice] = t('.updated_message')
-      redirect_to resource_path
+      redirect_to(resource_path)
     end
   end
 end
