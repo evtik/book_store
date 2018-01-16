@@ -2,7 +2,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def update
     Settings::UpdatePassword.call(permitted, resource, flash, self)
     flash[:show_privacy] = true
-    redirect_to settings_path
+    redirect_to(settings_path)
   end
 
   def destroy

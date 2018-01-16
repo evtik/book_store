@@ -4,6 +4,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(oauth_params)
     set_flash_message(:notice, :success,
                       kind: oauth_params[:provider].capitalize)
-    sign_in_and_redirect @user
+    sign_in_and_redirect(@user)
   end
 end

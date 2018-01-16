@@ -1,7 +1,7 @@
 class ReviewsController < ApplicationController
   include Rectify::ControllerHelpers
 
-  before_action :authenticate_user!
+  before_action(:authenticate_user!)
 
   def new
     @book = BookWithAssociated.new(params[:book_id]).first.decorate
@@ -12,7 +12,7 @@ class ReviewsController < ApplicationController
     Reviews::CreateReview.call(params, current_user) do
       on(:invalid) do |review, book|
         expose(review: review, book: book)
-        render 'new'
+        render('new')
       end
 
       on(:ok) { |note| redirect_to book_path(params[:book_id]), notice: note }

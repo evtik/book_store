@@ -1,19 +1,19 @@
 class ApplicationController < ActionController::Base
   COUNTRIES = Country.all.map { |c| [c.name, c.country_code] }
 
-  protect_from_forgery with: :exception
+  protect_from_forgery(with: :exception)
   before_action { @categories = Common::GetCategoriesWithCounters.call }
-  before_action :store_current_location, unless: :devise_controller?
+  before_action(:store_current_location, unless: :devise_controller?)
 
   rescue_from CanCan::AccessDenied do
-    render file: "#{Rails.root}/public/403.html", status: 403, layout: false
+    render(file: "#{Rails.root}/public/403.html", status: 403, layout: false)
   end
 
   def authenticate_active_admin_user!
     authenticate_user!
     return if current_user.admin?
     flash[:alert] = t('admin.not_authorized')
-    redirect_to root_path
+    redirect_to(root_path)
   end
 
   private

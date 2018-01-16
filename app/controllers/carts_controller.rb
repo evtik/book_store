@@ -16,7 +16,7 @@ class CartsController < ApplicationController
 
     handle_coupon if params[:coupon].present?
 
-    redirect_to params[:to_checkout] ? checkout_address_path : cart_path
+    redirect_to(params[:to_checkout] ? checkout_address_path : cart_path)
   end
 
   private

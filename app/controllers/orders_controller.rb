@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
   include Rectify::ControllerHelpers
 
-  before_action :authenticate_user!
-  load_and_authorize_resource only: :index
+  before_action(:authenticate_user!)
+  load_and_authorize_resource(only: :index)
 
   def index
     present OrdersPresenter.new(params: order_params)
@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
 
   def show
     @order = Orders::GetOrderWithAssociated.call(order_params[:id])
-    authorize! :show, @order
+    authorize!(:show, @order)
     @billing = @order.billing_address
     @shipping = @order.shipping_address || @billing
     @order_items = @order.order_items

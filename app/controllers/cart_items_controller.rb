@@ -12,6 +12,6 @@ class CartItemsController < ApplicationController
 
   def destroy
     session[:cart].except!(params[:id])
-    redirect_to cart_path
+    redirect_to(cart_path)
   end
 end

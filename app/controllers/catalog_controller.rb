@@ -2,8 +2,8 @@ class CatalogController < ApplicationController
   include Rectify::ControllerHelpers
 
   def index
-    present CatalogPresenter.new(params: catalog_params,
-                                 categories: @categories)
+    present(CatalogPresenter.new(params: catalog_params,
+                                 categories: @categories))
     @books = BookDecorator.decorate_collection(category_books | sorted)
   end
 

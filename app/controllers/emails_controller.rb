@@ -1,5 +1,5 @@
 class EmailsController < ApplicationController
-  before_action :authenticate_user!
+  before_action(:authenticate_user!)
 
   def update
     user = User.find(current_user.id)
@@ -10,6 +10,6 @@ class EmailsController < ApplicationController
     else
       flash[:alert] = user.errors.full_messages.first
     end
-    redirect_to settings_path
+    redirect_to(settings_path)
   end
 end
