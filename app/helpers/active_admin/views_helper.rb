@@ -39,7 +39,7 @@ module ActiveAdmin
     private
 
     def to_p_with_br(details)
-      raw "<p>#{details.join('<br>')}</p>"
+      raw("<p>#{details.join('<br>')}</p>")
     end
   end
 end
