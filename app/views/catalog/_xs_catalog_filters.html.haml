@@ -1,4 +1,4 @@
-%p.in-grey-600.small.mb-10= t '.filter_by_category'
+%p.in-grey-600.small.mb-10= t('.filter_by_category')
 .dropdown.mb-20
   %a.dropdown-toggle.dropdown-btn{href: '#', 'data-toggle': 'dropdown',
     role: 'button', 'aria-haspopup': 'true', 'aria-expanded': 'false'}
@@ -7,5 +7,5 @@
   %ul.dropdown-menu
     - @categories.each do |category|
       %li
-        = link_to capitalize_category(category.first.first),
-          presenter.params.merge('category' => category.first.second)
+        = link_to(capitalize_category(category.first.first),
+          presenter.params.merge('category' => category.first.second))

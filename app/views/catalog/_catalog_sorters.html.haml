@@ -5,4 +5,4 @@
 %ul.dropdown-menu
   - presenter.sorters.each do |sorter_params, sorter_name|
     %li
-      = link_to sorter_name, presenter.params.merge(sorter_params)
+      = link_to(sorter_name, presenter.params.merge(sorter_params))
