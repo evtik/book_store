@@ -1,5 +1,5 @@
 class NotifierMailer < ApplicationMailer
-  default from: 'admin@bookstore.com'
+  default(from: 'admin@bookstore.com')
 
   def user_email(user)
     @user = user

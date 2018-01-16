@@ -1,16 +1,16 @@
 class User < ApplicationRecord
-  has_many :reviews, dependent: :destroy
-  has_many :addresses, dependent: :destroy
-  has_many :orders, dependent: :destroy, autosave: false
-  has_one :billing_address, -> { billing }, class_name: 'Address'
+  has_many(:reviews, dependent: :destroy)
+  has_many(:addresses, dependent: :destroy)
+  has_many(:orders, dependent: :destroy, autosave: false)
+  has_one(:billing_address, -> { billing }, class_name: 'Address')
 
-  after_create :send_welcome_user
+  after_create(:send_welcome_user)
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
+  devise(:database_authenticatable, :registerable,
          :validatable, :recoverable, :rememberable,
-         :omniauthable, omniauth_providers: [:facebook]
+         :omniauthable, omniauth_providers: [:facebook])
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
