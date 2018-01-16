@@ -14,8 +14,8 @@ class CatalogPresenter < Rectify::Presenter
     I18n.t('catalog.catalog_sorters.title_za')
   }.freeze
 
-  attribute :params, ActionController::Parameters
-  attribute :categories, Array
+  attribute(:params, ActionController::Parameters)
+  attribute(:categories, Array)
 
   def sorters
     SORTERS

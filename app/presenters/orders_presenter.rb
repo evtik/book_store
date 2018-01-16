@@ -1,7 +1,7 @@
 class OrdersPresenter < Rectify::Presenter
   FILTERS = %w(in_progress in_queue in_delivery delivered canceled).freeze
 
-  attribute :params, ActionController::Parameters
+  attribute(:params, ActionController::Parameters)
 
   def filters
     FILTERS
