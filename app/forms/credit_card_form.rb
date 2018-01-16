@@ -7,9 +7,9 @@ class CreditCardForm < Rectify::Form
   }
 
   fields.each do |field, format|
-    attribute field, String
-    validates field, presence: true, format: { with: format }
+    attribute(field, String)
+    validates(field, presence: true, format: { with: format })
   end
 
-  validates_with CardLuhnValidator, CardExpiryValidator
+  validates_with(CardLuhnValidator, CardExpiryValidator)
 end

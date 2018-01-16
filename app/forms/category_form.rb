@@ -1,8 +1,8 @@
 class CategoryForm < Rectify::Form
-  attribute :name, String
+  attribute(:name, String)
 
-  validates :name,
+  validates(:name,
             presence: true,
             format: { with: /\A[\p{Alpha} \/-]*\z/ },
-            length: { maximum: 30 }
+            length: { maximum: 30 })
 end

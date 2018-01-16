@@ -9,12 +9,12 @@ class AddressForm < Rectify::Form
   }
 
   fields.each do |field, format|
-    attribute field, String
-    validates field, presence: true, format: { with: format }
+    attribute(field, String)
+    validates(field, presence: true, format: { with: format })
   end
 
-  attribute :country, String
-  validates :country, presence: true
+  attribute(:country, String)
+  validates(:country, presence: true)
 
-  attribute :address_type, String
+  attribute(:address_type, String)
 end
