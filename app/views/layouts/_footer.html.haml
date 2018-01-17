@@ -4,17 +4,17 @@
       .col-sm-9
         %ul.list-inline.general-align.mb-25
           %li
-            = link_to t('layouts.header.home'), root_path, class: 'nav-link'
+            = link_to(t('layouts.header.home'), root_path, class: 'nav-link')
           %li
-            = link_to t('layouts.header.shop'),
-              catalog_index_path, class: 'nav-link'
+            = link_to(t('layouts.header.shop'),
+              catalog_index_path, class: 'nav-link')
           - if user_signed_in?
             %li
-              = link_to t('layouts.my_account.orders'), orders_path,
-                class: 'nav-link'
+              = link_to(t('layouts.my_account.orders'), orders_path,
+                class: 'nav-link')
             %li
-              = link_to t('layouts.my_account.settings'), settings_path,
-                class: 'nav-link'
+              = link_to(t('layouts.my_account.settings'), settings_path,
+                class: 'nav-link')
       .col-sm-3
         %p.general-nav-mail support@bookstore.com
         %p.general-nav-number (555)-555-5555
