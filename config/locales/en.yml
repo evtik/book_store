@@ -388,6 +388,7 @@ en:
     remove_account:
       caption: 'Remove Account'
       label: 'Please Remove My Account'
+      are_you_sure: 'Are you sure?'
       understood: 'I understand that all data will be lost'
       removed_message: 'Your account has been successfully deleted!'
 
