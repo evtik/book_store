@@ -1,9 +1,8 @@
 %ul.list-inline.pt-10.mb-25.mr-240
   - @categories.each do |category|
     %li.mr-35
-      = link_to presenter.params.merge('category' => category.first.second,
-        'limit' => 12, 'sort_by' => 'created_at', 'order' => 'desc'),
-        class: 'filter-link' do
+      = link_to(presenter.params.merge('category' => category.first.second),
+        class: 'filter-link') do
         -if presenter.current_category?(category.first.second)
           %b= capitalize_category(category.first.first)
         -else
