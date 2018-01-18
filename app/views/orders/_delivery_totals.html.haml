@@ -1,0 +1,16 @@
+%tr
+  %td
+    %p.font-16= t('checkout.order_subtotal')
+  %td
+    %p.font-16= number_to_currency(@order.subtotal)
+%tr
+  %td
+    %p.font-16= t('checkout.shipping')
+  %td
+    %p#shipment-label.font-16= number_to_currency(@order.shipment.price)
+%tr
+  %td
+    %strong.font-18= t('carts.show.order_total')
+  %td
+    %strong#order-total-label.font-18{'data-subtotal': @order.subtotal}= |
+      number_to_currency(@order.subtotal + @order.shipment.price) |

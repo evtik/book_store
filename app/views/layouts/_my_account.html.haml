@@ -1,0 +1,10 @@
+- if current_user.admin?
+  %li
+    = link_to(t('.admin_panel'), admin_root_path, class: css_class)
+%li
+  = link_to(t('.orders'), orders_path, class: css_class)
+%li
+  = link_to(t('.settings'), settings_path, class: css_class)
+%li.divider{role: 'separator'}
+%li
+  = link_to(t('.logout'), logout_path, class: css_class)

@@ -1,0 +1,54 @@
+%table.table.table-hover
+  %tr.no-hover
+    %th.col-pic.pl-0
+      %span.in-grey-600.ml-20= t('carts.product')
+    %th.col-title
+    %th.col-price
+      %span.in-grey-600= t('carts.price')
+    %th.col-quantity
+      %span.in-grey-600= t('carts.quantity')
+    %th.col-total
+      %span.in-grey-600= t('carts.subtotal')
+    - if render_inputs
+      %th.col-close
+  - @order_items.each do |order_item|
+    %tr
+      %td
+        .general-img-wrap-table
+          = image_tag(order_item.book.main_image,
+            alt: order_item.book.title, class: 'cart-img-shadow pull-left')
+      %td
+        %p.general-title= order_item.book.title
+        - unless render_inputs
+          %p.text-justify.in-grey-600.font-weight-light= |
+            truncate(order_item.book.description, length: 150) |
+      %td
+        %span.font-16.in-gold-500= number_to_currency(order_item.book.price)
+      %td
+        - if render_inputs
+          .input-group
+            %a.input-link.quantity-decrement{href: '#',
+              'data-target': "quantities-#{order_item.book_id}"}
+              %i.fa.fa-minus.line-height-40
+            %input.form-control.quantity-input{type: 'number', min: '1',
+              name: "quantities[#{order_item.book_id}]",
+              class: "quantities-#{order_item.book_id}",
+              id: "quantities-#{order_item.book_id}",
+              'data-bound-input': "xs-quantities-#{order_item.book_id}",
+              'data-bound-subtotal': "subtotal-#{order_item.book.id}",
+              'data-price': order_item.book.price,
+              value: order_item.quantity}
+            %a.input-link.quantity-increment{href: '#',
+              'data-target': "quantities-#{order_item.book_id}"}
+              %i.fa.fa-plus.line-height-40
+        - else
+          %span.ml-30= order_item.quantity
+      %td
+        %span.font-16.in-gold-500{class: "subtotal-#{order_item.book.id}"}= |
+          number_to_currency(order_item.book.price * order_item.quantity) |
+      - if render_inputs
+        %td
+          = link_to(cart_item_path(order_item.book.id),
+            data: { confirm: 'Are you sure?' },
+            class: 'close general-cart-close', method: :delete) do
+            %span{'aria-hidden': 'true'} &times;

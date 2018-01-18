@@ -1,0 +1,6 @@
+= content_for(:head) do
+  = javascript_include_tag('books')
+= render('books/book_details')
+.container
+  .mb-80
+    = render('form')

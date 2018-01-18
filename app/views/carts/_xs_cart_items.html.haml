@@ -1,0 +1,48 @@
+- @order_items.each do |order_item|
+  - if render_inputs
+    = link_to(cart_item_path(order_item.book.id),
+      data: { confirm: 'Are you sure?' }, class: 'close general-cart-close',
+      method: :delete) do
+      %span{'aria-hidden': 'true'} &times;
+  .general-img-wrap-table
+    = image_tag(order_item.book.main_image, alt: order_item.book.title,
+      class: 'cart-image-shadow')
+  %p.general-title= order_item.book.title
+  - unless render_inputs
+    %p.text-justify.in-grey-600.font-weight-light= |
+      truncate(order_item.book.description, length: 150) |
+  %table.table
+    %tr
+      %td
+        %span.in-grey-600= t('carts.price')
+      %td
+        %span.font-16.in-gold-500= number_to_currency(order_item.book.price)
+    %tr
+      %td.vertical-middle
+        %span.in-grey-600= t('carts.quantity')
+      %td
+        - if render_inputs
+          .input-group
+            %a.input-link.quantity-decrement{href: '#',
+              'data-target': "xs-quantities-#{order_item.book_id}"}
+              %i.fa.fa-minus.line-height-40
+            %input.form-control.quantity-input{type: 'number', min: '1',
+              name: "quantities[#{order_item.book_id}]",
+              class: "quantities-#{order_item.book_id}",
+              id: "xs-quantities-#{order_item.book_id}",
+              'data-bound-input': "quantities-#{order_item.book_id}",
+              'data-bound-subtotal': "subtotal-#{order_item.book.id}",
+              'data-price': order_item.book.price,
+              value: order_item.quantity}
+            %a.input-link.quantity-increment{href: '#',
+              'data-target': "xs-quantities-#{order_item.book_id}"}
+              %i.fa.fa-plus.line-height-40
+        - else
+          %span= order_item.quantity
+    %tr
+      %td
+        %span.in-grey-600= t('carts.subtotal')
+      %td
+        %span.font-16.in-gold-500{class: "subtotal-#{order_item.book.id}"}= |
+          number_to_currency(order_item.book.price * order_item.quantity) |
+  .general-cart-item.divider-lg-bottom.mb-30

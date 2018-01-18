@@ -1,0 +1,8 @@
+%main.container.general-main-wrap
+  %h1.general-title-margin= t('checkout.caption')
+  = render('progress')
+  = render('/orders/order_details', render_links: true)
+  = form_tag(checkout_submit_confirm_path) do
+    .text-center
+      = submit_tag(t('.place_order'), class: 'btn btn-default')
+

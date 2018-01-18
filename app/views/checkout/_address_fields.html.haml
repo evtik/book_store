@@ -1,0 +1,28 @@
+= f.fields_for(type, address) do |fields|
+  = fields.hidden_field(:id)
+  = fields.hidden_field(:address_type)
+  - %i(first_name last_name street_address city zip).each do |property|
+    .form-group{ class: ('has-error' if address.errors[property].any?)}
+      = fields.label(property, t("checkout.address.#{property}"),
+        class: 'control-label font-weight-light')
+      = fields.text_field(property, class: 'form-control',
+        placeholder: t("checkout.address.#{property}"))
+      %span.help-block= address.errors[property].first
+  .form-group{ class: ('has-error' if address.errors[:country].any?)}
+    = fields.label(:country, t('checkout.address.country'),
+      class: 'control-label font-weight-light')
+    %select{class: 'form-control country-select',
+      name: "#{entity}[#{type}][country]", 'data-target': "#{type}-phone"}
+      %option{value: '', hidden: true, selected: true}= |
+        t('checkout.address.select_country') |
+      - @countries.each do |country|
+        %option{value: country.first, class: "#{type}",
+          selected: country.first == address.country,
+          'data-country-code': country.last}= country.first
+    %span.help-block= address.errors[:country].first
+  .form-group{ class: ('has-error' if address.errors[:phone].any?)}
+    = fields.label(:phone, t('checkout.address.phone'),
+      class: 'control-label font-weight-light')
+    = fields.phone_field(:phone, class: 'form-control',
+      id: "#{type}-phone", placeholder: t('checkout.address.phone_example'))
+    %span.help-block= address.errors[:phone].first
